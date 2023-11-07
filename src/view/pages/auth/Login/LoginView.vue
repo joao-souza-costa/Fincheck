@@ -21,11 +21,12 @@
 </template>
 
 <script setup lang="ts">
-import { REGISTER } from '@/router/const'
+import { Form } from 'vee-validate'
 import { RouterLink } from 'vue-router'
+
+import { REGISTER } from '@/router/const'
 import BaseInput from '@/view/components/BaseInput.vue'
 import BaseButton from '@/view/components/BaseButton.vue'
-import { Form } from 'vee-validate'
 
 import { useLoginController } from './useLoginController'
 const { schema, onSubmit, isLoading } = useLoginController()

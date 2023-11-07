@@ -28,12 +28,11 @@
 </template>
 
 <script setup lang="ts">
-import { LOGIN } from '@/router/const'
-import { RouterLink } from 'vue-router'
 import { Form } from 'vee-validate'
+import { RouterLink } from 'vue-router'
+import { LOGIN } from '@/router/const'
 import BaseInput from '@/view/components/BaseInput.vue'
 import BaseButton from '@/view/components/BaseButton.vue'
-
 import { useRegisterController } from './useRegisterController'
 
 const { schema, onSubmit, isLoading } = useRegisterController()

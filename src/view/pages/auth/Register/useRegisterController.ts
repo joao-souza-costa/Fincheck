@@ -1,9 +1,14 @@
 import * as Yup from 'yup'
-import AuthService, { type signUpParams } from '@/app/services/AuthService'
 import { useMutation } from '@tanstack/vue-query'
-import { inject } from 'vue'
+import AuthService, { type signUpParams } from '@/app/services/AuthService'
+import { useUserStore } from '@/app/store/useUserProvider'
+import { useRouter } from 'vue-router'
+import { DASHBOARD } from '@/router/const'
+import { toast } from '@/app/utils/toast'
 
 export function useRegisterController() {
+  const userStore = useUserStore()
+  const router = useRouter()
 
   const { mutateAsync, isLoading } = useMutation({
     mutationFn: async (values: signUpParams) => {
@@ -14,8 +19,10 @@ export function useRegisterController() {
   async function onSubmit(values: any) {
     try {
       const { token } = await mutateAsync(values)
+      userStore.signin(token)
+      router.push(DASHBOARD)
     } catch (e) {
-      console.log(e)
+      toast.error('Credenciais inválidas')
     }
   }
 
