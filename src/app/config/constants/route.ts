@@ -9,7 +9,7 @@ export const HOME: iRoute = {
 }
 
 export const LOGIN: iRoute = {
-  path: 'login',
+  path: '',
   name: 'LOGIN'
 }
 

@@ -19,7 +19,7 @@ export function useLoginController() {
       const { token } = await mutateAsync(values)
       userStore.signin(token)
     } catch (e) {
-      toast.error('Credenciais inválidas')
+      console.error(e)
     }
   }
 

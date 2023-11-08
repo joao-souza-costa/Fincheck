@@ -24,7 +24,7 @@
 import { Form } from 'vee-validate'
 import { RouterLink } from 'vue-router'
 
-import { REGISTER } from '@/router/const'
+import { REGISTER } from '@/app/config/constants/route'
 import BaseInput from '@/view/components/BaseInput.vue'
 import BaseButton from '@/view/components/BaseButton.vue'
 

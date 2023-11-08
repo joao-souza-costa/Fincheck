@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/vue-query'
 import AuthService, { type signUpParams } from '@/app/services/AuthService'
 import { useUserStore } from '@/app/store/useUserProvider'
 import { useRouter } from 'vue-router'
-import { DASHBOARD } from '@/router/const'
+import { DASHBOARD } from '@/app/config/constants/route'
 import { toast } from '@/app/utils/toast'
 
 export function useRegisterController() {

@@ -2,7 +2,7 @@ import { defineStore } from "pinia"
 import { useRouter } from "vue-router"
 import { ref, type InjectionKey } from "vue"
 import { accessTokenKey } from "../config/constants/localStorageKeys"
-import { DASHBOARD, LOGIN } from "@/router/const"
+import { DASHBOARD, LOGIN } from "@/app/config/constants/route"
 import { useQuery } from "@tanstack/vue-query"
 import userService from "../services/UserService"
 

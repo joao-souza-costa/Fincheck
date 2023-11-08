@@ -1,4 +1,4 @@
-import { HOME, LOGIN, REGISTER, DASHBOARD } from './const'
+import { HOME, LOGIN, REGISTER, DASHBOARD } from '../app/config/constants/route'
 
 import AuthLayout from '@/view/layouts/AuthLayout.vue'
 import LoginView from '@/view/pages/auth/Login/LoginView.vue'
