@@ -17,10 +17,11 @@ httpClient.interceptors.request.use(config => {
 
 httpClient.interceptors.response.use(response => response, error => {
   const userStore = useUserStore();
-  const response = error.response.data;
-  if (response.statusCode === 401) {
+  const response = error.response
+
+  if (response.status === 401) {
     userStore.signout()
-    toast.error(response.message)
+    toast.error(response.data.message)
   }
 
   throw (error)

@@ -1,13 +1,11 @@
 import './index.css'
+import 'swiper/css';
 import 'vue-toastification/dist/index.css'
 
 import Toast from 'vue-toastification'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { VueQueryPlugin } from "@tanstack/vue-query";
-
-//use it 
-
 
 import App from './App.vue'
 import router from './router'
