@@ -4,7 +4,7 @@
       <fincheck-logo class="h-6 text-teal-900" />
       <user-menu />
     </header>
-    <main class="flex-1 flex flex-col md:flex-row gap-4">
+    <main class="flex-1 flex flex-col md:flex-row gap-4 h-full">
       <div class="w-full md:w-1/2">
         <accounts-view />
       </div>
@@ -20,6 +20,9 @@ import FincheckLogo from '@/view/components/FincheckLogo.vue'
 import UserMenu from '@/view/components/UserMenu.vue'
 import AccountsView from './components/AccountsView.vue'
 import TransactionsView from './components/TransactionsView.vue'
+import { useBalanceProvider } from './providers/balanceProvider'
+
+useBalanceProvider()
 </script>
 
 <style scoped></style>

@@ -22,7 +22,7 @@ import FincheckLogo from '../components/FincheckLogo.vue'
 import BaseSpinner from '../components/BaseSpinner.vue'
 import { TransitionRoot } from '@headlessui/vue'
 
-interface iLaunchProps {
+type iLaunchProps = {
   isLoading: boolean
 }
 

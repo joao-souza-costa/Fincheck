@@ -8,24 +8,22 @@
       <span class="text-gray-800 font-medium tracking-[-0.5px] block mt-4"> {{ name }} </span>
     </div>
     <div>
-      <span class="text-gray-800 font-medium tracking-[-0.5px] block">
-        {{ formatCurrency(balance) }}
-      </span>
+      <base-balance class="text-gray-800 font-medium tracking-[-0.5px] block" :balance="balance" />
       <small class="text-gray-600 text-sm">Saldo atual</small>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { formatCurrency } from '@/app/utils/formatCurrency'
+import baseBalance from '../base/baseBalance.vue'
 import BankAccountIcon from '@/view/components/icons/BankAccountTypeIcon/BankAccountIcon.vue'
 
-interface AccountCardProps {
+type accountCardProps = {
   color: string
   name: string
   balance: number
   type: 'CHECKING' | 'INVESTMENT' | 'CASH'
 }
 
-defineProps<AccountCardProps>()
+defineProps<accountCardProps>()
 </script>

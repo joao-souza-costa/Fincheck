@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import BaseSpinner from './BaseSpinner.vue'
 
-interface iProps {
+type iProps =  {
   isLoading?: boolean
   disabled?: boolean
 }

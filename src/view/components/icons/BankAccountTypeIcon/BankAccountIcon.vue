@@ -3,15 +3,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { markRaw } from 'vue'
 import { iconsMap } from './iconsMap'
 
-interface BankAccountTypeIconProps {
+type BankAccountTypeIconProps = {
   type: keyof typeof iconsMap
 }
 const props = defineProps<BankAccountTypeIconProps>()
 
-const current = ref(iconsMap[props.type])
+const current = markRaw(iconsMap[props.type])
 </script>
 
-<style scoped></style>
