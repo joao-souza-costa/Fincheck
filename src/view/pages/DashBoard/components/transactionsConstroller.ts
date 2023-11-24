@@ -2,6 +2,7 @@
 export function useTransactionsController() {
   return {
     transactions: [],
-    isLoading: false
+    transactionsLoading: true,
+    initialLoading: false,
   }
 }
