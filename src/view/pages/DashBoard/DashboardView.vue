@@ -12,6 +12,8 @@
         <transactions-view />
       </div>
     </main>
+
+    <base-fab />
   </div>
 </template>
 
@@ -21,6 +23,7 @@ import UserMenu from '@/view/components/UserMenu.vue'
 import AccountsView from './components/AccountsView.vue'
 import TransactionsView from './components/TransactionsView.vue'
 import { useBalanceProvider } from './providers/balanceProvider'
+import BaseFab from './components/base/BaseFab.vue'
 
 useBalanceProvider()
 </script>

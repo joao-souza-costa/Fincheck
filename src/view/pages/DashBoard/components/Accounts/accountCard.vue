@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import baseBalance from '../base/baseBalance.vue'
+import baseBalance from '../Base/BaseBalance.vue'
 import BankAccountIcon from '@/view/components/icons/BankAccountTypeIcon/BankAccountIcon.vue'
 
 type accountCardProps = {

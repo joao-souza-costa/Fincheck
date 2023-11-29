@@ -3,7 +3,7 @@ import 'swiper/css';
 import 'vue-toastification/dist/index.css'
 
 import Toast from 'vue-toastification'
-import { createApp, type Ref } from 'vue'
+import { createApp } from 'vue/dist/vue.esm-bundler'
 import { createPinia } from 'pinia'
 import { VueQueryPlugin } from "@tanstack/vue-query";
 

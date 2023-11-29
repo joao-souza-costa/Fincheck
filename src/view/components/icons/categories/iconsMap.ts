@@ -1,20 +1,21 @@
 import { Clothes } from "./expense/Clothes";
 import { Education } from "./expense/Education";
-import { Expense } from "./expense/Expense";
+
 import { Food } from "./expense/Food";
 import { Fun } from "./expense/Fun";
 import { Grocery } from "./expense/Grocery";
 import { Home } from "./expense/Home";
 import { Transport } from "./expense/Transport";
 import { Travel } from "./expense/Travel";
-import Income from "./income/IncomeIcon.vue";
+import Income from "./income/IncomeIcon"
+import Expenses from "./expense/ExpenseCategory"
 
 export const iconsMap = {
   income: {
     default: Income,
   },
   expense: {
-    default: Expense,
+    default: Expenses,
     food: Food,
     fun: Fun,
     grocery: Grocery,

@@ -9,12 +9,8 @@
     <template v-else>
       <header>
         <div class="flex items-center justify-between">
-          <button class="flex items-center gap-2">
-            <transactions-icon />
-            <span class="text-sm text-gray-800 tracking-[-0.5px] font-medium">transações</span>
-            <chevron-down-icon />
-          </button>
-          <button>
+          <TransactionsDropdown />
+          <button @click="openFiltersModal">
             <filter-icon />
           </button>
         </div>
@@ -59,6 +55,10 @@
         </template>
       </div>
     </template>
+
+    <filters-modal :open="isOpenFiltersModal" @close="closeFiltersModal">
+      Filtros...
+    </filters-modal>
   </div>
 </template>
 
@@ -67,14 +67,21 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import { MONTHS } from '@/app/config/constants/Date'
 import { useTransactionsController } from './transactionsConstroller'
 import BaseSpinner from '@/view/components/BaseSpinner.vue'
-import ChevronDownIcon from '@/view/components/icons/ChevronDownIcon.vue'
 import FilterIcon from '@/view/components/icons/FilterIcon.vue'
-import TransactionsIcon from '@/view/components/icons/TransactionsIcon.vue'
 import SliderOptions from './Transactions/SliderOptions.vue'
 import SliderNavigation from './Transactions/SliderNavigation.vue'
 import CategoryIcon from '@/view/components/icons/categories/CategoryIcon.vue'
-import baseBalance from './base/baseBalance.vue'
+import baseBalance from './Base/BaseBalance.vue'
 import emptyState from '@/assets/empty-state.svg'
+import TransactionsDropdown from './Transactions/TransactionsDropdown.vue'
+import FiltersModal from './Transactions/FiltersModal.vue'
 
-const { transactionsLoading, transactions, initialLoading } = useTransactionsController()
+const {
+  transactionsLoading,
+  transactions,
+  initialLoading,
+  closeFiltersModal,
+  openFiltersModal,
+  isOpenFiltersModal
+} = useTransactionsController()
 </script>

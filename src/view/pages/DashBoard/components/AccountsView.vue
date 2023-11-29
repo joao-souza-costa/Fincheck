@@ -91,7 +91,7 @@ import AccountCard from './Accounts/accountCard.vue'
 import SliderNavigation from './Accounts/sliderNavigation.vue'
 import EyeIcon from '@/view/components/icons/EyeIcon.vue'
 import PlusIcon from '@/view/components/icons/PlusIcon.vue'
-import baseBalance from './base/baseBalance.vue'
+import baseBalance from './Base/BaseBalance.vue'
 
 import { MEDIUM_SCREEN } from '@/app/config/constants/breakpoints'
 import { useAccountsController } from './accountsController'
