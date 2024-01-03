@@ -1,4 +1,4 @@
-import { ref, type InjectionKey, type Ref, provide } from "vue"
+import { ref, type Ref, provide } from "vue"
 
 export type balanceProviderProps = {
   areVisible: Ref<boolean>

@@ -22,6 +22,7 @@
             <strong class="text-white tracking-[-1px] text-lg"> Minhas compras </strong>
           </div>
           <base-button
+            @click="openNewAccountModal"
             class="w-full h-52 mt-4 rounded-2xl border-2 border-dashed border-teal-600 flex flex-col justify-center items-center gap-4 text-white"
           >
             <div
@@ -29,9 +30,9 @@
             >
               <plus-icon class="w-6 h-6" />
             </div>
-            <span class="tracking-[-0.5px] font-medium block w-32 text-center"
-              >Cadastrar uma nova conta</span
-            >
+            <span class="tracking-[-0.5px] font-medium block w-32 text-center">
+              Cadastrar uma nova conta
+            </span>
           </base-button>
         </div>
 
@@ -84,6 +85,7 @@
 </template>
 
 <script lang="ts" setup>
+import { inject } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import BaseButton from '@/view/components/BaseButton.vue'
 import BaseSpinner from '@/view/components/BaseSpinner.vue'
@@ -95,6 +97,9 @@ import baseBalance from './Base/BaseBalance.vue'
 
 import { MEDIUM_SCREEN } from '@/app/config/constants/breakpoints'
 import { useAccountsController } from './accountsController'
+import { type modalsProviderProps, MODALS_PROVIDER } from '../providers/modalsProvider'
+
+const { openNewAccountModal } = inject(MODALS_PROVIDER) as modalsProviderProps
 
 const { accounts, isLoading, eyeOpen, toggleEye } = useAccountsController()
 </script>

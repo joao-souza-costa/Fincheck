@@ -1,6 +1,7 @@
 import './index.css'
 import 'swiper/css';
 import 'vue-toastification/dist/index.css'
+import '@vuepic/vue-datepicker/dist/main.css'
 
 import Toast from 'vue-toastification'
 import { createApp } from 'vue/dist/vue.esm-bundler'

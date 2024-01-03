@@ -14,6 +14,10 @@
     </main>
 
     <base-fab />
+
+    <account-modal />
+
+    <new-transaction-modal />
   </div>
 </template>
 
@@ -22,10 +26,14 @@ import FincheckLogo from '@/view/components/FincheckLogo.vue'
 import UserMenu from '@/view/components/UserMenu.vue'
 import AccountsView from './components/AccountsView.vue'
 import TransactionsView from './components/TransactionsView.vue'
+import BaseFab from './components/Base/BaseFab.vue'
+import AccountModal from './components/Modals/AccountModal.vue'
 import { useBalanceProvider } from './providers/balanceProvider'
-import BaseFab from './components/base/BaseFab.vue'
+import { useModalsProvider } from './providers/modalsProvider'
+import NewTransactionModal from './components/Modals/NewTransactionModal.vue'
 
 useBalanceProvider()
+useModalsProvider()
 </script>
 
 <style scoped></style>
