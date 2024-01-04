@@ -1,7 +1,7 @@
 import { computed, inject, ref } from "vue"
 import type { balanceProviderProps } from "../providers/balanceProvider"
 import { useQuery } from "@tanstack/vue-query"
-import bankAccountsService, { type bankAccountsResponse } from "@/app/services/BankAccountsService"
+import bankAccountsService from "@/app/services/BankAccountsService"
 
 export function useAccountsController() {
   const { areVisible, toggleVisibility } = inject('balanceProvider') as balanceProviderProps

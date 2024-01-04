@@ -1,4 +1,5 @@
-import { provide, reactive, ref, type Ref } from "vue"
+import type { bankAccountParams, bankAccountsResponse } from "@/app/services/BankAccountsService"
+import { provide, reactive } from "vue"
 
 type tTransactionType = 'INCOME' | 'EXPENSE'
 type tAccountType = 'CREATE' | 'EDIT'
@@ -9,8 +10,9 @@ export type modalsProviderProps = {
   isOpenAccountModal: {
     CREATE: boolean
     EDIT: boolean
+    EDIT_ACCOUNT: bankAccountsResponse
   }
-  toggleAccountModal: (type: tAccountType) => void
+  toggleAccountModal: (type: tAccountType, account?: bankAccountsResponse) => void
 
   isOpenTransactionModal: {
     INCOME: boolean
@@ -24,9 +26,13 @@ export function useModalsProvider() {
   const isOpenAccountModal = reactive({
     CREATE: false,
     EDIT: false,
+    EDIT_ACCOUNT: {}
   })
 
-  const toggleAccountModal = (type: tAccountType): void => {
+  const toggleAccountModal = (type: tAccountType, account?: bankAccountsResponse): void => {
+
+    if (type === "EDIT" && account) isOpenAccountModal.EDIT_ACCOUNT = account
+
     isOpenAccountModal[type] = !isOpenAccountModal[type]
   }
 

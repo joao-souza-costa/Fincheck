@@ -1,6 +1,13 @@
 <template>
-  <CreateAccountModal :is-open="isOpenAccountModal.CREATE" @close="toggleAccountModal('CREATE')" />
-  <EditAccountModal :is-open="isOpenAccountModal.EDIT" @close="toggleAccountModal('EDIT')" />
+  <CreateAccountModal
+   :is-open="isOpenAccountModal.CREATE" 
+   @close="toggleAccountModal('CREATE')" />
+
+  <EditAccountModal
+    :is-open="isOpenAccountModal.EDIT"
+    :account="isOpenAccountModal.EDIT_ACCOUNT"
+    @close="toggleAccountModal('EDIT')"
+  />
 </template>
 
 <script setup lang="ts">

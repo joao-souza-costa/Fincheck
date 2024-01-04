@@ -1,7 +1,7 @@
 <template>
   <base-account-modal
+    v-if="isOpen"
     modal-label="Criar Conta"
-    :is-open="isOpen"
     @close="$emit('close')"
     @submit="onSubmit"
   >

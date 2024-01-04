@@ -32,7 +32,7 @@ const number = {
 
 const name = toRef(props, 'name')
 
-const { handleChange, value } = useField(name, undefined, { initialValue: 0 })
+const { handleChange, value } = useField(name, undefined)
 </script>
 
 <style scoped></style>

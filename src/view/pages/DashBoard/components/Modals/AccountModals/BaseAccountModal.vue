@@ -1,6 +1,14 @@
 <template>
-  <base-modal :title="modalLabel" :open="isOpen" @update:open="$emit('close')">
-    <Form @submit="(v) => emit('submit', v)" :validation-schema="schema" class="mt-10">
+  <base-modal :title="modalLabel" open @update:open="$emit('close')">
+    <template #right-action>
+      <slot name="right-action" />
+    </template>
+    <Form
+      @submit="(v) => emit('submit', v)"
+      :initial-values="initialValues"
+      :validation-schema="schema"
+      class="mt-10"
+    >
       <span class="text-gray-600 tracking-[-0.5px] text-xs">Saldo</span>
       <div class="flex items-center gap-2">
         <span class="text-gray-600 tracking-[-0.5px] text-lg">R$</span>
@@ -24,11 +32,12 @@ import BaseInput from '@/view/components/BaseInput.vue'
 import BaseInputSelect from '@/view/components/BaseInputSelect.vue'
 import ColorsDropdown from '../../Base/ColorsDropdown.vue'
 import { useAccountModalController } from './BaseAccountModelController'
+import type { bankAccountsResponse } from '@/app/services/BankAccountsService'
 
 type iProps = {
-  isOpen: boolean
   modalLabel: string
   buttonLabel?: String
+  initialValues?: bankAccountsResponse
 }
 
 type tEmit = {
@@ -36,7 +45,12 @@ type tEmit = {
   submit: [v: GenericObject]
 }
 
-defineProps<iProps>()
+withDefaults(defineProps<iProps>(), {
+  // eslint-disable-next-line vue/require-valid-default-prop
+  initialValues: {
+    initialBalance: 0
+  }
+})
 const emit = defineEmits<tEmit>()
 
 const { schema, options } = useAccountModalController()

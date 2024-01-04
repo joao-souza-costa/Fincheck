@@ -17,7 +17,7 @@
       </div>
 
       <div class="flex flex-1 flex-col justify-end mt-10 md:mt-0">
-        <div v-if="!accounts.length">
+        <div v-if="!accounts?.length">
           <div class="mb-4">
             <strong class="text-white tracking-[-1px] text-lg"> Minhas contas </strong>
           </div>
@@ -36,7 +36,7 @@
           </base-button>
         </div>
 
-        <div v-if="accounts.length">
+        <div v-if="accounts?.length">
           <swiper
             :space-between="16"
             :slides-per-view="1.5"
@@ -55,7 +55,7 @@
 
             <swiper-slide v-for="account in accounts" :key="account.id">
               <account-card
-                @click="toggleAccountModal('EDIT')"
+                @click="toggleAccountModal('EDIT', account)"
                 :balance="account.currentBalance"
                 :color="account.color"
                 :name="account.name"
