@@ -9,7 +9,7 @@
       <div>
         <span class="text-white block tracking-[-0.5px]">Saldo Total</span>
         <div class="flex flex-row items-center gap-2">
-          <base-balance class="text-2xl tracking-[-1px] text-white" :balance="1000" />
+          <base-balance class="text-2xl tracking-[-1px] text-white" :balance="total" />
           <button class="w-8 h-8 flex items-center justify-center" @click="toggleEye">
             <eye-icon :open="eyeOpen" />
           </button>
@@ -19,10 +19,10 @@
       <div class="flex flex-1 flex-col justify-end mt-10 md:mt-0">
         <div v-if="!accounts.length">
           <div class="mb-4">
-            <strong class="text-white tracking-[-1px] text-lg"> Minhas compras </strong>
+            <strong class="text-white tracking-[-1px] text-lg"> Minhas contas </strong>
           </div>
           <base-button
-            @click="openNewAccountModal"
+            @click="toggleAccountModal('CREATE')"
             class="w-full h-52 mt-4 rounded-2xl border-2 border-dashed border-teal-600 flex flex-col justify-center items-center gap-4 text-white"
           >
             <div
@@ -48,34 +48,19 @@
           >
             <template #container-start>
               <div class="flex items-center justify-between mb-4">
-                <strong class="text-white tracking-[-1px] text-lg"> Minhas compras </strong>
+                <strong class="text-white tracking-[-1px] text-lg"> Minhas contas </strong>
                 <slider-navigation />
               </div>
             </template>
 
-            <swiper-slide>
-              <account-card :balance="123" color="#7950F2" name="Nubank" type="CASH" />
-            </swiper-slide>
-
-            <swiper-slide>
-              <account-card :balance="10003" color="#333" name="XP" type="INVESTMENT" />
-            </swiper-slide>
-
-            <swiper-slide>
-              <account-card :balance="10003" color="#0f0" name="Carteira" type="CHECKING" />
-            </swiper-slide>
-            <swiper-slide>
-              <account-card :balance="10003" color="#0f0" name="Carteira" type="CHECKING" />
-            </swiper-slide>
-            <swiper-slide>
-              <account-card :balance="10003" color="#0f0" name="Carteira" type="CHECKING" />
-            </swiper-slide>
-
-            <swiper-slide>
-              <account-card :balance="10003" color="#0f0" name="Carteira" type="CHECKING" />
-            </swiper-slide>
-            <swiper-slide>
-              <account-card :balance="10003" color="#0f0" name="Carteira" type="CHECKING" />
+            <swiper-slide v-for="account in accounts" :key="account.id">
+              <account-card
+                @click="toggleAccountModal('EDIT')"
+                :balance="account.currentBalance"
+                :color="account.color"
+                :name="account.name"
+                :type="account.type"
+              />
             </swiper-slide>
           </swiper>
         </div>
@@ -99,7 +84,7 @@ import { MEDIUM_SCREEN } from '@/app/config/constants/breakpoints'
 import { useAccountsController } from './accountsController'
 import { type modalsProviderProps, MODALS_PROVIDER } from '../providers/modalsProvider'
 
-const { openNewAccountModal } = inject(MODALS_PROVIDER) as modalsProviderProps
+const { toggleAccountModal } = inject(MODALS_PROVIDER) as modalsProviderProps
 
-const { accounts, isLoading, eyeOpen, toggleEye } = useAccountsController()
+const { accounts, total, isLoading, eyeOpen, toggleEye } = useAccountsController()
 </script>

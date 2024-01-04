@@ -22,7 +22,6 @@ app.use(VueQueryPlugin, {
       queries: {
         retry: false,
         refetchOnWindowFocus: false,
-
       }
     },
   },

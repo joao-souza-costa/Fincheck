@@ -15,9 +15,8 @@
 
     <base-fab />
 
-    <account-modal />
-
-    <new-transaction-modal />
+    <account-modals />
+    <transaction-modals />
   </div>
 </template>
 
@@ -27,10 +26,10 @@ import UserMenu from '@/view/components/UserMenu.vue'
 import AccountsView from './components/AccountsView.vue'
 import TransactionsView from './components/TransactionsView.vue'
 import BaseFab from './components/Base/BaseFab.vue'
-import AccountModal from './components/Modals/AccountModal.vue'
+import AccountModals from './components/Modals/AccountModals.vue'
 import { useBalanceProvider } from './providers/balanceProvider'
 import { useModalsProvider } from './providers/modalsProvider'
-import NewTransactionModal from './components/Modals/NewTransactionModal.vue'
+import TransactionModals from './components/Modals/TransactionModals.vue'
 
 useBalanceProvider()
 useModalsProvider()

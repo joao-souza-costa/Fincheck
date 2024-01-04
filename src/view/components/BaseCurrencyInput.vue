@@ -1,33 +1,27 @@
 <template>
   <InputCurrency
     class="w-full text-gray-800 text-[32px] font-bold tracking-[-1px] outline-none"
-    v-model="value"
+    :model-value="String(value)"
     v-bind="number"
-    @input:model-value="handleValue"
+    @input:model-value="handleChange"
   />
 </template>
 
 <script setup lang="ts">
 import { component as InputCurrency } from '@coders-tm/vue-number-format'
-import { computed, ref } from 'vue'
+import { useField } from 'vee-validate'
+import { computed, ref, toRef } from 'vue'
 
 type iProps = {
-  modelValue: number
-}
-
-type iEmit = {
-  (e: 'update:modelValue', v: number): void
+  initialValue?: string
+  name: string
 }
 
 const props = defineProps<iProps>()
-const emit = defineEmits<iEmit>()
-
-const value = ref(props.modelValue)
 
 const number = {
   decimal: ',',
   separator: '.',
-  prefix: 'R$ ',
   precision: 2,
   masked: false,
   min: 0,
@@ -36,9 +30,9 @@ const number = {
   reverseFill: true
 }
 
-const handleValue = (value: number): void => {
-  return emit('update:modelValue', value)
-}
+const name = toRef(props, 'name')
+
+const { handleChange, value } = useField(name, undefined, { initialValue: 0 })
 </script>
 
 <style scoped></style>

@@ -2,11 +2,14 @@
   <div class="relative">
     <label
       class="absolute z-10 top-1/2 -translate-y-1/2 left-3 text-gray-700 pointer-events-none"
-      :class="[modelValue && 'text-xs left-[13px] top-2 transition-all translate-y-0']"
+      :class="[
+        value && 'text-xs left-[13px] top-2 transition-all translate-y-0 text',
+        errorMessage && '!text-red-900 top-1/3'
+      ]"
     >
       {{ placeholder }}
     </label>
-    <SelectRoot @update:model-value="handleSelect">
+    <SelectRoot @update:model-value="handleChange" :model-value="value">
       <SelectTrigger
         class="relative bg-white w-full rounded-lg border border-gray-500 px-3 h-[55px] text-gray-800 outline-none focus:border-gray-800 flex items-center transition-all pt-4"
         :class="[errorMessage && '!border-red-900 text-red-900']"
@@ -14,7 +17,10 @@
       >
         <SelectValue />
         <SelectIcon class="absolute right-3 bottom-3">
-          <ChevronDownIcon class="w-6 h-6 text-gray-800" />
+          <ChevronDownIcon
+            class="w-6 h-6 text-gray-800"
+            :class="[errorMessage && '!border-red-900 text-red-900']"
+          />
         </SelectIcon>
       </SelectTrigger>
 
@@ -56,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, toRef } from 'vue'
 import {
   SelectContent,
   SelectItem,
@@ -72,23 +78,23 @@ import {
 } from 'radix-vue'
 import ChevronDownIcon from './icons/ChevronDownIcon.vue'
 import CrossCircle from '@/assets/CrossCircle.vue'
+import { useField } from 'vee-validate'
 
 type tProps = {
+  initialValue?: string
+  name: string
   errorMessage?: string
   options: {
     value: string
     label: string
   }[]
   placeholder: string
-  modelValue: string
 }
 
-defineProps<tProps>()
-const emit = defineEmits<{
-  'update:modelValue': [value: string]
-}>()
+const props = defineProps<tProps>()
+const name = toRef(props, 'name')
 
-function handleSelect(value: string) {
-  return emit('update:modelValue', value)
-}
+const { handleChange, value, errorMessage } = useField(name, undefined, {
+  initialValue: props.initialValue
+})
 </script>

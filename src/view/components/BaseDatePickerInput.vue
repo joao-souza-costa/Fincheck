@@ -59,7 +59,7 @@ const toggleOpen = (): void => {
 }
 </script>
 
-<style>
+<style lang="less">
 .dp__theme_light {
   --dp-primary-color: rgb(8 127 91 / var(--tw-bg-opacity));
   --dp-icon-color: rgb(8 127 91 / var(--tw-bg-opacity));

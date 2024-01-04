@@ -2,6 +2,7 @@
   <div
     class="p-4 bg-white rounded-2xl h-[200px] flex flex-col justify-between border-b-4 border-teal-950"
     :style="{ borderColor: color }"
+    role="button"
   >
     <div>
       <bank-account-icon :type="type" />

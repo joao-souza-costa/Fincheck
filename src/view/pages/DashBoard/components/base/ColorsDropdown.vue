@@ -34,40 +34,48 @@ import CrossCircle from '@/assets/CrossCircle.vue'
 import BaseDropdown from '@/view/components/Dropdown/BaseDropdown'
 import ChevronDownIcon from '@/view/components/icons/ChevronDownIcon.vue'
 import ColorIcon from '@/view/components/icons/ColorIcon.vue'
-import { ref } from 'vue'
+import { useField } from 'vee-validate'
+import { ref, toRef } from 'vue'
 
 type iProps = {
-  errorMessage?: string
+  initialValue?: string
+  name: string
 }
 
-defineProps<iProps>()
+const props = withDefaults(defineProps<iProps>(), {
+  initialValue: ''
+})
 
 type Color = {
   color: string
   bg: string
 }
 
-const colors: Color[] = [
-  { color: '#868E96', bg: '#F8F9FA' },
-  { color: '#FA5252', bg: '#FFF5F5' },
-  { color: '#E64980', bg: '#FFF0F6' },
-  { color: '#BE4BDB', bg: '#F8F0FC' },
-  { color: '#7950F2', bg: '#F3F0FF' },
-  { color: '#4C6EF5', bg: '#EDF2FF' },
-  { color: '#228BE6', bg: '#E7F5FF' },
-  { color: '#15AABF', bg: '#E3FAFC' },
-  { color: '#12B886', bg: '#E6FCF5' },
-  { color: '#40C057', bg: '#EBFBEE' },
-  { color: '#82C91E', bg: '#F4FCE3' },
-  { color: '#FAB005', bg: '#FFF9DB' },
-  { color: '#FD7E14', bg: '#FFF4E6' },
-  { color: '#212529', bg: '#F8F9FA' }
-]
+const colors = {
+  '#868E96': { color: '#868E96', bg: '#F8F9FA' },
+  '#FA5252': { color: '#FA5252', bg: '#FFF5F5' },
+  '#E64980': { color: '#E64980', bg: '#FFF0F6' },
+  '#BE4BDB': { color: '#BE4BDB', bg: '#F8F0FC' },
+  '#7950F2': { color: '#7950F2', bg: '#F3F0FF' },
+  '#4C6EF5': { color: '#4C6EF5', bg: '#EDF2FF' },
+  '#228BE6': { color: '#228BE6', bg: '#E7F5FF' },
+  '#15AABF': { color: '#15AABF', bg: '#E3FAFC' },
+  '#12B886': { color: '#12B886', bg: '#E6FCF5' },
+  '#40C057': { color: '#40C057', bg: '#EBFBEE' },
+  '#82C91E': { color: '#82C91E', bg: '#F4FCE3' },
+  '#FAB005': { color: '#FAB005', bg: '#FFF9DB' },
+  '#FD7E14': { color: '#FD7E14', bg: '#FFF4E6' },
+  '#212529': { color: '#212529', bg: '#F8F9FA' }
+}
 
-const selected = ref<null | Color>(null)
+const name = toRef(props, 'name')
+const { errorMessage, setValue, value } = useField(name, undefined)
+
+const selected = ref<null | Color>(colors[String(value.value)])
 
 const handleSelect = (value: Color) => {
   selected.value = value
+  setValue(value.color)
 }
 </script>
 

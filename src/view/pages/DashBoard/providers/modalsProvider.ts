@@ -1,13 +1,17 @@
 import { provide, reactive, ref, type Ref } from "vue"
 
 type tTransactionType = 'INCOME' | 'EXPENSE'
+type tAccountType = 'CREATE' | 'EDIT'
 
 export const MODALS_PROVIDER: string = 'newAccountModalProvider'
 
 export type modalsProviderProps = {
-  isOpenNewAccountModal: Ref<boolean>
-  closeNewAccountModal: () => void
-  openNewAccountModal: () => void
+  isOpenAccountModal: {
+    CREATE: boolean
+    EDIT: boolean
+  }
+  toggleAccountModal: (type: tAccountType) => void
+
   isOpenTransactionModal: {
     INCOME: boolean
     EXPENSE: boolean
@@ -16,16 +20,14 @@ export type modalsProviderProps = {
   openTransactionModal: (type: tTransactionType) => void
 }
 
-
-
 export function useModalsProvider() {
-  const isOpenNewAccountModal = ref(false)
+  const isOpenAccountModal = reactive({
+    CREATE: false,
+    EDIT: false,
+  })
 
-  const closeNewAccountModal = (): boolean => {
-    return isOpenNewAccountModal.value = false
-  }
-  const openNewAccountModal = (): boolean => {
-    return isOpenNewAccountModal.value = true
+  const toggleAccountModal = (type: tAccountType): void => {
+    isOpenAccountModal[type] = !isOpenAccountModal[type]
   }
 
   const isOpenTransactionModal = reactive({
@@ -42,9 +44,8 @@ export function useModalsProvider() {
   }
 
   provide(MODALS_PROVIDER, {
-    isOpenNewAccountModal,
-    closeNewAccountModal,
-    openNewAccountModal,
+    isOpenAccountModal,
+    toggleAccountModal,
     isOpenTransactionModal,
     closeTransactionModal,
     openTransactionModal,

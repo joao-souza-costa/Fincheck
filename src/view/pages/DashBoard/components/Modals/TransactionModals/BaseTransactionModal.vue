@@ -1,25 +1,21 @@
 <template>
   <div>
     <base-modal :title="modalLabel" :open="openModal" @update:open="$emit('close')">
-      <form>
+      <form @submit="onSubmit" :validation-schema="schema" :initialValues="initialValues">
         <span class="text-gray-600 tracking-[-0.5px] text-xs">{{ balanceLabel }}</span>
         <div class="flex items-center gap-2">
-          <span class="text-gray-600 tracking-[-0.5px] text-lg">RS</span>
-          <base-currency-input v-model="value" />
+          <span class="text-gray-600 tracking-[-0.5px] text-lg">R$</span>
+          <base-currency-input name="balance" />
         </div>
         <div class="mt-10 flex flex-col gap-4">
           <base-input
+            name="name"
             type="text"
             id="transactionName"
-            name="name"
             :placeholder="transactionNameLabel"
           />
-          <base-input-select v-model="selectValue" :options="options" :placeholder="typeLabel" />
-          <base-input-select
-            v-model="paymentMethod"
-            :options="options"
-            :placeholder="paymentLabel"
-          />
+          <base-input-select name="type" :options="options" :placeholder="typeLabel" />
+          <base-input-select name="paymentMethod" :options="options" :placeholder="paymentLabel" />
           <base-date-picker-input />
           <base-button> Salvar </base-button>
         </div>
@@ -28,13 +24,16 @@
   </div>
 </template>
 <script setup lang="ts">
+import { Form } from 'vee-validate'
 import BaseModal from '@/view/components/BaseModal.vue'
-import { ref } from 'vue'
 import BaseCurrencyInput from '@/view/components/BaseCurrencyInput.vue'
 import BaseInput from '@/view/components/BaseInput.vue'
 import BaseInputSelect from '@/view/components/BaseInputSelect.vue'
 import BaseButton from '@/view/components/BaseButton.vue'
 import BaseDatePickerInput from '@/view/components/BaseDatePickerInput.vue'
+import { useBaseTransactionModalController } from './BaseTransactionModalController'
+
+const { onSubmit, schema, initialValues } = useBaseTransactionModalController()
 
 type tProps = {
   openModal: boolean
@@ -51,10 +50,6 @@ type tEmit = {
 
 defineProps<tProps>()
 defineEmits<tEmit>()
-
-const value = ref(0)
-const selectValue = ref('')
-const paymentMethod = ref('')
 
 const options = [
   {

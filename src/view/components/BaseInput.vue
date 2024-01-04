@@ -10,6 +10,7 @@
       :name="inputId"
       :id="inputId"
       :type="type"
+      :value="value"
       @input="handleChange"
       @blur="handleBlur"
       placeholder=" "
@@ -22,7 +23,7 @@
     <label
       :class="
         cn(
-          ' absolute left-[13px] top-1 pointer-events-none text-gray-700 peer-placeholder-shown:text-base peer-placeholder-shown:top-4 transition-all',
+          ' text-xs absolute left-[13px] top-1 pointer-events-none text-gray-700 peer-placeholder-shown:text-base peer-placeholder-shown:top-4 transition-all',
           errorMessage && '!text-red-900'
         )
       "
@@ -40,9 +41,9 @@ import CrossCircle from '@/assets/CrossCircle.vue'
 import { toRef } from 'vue'
 
 export interface iProps {
-  value?: string
-  type: string
+  initialValue?: string
   name: string
+  type: string
   id: string
   placeholder: string
 }
@@ -51,8 +52,8 @@ const props = defineProps<iProps>()
 
 const name = toRef(props, 'name')
 
-const { errorMessage, handleBlur, handleChange } = useField(name, undefined, {
-  initialValue: props.value
+const { errorMessage, handleBlur, handleChange, value } = useField(name, undefined, {
+  initialValue: props.initialValue
 })
 const inputId = props.name ?? props.id
 </script>

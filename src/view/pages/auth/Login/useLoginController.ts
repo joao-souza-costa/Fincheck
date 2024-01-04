@@ -1,7 +1,6 @@
 import AuthService from '@/app/services/AuthService'
 import type { signInParams } from '@/app/services/AuthService'
 import { useMutation } from '@tanstack/vue-query'
-import { toast } from '@/app/utils/toast'
 import * as Yup from 'yup'
 import { useUserStore } from '@/app/store/useUserProvider'
 

@@ -1,5 +1,7 @@
-import { inject, ref } from "vue"
+import { computed, inject, ref } from "vue"
 import type { balanceProviderProps } from "../providers/balanceProvider"
+import { useQuery } from "@tanstack/vue-query"
+import bankAccountsService, { type bankAccountsResponse } from "@/app/services/BankAccountsService"
 
 export function useAccountsController() {
   const { areVisible, toggleVisibility } = inject('balanceProvider') as balanceProviderProps
@@ -10,9 +12,20 @@ export function useAccountsController() {
     toggleVisibility()
   }
 
+  const { data, isLoading } = useQuery({
+    queryKey: ['bankAccounts'],
+    queryFn: bankAccountsService.getAll
+  })
+
+  const total = computed(() => {
+    return data.value?.reduce((total, account) => total + account.currentBalance, 0) ?? 0
+  })
+
+
   return {
-    accounts: [],
-    isLoading: false,
+    accounts: data,
+    total,
+    isLoading,
     eyeOpen,
     toggleEye
   }
