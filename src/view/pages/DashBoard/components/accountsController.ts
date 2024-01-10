@@ -1,10 +1,11 @@
 import { computed, inject, ref } from "vue"
 import type { balanceProviderProps } from "../providers/balanceProvider"
-import { useQuery } from "@tanstack/vue-query"
-import bankAccountsService from "@/app/services/BankAccountsService"
+import { useAccountStore } from "@/app/store/useAccountStore"
+import { storeToRefs } from "pinia"
 
 export function useAccountsController() {
   const { areVisible, toggleVisibility } = inject('balanceProvider') as balanceProviderProps
+  const { data: accounts, queryLoading: isLoading, totalExpense, totalIncome } = storeToRefs(useAccountStore())
   const eyeOpen = ref<boolean>(false)
 
   const toggleEye = (): void => {
@@ -12,20 +13,14 @@ export function useAccountsController() {
     toggleVisibility()
   }
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['bankAccounts'],
-    queryFn: bankAccountsService.getAll
-  })
-
   const total = computed(() => {
-    return data.value?.reduce((total, account) => total + account.currentBalance, 0) ?? 0
+    return totalExpense.value + totalIncome.value
   })
-
 
   return {
-    accounts: data,
-    total,
+    accounts,
     isLoading,
+    total,
     eyeOpen,
     toggleEye
   }

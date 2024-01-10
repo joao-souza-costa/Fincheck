@@ -18,7 +18,6 @@ export function useAccountModalController() {
   ]
 
   const schema = Yup.object().shape({
-    initialBalance: Yup.string().required('Saldo inicial é obrigatório'),
     name: Yup.string().required('Nome da conta é obrigatório'),
     type: Yup.mixed().required('Tipo é obrigatório').oneOf(options.map(({ value }) => value)),
     color: Yup.string().required('Cor é obrigatória')

@@ -1,10 +1,10 @@
 <template>
   <div class="h-full w-full p-4 md:p-8 md:pt-6 flex flex-col gap-4">
-    <header class="h-12 flex flex-row items-center justify-between">
+    <header class="h-10 flex flex-row items-center justify-between">
       <fincheck-logo class="h-6 text-teal-900" />
       <user-menu />
     </header>
-    <main class="flex-1 flex flex-col md:flex-row gap-4 h-full">
+    <main class="flex-1 flex flex-col md:flex-row gap-4 max-h-[95%]">
       <div class="w-full md:w-1/2">
         <accounts-view />
       </div>

@@ -15,11 +15,11 @@ export const useUserStore = defineStore('user', () => {
   const router = useRouter()
   const accessToken = ref<boolean>(Boolean(localStorage.getItem(accessTokenKey)))
 
-  const {isFetching, isSuccess, remove} = useQuery({
+  const { isFetching, isSuccess, remove } = useQuery({
     queryKey: ['users', 'me'],
     queryFn: async () => userService.me(),
     enabled: accessToken,
-    staleTime:Infinity
+    staleTime: Infinity
   })
 
   const signin = (token: string): void => {

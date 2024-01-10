@@ -11,8 +11,12 @@ import { type balanceProviderProps } from '../../providers/balanceProvider'
 
 type iProps = {
   balance: number
+  type?: string
 }
 
 const { areVisible } = inject('balanceProvider') as balanceProviderProps
-defineProps<iProps>()
+
+withDefaults(defineProps<iProps>(), {
+  type: 'income'
+})
 </script>

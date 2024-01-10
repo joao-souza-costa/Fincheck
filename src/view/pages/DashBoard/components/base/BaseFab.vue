@@ -10,12 +10,12 @@
       </BaseDropdown.Trigger>
 
       <BaseDropdown.Content>
-        <BaseDropdown.Item class="gap-2" @click="openTransactionModal('EXPENSE')">
+        <BaseDropdown.Item class="gap-2" @click="toggleTransactionModal('EXPENSE')">
           <ExpenseCategory />
           Nova Despesa
         </BaseDropdown.Item>
 
-        <BaseDropdown.Item class="gap-2" @click="openTransactionModal('INCOME')">
+        <BaseDropdown.Item class="gap-2" @click="toggleTransactionModal('INCOME')">
           <IncomeIcon />
           Nova Receita
         </BaseDropdown.Item>
@@ -38,5 +38,5 @@ import IncomeIcon from '@/view/components/icons/categories/income/IncomeIcon'
 import { inject } from 'vue'
 import { MODALS_PROVIDER, type modalsProviderProps } from '../../providers/modalsProvider'
 
-const { toggleAccountModal, openTransactionModal } = inject(MODALS_PROVIDER) as modalsProviderProps
+const { toggleAccountModal, toggleTransactionModal } = inject(MODALS_PROVIDER) as modalsProviderProps
 </script>

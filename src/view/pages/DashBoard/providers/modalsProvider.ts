@@ -18,8 +18,7 @@ export type modalsProviderProps = {
     INCOME: boolean
     EXPENSE: boolean
   }
-  closeTransactionModal: () => void
-  openTransactionModal: (type: tTransactionType) => void
+  toggleTransactionModal: (type: tTransactionType) => void
 }
 
 export function useModalsProvider() {
@@ -30,9 +29,7 @@ export function useModalsProvider() {
   })
 
   const toggleAccountModal = (type: tAccountType, account?: bankAccountsResponse): void => {
-
     if (type === "EDIT" && account) isOpenAccountModal.EDIT_ACCOUNT = account
-
     isOpenAccountModal[type] = !isOpenAccountModal[type]
   }
 
@@ -41,19 +38,14 @@ export function useModalsProvider() {
     EXPENSE: false
   })
 
-  const closeTransactionModal = (): void => {
-    isOpenTransactionModal.EXPENSE = false
-    isOpenTransactionModal.INCOME = false
-  }
-  const openTransactionModal = (type: tTransactionType): void => {
-    isOpenTransactionModal[type] = true
+  const toggleTransactionModal = (type: tTransactionType): void => {
+    isOpenTransactionModal[type] = !isOpenTransactionModal[type]
   }
 
   provide(MODALS_PROVIDER, {
     isOpenAccountModal,
     toggleAccountModal,
     isOpenTransactionModal,
-    closeTransactionModal,
-    openTransactionModal,
+    toggleTransactionModal
   })
 }

@@ -1,11 +1,15 @@
 <template>
   <div>
     <base-modal :title="modalLabel" :open="openModal" @update:open="$emit('close')">
-      <form @submit="onSubmit" :validation-schema="schema" :initialValues="initialValues">
+      <Form
+        @submit="(v) => $emit('submit', v)"
+        :validation-schema="schema"
+        :initialValues="initialValues"
+      >
         <span class="text-gray-600 tracking-[-0.5px] text-xs">{{ balanceLabel }}</span>
         <div class="flex items-center gap-2">
           <span class="text-gray-600 tracking-[-0.5px] text-lg">R$</span>
-          <base-currency-input name="balance" />
+          <base-currency-input name="value" />
         </div>
         <div class="mt-10 flex flex-col gap-4">
           <base-input
@@ -14,17 +18,27 @@
             id="transactionName"
             :placeholder="transactionNameLabel"
           />
-          <base-input-select name="type" :options="options" :placeholder="typeLabel" />
-          <base-input-select name="paymentMethod" :options="options" :placeholder="paymentLabel" />
-          <base-date-picker-input />
-          <base-button> Salvar </base-button>
+          <base-input-select
+            name="categoryId"
+            :options="categoriesOptions"
+            :placeholder="typeLabel"
+          />
+
+          <base-input-select
+            name="bankAccountId"
+            :options="accountsOptions"
+            :placeholder="paymentLabel"
+          />
+
+          <base-date-picker-input name="date" />
+          <base-button type="submit"> Salvar </base-button>
         </div>
-      </form>
+      </Form>
     </base-modal>
   </div>
 </template>
 <script setup lang="ts">
-import { Form } from 'vee-validate'
+import { Form, type GenericObject } from 'vee-validate'
 import BaseModal from '@/view/components/BaseModal.vue'
 import BaseCurrencyInput from '@/view/components/BaseCurrencyInput.vue'
 import BaseInput from '@/view/components/BaseInput.vue'
@@ -33,10 +47,9 @@ import BaseButton from '@/view/components/BaseButton.vue'
 import BaseDatePickerInput from '@/view/components/BaseDatePickerInput.vue'
 import { useBaseTransactionModalController } from './BaseTransactionModalController'
 
-const { onSubmit, schema, initialValues } = useBaseTransactionModalController()
-
 type tProps = {
   openModal: boolean
+  type: 'INCOME' | 'EXPENSE'
   modalLabel: string
   balanceLabel: string
   transactionNameLabel: string
@@ -46,23 +59,12 @@ type tProps = {
 
 type tEmit = {
   (e: 'close'): void
+  (e: 'submit', v: GenericObject): void
 }
 
-defineProps<tProps>()
+const props = defineProps<tProps>()
 defineEmits<tEmit>()
 
-const options = [
-  {
-    value: 'CHECKING',
-    label: 'Conta corrente'
-  },
-  {
-    value: 'INVESTMENT',
-    label: 'Investimentos'
-  },
-  {
-    value: 'CASH',
-    label: 'Dinheiro Físico'
-  }
-]
+const { schema, initialValues, accountsOptions, categoriesOptions } =
+  useBaseTransactionModalController(props.type)
 </script>

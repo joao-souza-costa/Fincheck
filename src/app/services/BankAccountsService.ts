@@ -1,5 +1,5 @@
 import { httpClient } from "./Client";
-
+import { type Transaction } from "./TransactionService";
 export interface bankAccountParams {
   name: string,
   initialBalance: string,
@@ -17,7 +17,7 @@ export type bankAccountsResponse = {
   initialBalance: number
   type: 'CHECKING' | 'INVESTMENT' | 'CASH'
   color: string
-  currentBalance: number
+  transactions: Pick<Transaction, 'id' |'type' | 'value'>[]
 }
 
 export default {
@@ -26,7 +26,7 @@ export default {
     return data
   },
   getAll: async () => {
-    const { data = [] } = await httpClient.get<bankAccountsResponse[]>('/bank-accounts')
+    const { data } = await httpClient.get<bankAccountsResponse[]>('/bank-accounts')
     return data
   },
   update: async ({ id, ...params }: UpdateBankAccountParams) => {

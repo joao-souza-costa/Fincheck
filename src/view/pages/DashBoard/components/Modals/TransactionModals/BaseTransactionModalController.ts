@@ -1,28 +1,47 @@
 
 import * as Yup from 'yup'
+import { useAccountStore } from "@/app/store/useAccountStore"
+import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
+import { useQuery } from '@tanstack/vue-query'
+import categoriesService from '@/app/services/CategoriesService'
 
-export function useBaseTransactionModalController() {
+export function useBaseTransactionModalController(type: string) {
+
+  const { data: categories, isLoading: categoriesLoading } = useQuery({
+    queryKey: ['categories'],
+    queryFn: categoriesService.getAll
+  })
+
+  const { data: accounts, queryLoading: accountLoading } = storeToRefs(useAccountStore())
+
+  const accountsOptions = computed(() => {
+    if (!accounts.value) return []
+
+    return accounts.value?.map((acc) => ({ value: acc.id, label: acc.name }))
+  })
+
+  const categoriesOptions = computed(() => {
+    if (!categories.value) return []
+
+    return categories.value?.filter((category) => category.type === type)
+      .map((acc) => ({ value: acc.id, label: acc.name }))
+  })
 
   const schema = Yup.object().shape({
-    balance: Yup.string().required('Saldo  é obrigatório'),
+    value: Yup.string().required('Saldo  é obrigatório'),
     name: Yup.string().required('Nome da transação é obrigatório'),
-    type: Yup.mixed().required('Tipo é obrigatório').oneOf(['CHECKv ING', 'INVESTMENT', 'CASH']),
-    paymentMethod: Yup.string().required('Método de pagamento é obrigatória')
+    categoryId: Yup.mixed().required('Tipo é obrigatório'),
+    bankAccountId: Yup.string().required('Método de pagamento é obrigatória'),
+    date: Yup.date().required('Data é obrigatório')
   })
-  /* 
-    const { mutateAsync, isLoading } = useMutation({
-      mutationFn: async (values: bankAccountParams) => {
-        return bankAccountsService.create(values)
-      }
-    })
-  */
-  async function onSubmit(values: any) {
-    console.log(values)
-  }
 
   return {
     schema,
-    onSubmit,
-    initialValues: {}
+    initialValues: { value: 0 },
+    accountsOptions,
+    accountLoading,
+    categoriesOptions,
+    categoriesLoading
   }
 }

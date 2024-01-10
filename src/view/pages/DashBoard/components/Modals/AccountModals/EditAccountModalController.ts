@@ -1,9 +1,12 @@
-import bankAccountsService, { type bankAccountsResponse } from '@/app/services/BankAccountsService'
-import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { toast } from '@/app/utils/toast'
 import { ref } from 'vue'
+import { useAccountStore } from '@/app/store/useAccountStore'
+import { storeToRefs } from 'pinia'
+
 
 export function useEditAccountModalController(emit: Function) {
+  const accounts = useAccountStore()
+  const { updateLoading, deleteLoading, isRefetchingLoading } = storeToRefs(accounts)
   const isOpenDeleteModal = ref<boolean>(false)
 
   const handleDeleteModal = () => {
@@ -11,30 +14,15 @@ export function useEditAccountModalController(emit: Function) {
     emit('close')
   }
 
-  const queryClient = useQueryClient()
-
-  const { mutateAsync: updateMutation, isLoading: updateLoading } = useMutation(
-    bankAccountsService.update
-  )
-  const { mutateAsync: deleteMuration, isLoading: deleteLoading } = useMutation(
-    bankAccountsService.delete
-  )
-
   async function onSubmit(values: any, id: string) {
-    return updateMutation({
-      ...values,
-      initialBalance: Number(values.initialBalance),
-      id: id
-    })
-      .then(() => queryClient.invalidateQueries({ queryKey: ['bankAccounts'] }))
+    return accounts.updateAccount(values, id)
       .then(() => toast.success('Conta editada com sucesso'))
       .then(() => emit('close'))
       .catch(() => toast.error('Não foi possivel editar a sua conta'))
   }
 
   async function onDelete(id: string) {
-    return deleteMuration(id)
-      .then(() => queryClient.invalidateQueries({ queryKey: ['bankAccounts'] }))
+    return accounts.deleteAccount(id)
       .then(() => toast.success('Conta deletada com sucesso'))
       .then(() => (isOpenDeleteModal.value = false))
       .catch(() => toast.error('Não foi possivel deletar a sua conta'))
@@ -44,6 +32,7 @@ export function useEditAccountModalController(emit: Function) {
     isOpenDeleteModal,
     updateLoading,
     deleteLoading,
+    queryLoading: isRefetchingLoading,
     handleDeleteModal,
     onSubmit,
     onDelete,

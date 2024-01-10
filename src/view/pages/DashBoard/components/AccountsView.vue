@@ -55,11 +55,12 @@
 
             <swiper-slide v-for="account in accounts" :key="account.id">
               <account-card
-                @click="toggleAccountModal('EDIT', account)"
+              @click="toggleAccountModal('EDIT', account)"
                 :balance="account.currentBalance"
                 :color="account.color"
                 :name="account.name"
                 :type="account.type"
+                :id="account.id"
               />
             </swiper-slide>
           </swiper>

@@ -31,26 +31,35 @@
       </div>
 
       <div v-else class="mt-4 space-y-2 flex-1 overflow-y-auto">
-        <template v-if="!transactions.length">
+        <template v-if="!transactions?.length">
           <div class="flex flex-col items-center justify-center h-full">
             <img :src="emptyState" alt="empty state" />
             <p class="text-gray-700">Não encontramos nenhuma transação</p>
           </div>
         </template>
-        <template v-if="transactions.length">
+        <template v-if="transactions?.length">
           <div
-            v-for="(_, index) in 20"
+            v-for="(transaction, index) in transactions"
             :key="index"
             class="bg-white p-4 rounded-2xl flex items-center justify-between gap-4"
           >
             <div class="flex-1 flex items-center gap-3">
-              <CategoryIcon type="income" />
+              <CategoryIcon
+                :type="transaction.type === 'EXPENSE' ? 'expense' : 'income'"
+                :category="transaction?.category?.icon"
+              />
               <div>
-                <strong class="font-bold tracking-[-0.5px] block">Almoço</strong>
-                <span class="text-sm text-gray-600">04/06/2023</span>
+                <strong class="font-bold tracking-[-0.5px] block">{{ transaction.name }}</strong>
+                <span class="text-sm text-gray-600">{{
+                  formatDate(new Date(transaction.date))
+                }}</span>
               </div>
             </div>
-            <base-balance class="text-red-800 tracking-[-0.5px] font-medium" :balance="-123" />
+            <base-balance
+              class="tracking-[-0.5px] font-medium"
+              :class="[ transaction.type === 'EXPENSE' ? 'text-red-800' : 'text-green-800']"
+              :balance="transaction.value"
+            />
           </div>
         </template>
       </div>
@@ -75,6 +84,7 @@ import baseBalance from './Base/BaseBalance.vue'
 import emptyState from '@/assets/empty-state.svg'
 import TransactionsDropdown from './Transactions/TransactionsDropdown.vue'
 import FiltersModal from './Transactions/FiltersModal.vue'
+import { formatDate } from '@/app/utils/formatDate'
 
 const {
   transactionsLoading,
