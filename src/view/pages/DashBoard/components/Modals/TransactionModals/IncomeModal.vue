@@ -1,8 +1,9 @@
 <template>
   <base-transaction-modal
-    type="INCOME"
     :open-modal="isOpen"
-    modal-label="Nova Receita"
+    :initial-values="income"
+    type="INCOME"
+    :modal-label="income ? 'Editar Receita' : 'Nova Receita'"
     balance-label="Valor da Receita"
     transaction-name-label="Noma da Receita"
     type-label="Categoria"
@@ -16,8 +17,10 @@
 import { useTransactionsStore } from '@/app/store/useTransactionStore'
 import BaseTransactionModal from './BaseTransactionModal.vue'
 import { toast } from '@/app/utils/toast'
+import type { Transaction } from '@/app/services/TransactionService'
 
-defineProps<{ isOpen: boolean }>()
+defineProps<{ isOpen: boolean; income?: Transaction }>()
+
 const emit = defineEmits<{ close: [] }>()
 const transactionsStore = useTransactionsStore()
 

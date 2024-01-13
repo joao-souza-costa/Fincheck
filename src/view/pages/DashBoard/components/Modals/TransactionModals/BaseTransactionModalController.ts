@@ -38,7 +38,6 @@ export function useBaseTransactionModalController(type: string) {
 
   return {
     schema,
-    initialValues: { value: 0 },
     accountsOptions,
     accountLoading,
     categoriesOptions,

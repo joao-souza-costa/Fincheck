@@ -2,16 +2,20 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query"
 import { defineStore, storeToRefs } from "pinia"
 import bankAccountsService from "../services/BankAccountsService"
 import { useTransactionsStore } from "./useTransactionStore"
+import { useUserStore } from "./useUserProvider"
 import { computed } from "vue"
 
 export const useAccountStore = defineStore('accounts', () => {
   const transactionStore = useTransactionsStore()
-  const { groupedTransactionByAccount } = storeToRefs(transactionStore)
+  const { groupedTransactionByAccount, filters } = storeToRefs(transactionStore)
+  const { accessToken } = storeToRefs(useUserStore())
+
   const queryClient = useQueryClient()
 
   const { data: accounts, isLoading: queryLoading, isRefetching: isRefetchingLoading } = useQuery({
     queryKey: ['bankAccounts'],
-    queryFn: bankAccountsService.getAll
+    queryFn: bankAccountsService.getAll,
+    enabled: accessToken
   })
 
   const { mutateAsync: createMutation, isLoading: createLoading } = useMutation(bankAccountsService.create)
@@ -53,6 +57,14 @@ export const useAccountStore = defineStore('accounts', () => {
     })
   })
 
+  const filteredAccounts = computed(() => {
+    if (filters?.value.bankAccountId) {
+      const account = data.value?.find((item) => item.id === filters?.value.bankAccountId)
+      return [account]
+    }
+    return data.value
+  })
+
   const totalExpense = computed(() => {
     return groupedTransactionByAccount.value?.totalExpense ?? 0
   })
@@ -63,6 +75,7 @@ export const useAccountStore = defineStore('accounts', () => {
 
   return {
     data,
+    filteredAccounts,
     totalExpense,
     totalIncome,
     queryLoading,

@@ -1,8 +1,9 @@
 <template>
   <base-transaction-modal
     :open-modal="isOpen"
+    :initial-values="expense"
     type="EXPENSE"
-    modal-label="Nova Despesa"
+    :modal-label="expense ? 'Editar Despesa' : 'Nova Despesa'"
     balance-label="Valor da Despesa"
     transaction-name-label="Noma da despesa"
     type-label="Categoria"
@@ -16,8 +17,9 @@
 import { useTransactionsStore } from '@/app/store/useTransactionStore'
 import BaseTransactionModal from './BaseTransactionModal.vue'
 import { toast } from '@/app/utils/toast'
+import type { Transaction } from '@/app/services/TransactionService'
 
-defineProps<{ isOpen: boolean }>()
+defineProps<{ isOpen: boolean; expense?: Transaction }>()
 const emit = defineEmits<{ close: [] }>()
 const transactionsStore = useTransactionsStore()
 

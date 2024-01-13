@@ -46,11 +46,12 @@ const BaseDropdownContent = defineComponent({
   `
 })
 const BaseDropdownItem = defineComponent({
+  emits: ['select', 'submit'],
   components: {
     DropdownMenuItem
   },
   template: `
-  <DropdownMenuItem class="min-h-[40x] outline-none flex items-center py-2 px-4
+  <DropdownMenuItem  @select="(v)=> $emit('select', v)" class="min-h-[40x] outline-none flex items-center py-2 px-4
    text-gray-800 text-sm data-[highlighted]:bg-gray-50 rounded-2xl transition-colors cursor-pointer">
     <slot/>
   </DropdownMenuItem>`

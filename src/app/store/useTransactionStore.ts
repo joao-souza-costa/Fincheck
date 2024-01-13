@@ -1,20 +1,35 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query"
-import { defineStore } from "pinia"
-import transactionService from "../services/TransactionService"
-import { computed } from "vue"
-
-
+import { defineStore, storeToRefs } from "pinia"
+import transactionService, { type GetAllTransactionFilters } from "../services/TransactionService"
+import { computed, ref, watch } from "vue"
+import { useUserStore } from "./useUserProvider"
 
 interface AccountsDictionary {
   [key: string]: number
 }
 export const useTransactionsStore = defineStore('transactions', () => {
   const queryClient = useQueryClient()
+  const { accessToken } = storeToRefs(useUserStore())
 
-  const { data, isLoading: queryLoading, isInitialLoading: queryInitialLoading } = useQuery({
-    queryKey: ['transactions'],
-    queryFn: () => transactionService.getAll({ month: 0, year: 2024 })
+  const filters = ref<GetAllTransactionFilters>({
+    month: new Date().getMonth(),
+    year: new Date().getFullYear(),
+    bankAccountId: undefined
   })
+
+  const { data, isFetching: queryLoading, isInitialLoading: queryInitialLoading, refetch } = useQuery({
+    queryKey: ['transactions'],
+    queryFn: () => transactionService.getAll(filters.value),
+    enabled: accessToken
+  })
+
+  function handleChangeFilters<TFilter extends keyof GetAllTransactionFilters>(filter: TFilter) {
+    return (value: GetAllTransactionFilters[TFilter]) => {
+      filters.value[filter] = value
+    }
+  }
+
+  watch(filters.value, () => refetch(), { deep: true })
 
   const { mutateAsync: createMutation, isLoading: createLoading } = useMutation(transactionService.create)
   const { mutateAsync: updateMutation, isLoading: updateLoading } = useMutation(transactionService.update)
@@ -66,12 +81,14 @@ export const useTransactionsStore = defineStore('transactions', () => {
 
   return {
     data,
+    filters,
     groupedTransactionByAccount,
     queryLoading,
     queryInitialLoading,
     createLoading,
     updateLoading,
     deleteLoading,
+    handleChangeFilters,
     invalidateTransactionsQuery,
     createTransaction,
     updateTransaction,

@@ -7,21 +7,37 @@ export function useTransactionsController() {
   const isOpenFiltersModal = ref(false)
 
   const store = useTransactionsStore()
-  const { data, queryLoading, queryInitialLoading } = storeToRefs(store)
+  const { data, queryLoading, queryInitialLoading, filters } = storeToRefs(store)
 
-  const closeFiltersModal = (): boolean => {
-    return isOpenFiltersModal.value = false
+  const toggleFiltersModal = (): boolean => {
+    return isOpenFiltersModal.value = !isOpenFiltersModal.value
   }
-  const openFiltersModal = (): boolean => {
-    return isOpenFiltersModal.value = true
+  const handleSelectTypeTransaction = (value: 'INCOME' | 'EXPENSE' | undefined) => {
+    store.handleChangeFilters("type")(value)
+  }
+
+  const handleSwiperChange = (swiperInstance: any) => {
+    store.handleChangeFilters("month")(swiperInstance.realIndex)
+  }
+
+  const handleApplyFilters = ({ bankAccountId, year }: {
+    bankAccountId: string | undefined
+    year: number
+  }) => {
+    store.handleChangeFilters("bankAccountId")(bankAccountId)
+    store.handleChangeFilters("year")(year)
+    toggleFiltersModal()
   }
 
   return {
+    filters,
     transactions: data,
     transactionsLoading: queryLoading,
     initialLoading: queryInitialLoading,
     isOpenFiltersModal,
-    closeFiltersModal,
-    openFiltersModal
+    toggleFiltersModal,
+    handleSelectTypeTransaction,
+    handleSwiperChange,
+    handleApplyFilters
   }
 }

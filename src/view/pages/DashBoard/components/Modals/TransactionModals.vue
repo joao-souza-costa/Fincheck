@@ -1,9 +1,11 @@
 <template>
-  <NewExpenseModal
+  <ExpenseModal
+    :expense="isOpenTransactionModal?.EDIT_TRANSACTION"
     :is-open="isOpenTransactionModal.EXPENSE"
     @close="toggleTransactionModal('EXPENSE')"
   />
-  <NewIncomeModal
+  <IncomeModal
+    :income="isOpenTransactionModal?.EDIT_TRANSACTION"
     :is-open="isOpenTransactionModal.INCOME"
     @close="toggleTransactionModal('INCOME')"
   />
@@ -11,8 +13,8 @@
 
 <script setup lang="ts">
 import { inject } from 'vue'
-import NewExpenseModal from './TransactionModals/NewExpenseModal.vue'
-import NewIncomeModal from './TransactionModals/NewIncomeModal.vue'
+import ExpenseModal from './TransactionModals/ExpenseModal.vue'
+import IncomeModal from './TransactionModals/IncomeModal.vue'
 import { MODALS_PROVIDER, type modalsProviderProps } from '../../providers/modalsProvider'
 
 const { isOpenTransactionModal, toggleTransactionModal } = inject(

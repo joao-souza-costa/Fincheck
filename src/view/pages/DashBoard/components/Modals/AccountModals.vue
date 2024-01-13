@@ -1,9 +1,8 @@
 <template>
-  <CreateAccountModal
-   :is-open="isOpenAccountModal.CREATE" 
-   @close="toggleAccountModal('CREATE')" />
+  <CreateAccountModal :is-open="isOpenAccountModal.CREATE" @close="toggleAccountModal('CREATE')" />
 
   <EditAccountModal
+    v-if="isOpenAccountModal.EDIT_ACCOUNT"
     :is-open="isOpenAccountModal.EDIT"
     :account="isOpenAccountModal.EDIT_ACCOUNT"
     @close="toggleAccountModal('EDIT')"

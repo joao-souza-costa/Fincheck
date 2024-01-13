@@ -32,7 +32,7 @@ import TrashIcon from '@/view/components/icons/TrashIcon.vue'
 import ConfirmDeleteModal from '@/view/components/ConfirmDeleteModal.vue'
 import { useEditAccountModalController } from './EditAccountModalController'
 
-const props = defineProps<{ isOpen: boolean; account: bankAccountsResponse }>()
+ defineProps<{ isOpen: boolean; account: bankAccountsResponse }>()
 const emit = defineEmits<{ close: [] }>()
 
 const {

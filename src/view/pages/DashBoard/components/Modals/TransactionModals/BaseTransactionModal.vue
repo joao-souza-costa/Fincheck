@@ -46,9 +46,11 @@ import BaseInputSelect from '@/view/components/BaseInputSelect.vue'
 import BaseButton from '@/view/components/BaseButton.vue'
 import BaseDatePickerInput from '@/view/components/BaseDatePickerInput.vue'
 import { useBaseTransactionModalController } from './BaseTransactionModalController'
+import type { Transaction } from '@/app/services/TransactionService'
 
 type tProps = {
   openModal: boolean
+  initialValues?: Transaction
   type: 'INCOME' | 'EXPENSE'
   modalLabel: string
   balanceLabel: string
@@ -65,6 +67,5 @@ type tEmit = {
 const props = defineProps<tProps>()
 defineEmits<tEmit>()
 
-const { schema, initialValues, accountsOptions, categoriesOptions } =
-  useBaseTransactionModalController(props.type)
+const { schema, accountsOptions, categoriesOptions } = useBaseTransactionModalController(props.type)
 </script>

@@ -1,4 +1,5 @@
-import type { bankAccountParams, bankAccountsResponse } from "@/app/services/BankAccountsService"
+import type { bankAccountsResponse } from "@/app/services/BankAccountsService"
+import type { Transaction } from "@/app/services/TransactionService"
 import { provide, reactive } from "vue"
 
 type tTransactionType = 'INCOME' | 'EXPENSE'
@@ -10,22 +11,24 @@ export type modalsProviderProps = {
   isOpenAccountModal: {
     CREATE: boolean
     EDIT: boolean
-    EDIT_ACCOUNT: bankAccountsResponse
+    EDIT_ACCOUNT: bankAccountsResponse | undefined
   }
   toggleAccountModal: (type: tAccountType, account?: bankAccountsResponse) => void
 
   isOpenTransactionModal: {
     INCOME: boolean
     EXPENSE: boolean
+    EDIT_TRANSACTION: Transaction | undefined
   }
-  toggleTransactionModal: (type: tTransactionType) => void
+  toggleTransactionModal: (type: tTransactionType, transaction?: Transaction) => void
 }
 
 export function useModalsProvider() {
-  const isOpenAccountModal = reactive({
+
+  const isOpenAccountModal = reactive<modalsProviderProps['isOpenAccountModal']>({
     CREATE: false,
     EDIT: false,
-    EDIT_ACCOUNT: {}
+    EDIT_ACCOUNT: undefined
   })
 
   const toggleAccountModal = (type: tAccountType, account?: bankAccountsResponse): void => {
@@ -33,12 +36,18 @@ export function useModalsProvider() {
     isOpenAccountModal[type] = !isOpenAccountModal[type]
   }
 
-  const isOpenTransactionModal = reactive({
+  const isOpenTransactionModal = reactive<modalsProviderProps['isOpenTransactionModal']>({
     INCOME: false,
-    EXPENSE: false
+    EXPENSE: false,
+    EDIT_TRANSACTION: undefined
   })
 
-  const toggleTransactionModal = (type: tTransactionType): void => {
+  const toggleTransactionModal = (type: tTransactionType, transaction: Transaction): void => {
+
+    if (isOpenTransactionModal[type]) isOpenTransactionModal.EDIT_TRANSACTION = undefined
+
+    if (transaction) isOpenTransactionModal.EDIT_TRANSACTION = { ...transaction, value: Math.abs(transaction.value) }
+
     isOpenTransactionModal[type] = !isOpenTransactionModal[type]
   }
 

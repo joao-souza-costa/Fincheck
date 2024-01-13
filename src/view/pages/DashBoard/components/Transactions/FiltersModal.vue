@@ -34,7 +34,7 @@
         </button>
       </div>
 
-      <base-button class="w-full mt-10"> Aplicar filtros</base-button>
+      <base-button class="w-full mt-10" @click="handleApplyFilters"> Aplicar filtros</base-button>
     </base-modal>
   </div>
 </template>
@@ -44,43 +44,28 @@ import BaseButton from '@/view/components/BaseButton.vue'
 import BaseModal from '@/view/components/BaseModal.vue'
 import ChevronLeftIcon from '@/view/components/icons/ChevronLeftIcon.vue'
 import ChevronRightIcon from '@/view/components/icons/ChevronRightIcon.vue'
-import { ref } from 'vue'
+import { useFiltersModalController } from './Contollers/FiltersModalController'
+
+type tFilters = {
+  bankAccountId: string | undefined
+  year: number
+}
 
 type iProps = {
   open: boolean
 }
 type iEmits = {
   (e: 'close'): void
+  (e: 'applyFilters', v: tFilters): void
 }
 
 defineProps<iProps>()
-defineEmits<iEmits>()
+const emit = defineEmits<iEmits>()
 
-const selectedAccountId = ref<null | string>(null)
+const { accounts, selectedAccountId, selectedYear, handleSelectedId, handleSelectedYear } =
+  useFiltersModalController()
 
-const handleSelectedId = (id: string): void => {
-  const prevId = selectedAccountId.value
-  prevId === id ? (selectedAccountId.value = null) : (selectedAccountId.value = id)
+const handleApplyFilters = () => {
+  emit('applyFilters', { bankAccountId: selectedAccountId.value, year: selectedYear.value })
 }
-
-const selectedYear = ref<number>(new Date().getFullYear())
-
-const handleSelectedYear = (step: number): void => {
-  selectedYear.value += step
-}
-
-const accounts = [
-  {
-    id: '1',
-    name: 'Nubank'
-  },
-  {
-    id: '2',
-    name: 'XP investimentos'
-  },
-  {
-    id: '3',
-    name: 'Dinheiro'
-  }
-]
 </script>

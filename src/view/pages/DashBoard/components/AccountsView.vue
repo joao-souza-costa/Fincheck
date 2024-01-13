@@ -53,9 +53,10 @@
               </div>
             </template>
 
-            <swiper-slide v-for="account in accounts" :key="account.id">
+            <swiper-slide v-for="account in accounts" :key="account!.id">
               <account-card
-              @click="toggleAccountModal('EDIT', account)"
+                v-if="account"
+                @click="toggleAccountModal('EDIT', account)"
                 :balance="account.currentBalance"
                 :color="account.color"
                 :name="account.name"

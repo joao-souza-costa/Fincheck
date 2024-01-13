@@ -9,13 +9,18 @@
     <template v-else>
       <header>
         <div class="flex items-center justify-between">
-          <TransactionsDropdown />
-          <button @click="openFiltersModal">
+          <TransactionsDropdown :selected="filters.type" @select="handleSelectTypeTransaction" />
+          <button @click="toggleFiltersModal">
             <filter-icon />
           </button>
         </div>
         <div class="mt-6 relative">
-          <swiper :slides-per-view="3" centered-slides>
+          <swiper
+            :initial-slide="filters.month"
+            :slides-per-view="3"
+            centered-slides
+            @slide-change="handleSwiperChange"
+          >
             <slider-navigation />
             <SwiperSlide v-for="(month, index) in MONTHS" :key="index" v-slot="{ isActive }">
               <slider-options :month="month" :is-active="isActive" :index="index" />
@@ -40,8 +45,9 @@
         <template v-if="transactions?.length">
           <div
             v-for="(transaction, index) in transactions"
+            @click.stop="toggleTransactionModal(transaction.type, transaction)"
             :key="index"
-            class="bg-white p-4 rounded-2xl flex items-center justify-between gap-4"
+            class="bg-white p-4 rounded-2xl flex items-center justify-between gap-4 cursor-pointer"
           >
             <div class="flex-1 flex items-center gap-3">
               <CategoryIcon
@@ -57,7 +63,7 @@
             </div>
             <base-balance
               class="tracking-[-0.5px] font-medium"
-              :class="[ transaction.type === 'EXPENSE' ? 'text-red-800' : 'text-green-800']"
+              :class="[transaction.type === 'EXPENSE' ? 'text-red-800' : 'text-green-800']"
               :balance="transaction.value"
             />
           </div>
@@ -65,7 +71,11 @@
       </div>
     </template>
 
-    <filters-modal :open="isOpenFiltersModal" @close="closeFiltersModal">
+    <filters-modal
+      :open="isOpenFiltersModal"
+      @close="toggleFiltersModal"
+      @apply-filters="handleApplyFilters"
+    >
       Filtros...
     </filters-modal>
   </div>
@@ -85,13 +95,20 @@ import emptyState from '@/assets/empty-state.svg'
 import TransactionsDropdown from './Transactions/TransactionsDropdown.vue'
 import FiltersModal from './Transactions/FiltersModal.vue'
 import { formatDate } from '@/app/utils/formatDate'
+import { MODALS_PROVIDER, type modalsProviderProps } from '../providers/modalsProvider'
+import { inject } from 'vue'
+
+const { toggleTransactionModal } = inject(MODALS_PROVIDER) as modalsProviderProps
 
 const {
+  filters,
   transactionsLoading,
   transactions,
   initialLoading,
-  closeFiltersModal,
-  openFiltersModal,
-  isOpenFiltersModal
+  isOpenFiltersModal,
+  toggleFiltersModal,
+  handleSwiperChange,
+  handleApplyFilters,
+  handleSelectTypeTransaction
 } = useTransactionsController()
 </script>

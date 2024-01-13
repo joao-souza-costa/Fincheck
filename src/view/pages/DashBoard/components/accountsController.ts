@@ -5,7 +5,7 @@ import { storeToRefs } from "pinia"
 
 export function useAccountsController() {
   const { areVisible, toggleVisibility } = inject('balanceProvider') as balanceProviderProps
-  const { data: accounts, queryLoading: isLoading, totalExpense, totalIncome } = storeToRefs(useAccountStore())
+  const { filteredAccounts: accounts, queryLoading: isLoading, totalExpense, totalIncome } = storeToRefs(useAccountStore())
   const eyeOpen = ref<boolean>(false)
 
   const toggleEye = (): void => {

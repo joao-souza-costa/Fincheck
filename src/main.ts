@@ -26,6 +26,6 @@ app.use(VueQueryPlugin, {
     },
   },
 })
-app.use(Toast)
 
+app.use(Toast)
 app.mount('#app')
