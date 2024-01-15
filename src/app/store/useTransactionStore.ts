@@ -18,7 +18,7 @@ export const useTransactionsStore = defineStore('transactions', () => {
     bankAccountId: undefined
   })
 
-  const { data, isFetching: queryLoading, isInitialLoading: queryInitialLoading, refetch } = useQuery({
+  const { data, isFetching: queryLoading, isInitialLoading: queryInitialLoading, isRefetching, refetch } = useQuery({
     queryKey: ['transactions'],
     queryFn: () => transactionService.getAll(filters.value),
     enabled: accessToken
@@ -89,6 +89,7 @@ export const useTransactionsStore = defineStore('transactions', () => {
     createLoading,
     updateLoading,
     deleteLoading,
+    refetchingLoading: isRefetching,
     handleChangeFilters,
     invalidateTransactionsQuery,
     createTransaction,

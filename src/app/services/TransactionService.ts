@@ -23,7 +23,7 @@ export interface CreateTransactionParams {
 }
 
 export interface CreateTransactionParams {
-  id:string,
+  id: string,
   bankAccountId: string;
   categoryId: string;
   name: string;
@@ -54,6 +54,6 @@ export default {
     return data;
   },
   delete: async (id: string) => {
-    return {}
+    return httpClient.delete<Transaction[]>(`/transactions/${id}`);
   },
 }

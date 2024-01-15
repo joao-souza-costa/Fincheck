@@ -7,7 +7,7 @@
       <p class="w-[180px] text-gray-800 font-bold tracking-[-0.5px]">
         {{ title }}
       </p>
-      <p class="tracking-[-0.5px]">
+      <p v-if="description" class="tracking-[-0.5px]">
         {{ description }}
       </p>
     </div>
@@ -34,7 +34,7 @@ import TrashIcon from './icons/TrashIcon.vue'
 
 defineProps<{
   title: string
-  description: string
+  description?: string
   isLoading?: boolean
 }>()
 defineEmits<{ close: []; confirm: []; cancel: [] }>()

@@ -1,6 +1,9 @@
 <template>
   <div>
     <base-modal :title="modalLabel" :open="openModal" @update:open="$emit('close')">
+      <template #right-action>
+        <slot name="right-action" />
+      </template>
       <Form
         @submit="(v) => $emit('submit', v)"
         :validation-schema="schema"
@@ -31,7 +34,7 @@
           />
 
           <base-date-picker-input name="date" />
-          <base-button type="submit"> Salvar </base-button>
+          <slot />
         </div>
       </Form>
     </base-modal>
@@ -43,7 +46,6 @@ import BaseModal from '@/view/components/BaseModal.vue'
 import BaseCurrencyInput from '@/view/components/BaseCurrencyInput.vue'
 import BaseInput from '@/view/components/BaseInput.vue'
 import BaseInputSelect from '@/view/components/BaseInputSelect.vue'
-import BaseButton from '@/view/components/BaseButton.vue'
 import BaseDatePickerInput from '@/view/components/BaseDatePickerInput.vue'
 import { useBaseTransactionModalController } from './BaseTransactionModalController'
 import type { Transaction } from '@/app/services/TransactionService'
