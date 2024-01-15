@@ -44,9 +44,9 @@ export function useModalsProvider() {
 
   const toggleTransactionModal = (type: tTransactionType, transaction: Transaction): void => {
 
-    if (isOpenTransactionModal[type]) isOpenTransactionModal.EDIT_TRANSACTION = undefined
+    if (isOpenTransactionModal[type]) isOpenTransactionModal.EDIT_TRANSACTION = undefined //close modal reset editTransaction
 
-    if (transaction) isOpenTransactionModal.EDIT_TRANSACTION = { ...transaction, value: Math.abs(transaction.value) }
+    if (transaction) isOpenTransactionModal.EDIT_TRANSACTION = { ...transaction, value: Math.abs(transaction.value), date: new Date(transaction.date) }
 
     isOpenTransactionModal[type] = !isOpenTransactionModal[type]
   }

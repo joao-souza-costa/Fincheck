@@ -8,30 +8,24 @@
     transaction-name-label="Noma da Receita"
     type-label="Categoria"
     payment-label="Receber Com"
-    @submit="onSubmit"
+    @submit="handleSubmit"
     @close="$emit('close')"
   />
 </template>
 
 <script lang="ts" setup>
-import { useTransactionsStore } from '@/app/store/useTransactionStore'
 import BaseTransactionModal from './BaseTransactionModal.vue'
-import { toast } from '@/app/utils/toast'
 import type { Transaction } from '@/app/services/TransactionService'
 
-defineProps<{ isOpen: boolean; income?: Transaction }>()
+import { useIncomeModalController } from './IncomeModalController'
 
+const props = defineProps<{ isOpen: boolean; income?: Transaction }>()
 const emit = defineEmits<{ close: [] }>()
-const transactionsStore = useTransactionsStore()
 
-async function onSubmit(values: any) {
-  return transactionsStore
-    .createTransaction({ ...values, type: 'INCOME' })
-    .then(() => toast.success('Receita criada com sucesso'))
-    .then(() => emit('close'))
-    .catch((e) => {
-      toast.error('Erro durante a criação da Receita')
-    })
+const { createIncome, updateIncome } = useIncomeModalController(emit)
+
+const handleSubmit = (values: any) => {
+  return props.income ? updateIncome(props.income.id, values) : createIncome(values)
 }
 </script>
 

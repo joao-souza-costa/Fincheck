@@ -8,29 +8,23 @@
     transaction-name-label="Noma da despesa"
     type-label="Categoria"
     payment-label="Pagar Com"
-    @submit="onSubmit"
+    @submit="handleSubmit"
     @close="$emit('close')"
   />
 </template>
 
 <script lang="ts" setup>
-import { useTransactionsStore } from '@/app/store/useTransactionStore'
 import BaseTransactionModal from './BaseTransactionModal.vue'
-import { toast } from '@/app/utils/toast'
 import type { Transaction } from '@/app/services/TransactionService'
+import { useExpenseModalController } from './ExpenseModalController'
 
-defineProps<{ isOpen: boolean; expense?: Transaction }>()
+const props = defineProps<{ isOpen: boolean; expense?: Transaction }>()
 const emit = defineEmits<{ close: [] }>()
-const transactionsStore = useTransactionsStore()
 
-async function onSubmit(values: any) {
-  return transactionsStore
-    .createTransaction({ ...values, type: 'EXPENSE' })
-    .then(() => toast.success('Despesa criada com sucesso'))
-    .then(() => emit('close'))
-    .catch((e) => {
-      toast.error('Erro durante a criação da Despesa')
-    })
+const { updateExpense, createExpense } = useExpenseModalController(emit)
+
+const handleSubmit = (values: any) => {
+  return props.expense ? updateExpense(props.expense.id, values) : createExpense(values)
 }
 </script>
 

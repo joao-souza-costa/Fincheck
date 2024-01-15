@@ -60,9 +60,7 @@ const toggleOpen = (): void => {
 
 const name = toRef(props, 'name')
 
-const { errorMessage, value } = useField(name, undefined, {
-  initialValue: new Date()
-})
+const { errorMessage, value } = useField(name, undefined)
 </script>
 
 <style lang="less">

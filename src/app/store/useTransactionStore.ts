@@ -7,6 +7,7 @@ import { useUserStore } from "./useUserProvider"
 interface AccountsDictionary {
   [key: string]: number
 }
+
 export const useTransactionsStore = defineStore('transactions', () => {
   const queryClient = useQueryClient()
   const { accessToken } = storeToRefs(useUserStore())
@@ -46,11 +47,11 @@ export const useTransactionsStore = defineStore('transactions', () => {
     }).then(invalidateTransactionsQuery)
   }
 
-  const updateTransaction = (values: any, id: string) => {
+  const updateTransaction = (id: string, { category, ...values }: any,) => {
     return updateMutation({
       ...values,
-      initialBalance: Number(values.initialBalance),
-      id
+      id,
+      value: Number(values.value),
     }).then(invalidateTransactionsQuery)
   }
 

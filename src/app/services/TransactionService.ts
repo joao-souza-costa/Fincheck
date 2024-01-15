@@ -2,7 +2,7 @@ import { httpClient } from "./Client";
 
 export type Transaction = {
   id: string;
-  date: string;
+  date: string | Date;
   name: string;
   value: number;
   type: 'INCOME' | 'EXPENSE';
@@ -20,6 +20,15 @@ export interface CreateTransactionParams {
   name: string;
   value: number;
   type: Transaction['type']
+}
+
+export interface CreateTransactionParams {
+  id:string,
+  bankAccountId: string;
+  categoryId: string;
+  name: string;
+  value: number;
+  date: Date
 }
 
 export type GetAllTransactionFilters = {
@@ -40,8 +49,9 @@ export default {
     });
     return data;
   },
-  update: async ({ id, ...params }) => {
-    return {}
+  update: async ({ id, ...params }: Omit<CreateTransactionParams, 'type'>) => {
+    const { data } = await httpClient.put<Transaction[]>(`/transactions/${id}`, params);
+    return data;
   },
   delete: async (id: string) => {
     return {}
