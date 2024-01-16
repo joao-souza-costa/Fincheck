@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query"
 import { defineStore, storeToRefs } from "pinia"
 import bankAccountsService from "../services/BankAccountsService"
 import { useTransactionsStore } from "./useTransactionStore"
-import { useUserStore } from "./useUserProvider"
+import { useUserStore } from "./useUserStore"
 import { computed } from "vue"
 
 export const useAccountStore = defineStore('accounts', () => {

@@ -2,7 +2,7 @@ import AuthService from '@/app/services/AuthService'
 import type { signInParams } from '@/app/services/AuthService'
 import { useMutation } from '@tanstack/vue-query'
 import * as Yup from 'yup'
-import { useUserStore } from '@/app/store/useUserProvider'
+import { useUserStore } from '@/app/store/useUserStore'
 
 export function useLoginController() {
   const userStore = useUserStore()

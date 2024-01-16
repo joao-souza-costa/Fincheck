@@ -2,17 +2,14 @@
   <BaseDropdown.Root>
     <BaseDropdown.Trigger>
       <div
-        class="bg-teal-0 rounded-full w-12 h-12 flex items-center justify-center border-teal-100"
+        class="bg-teal-0 rounded-full w-12 h-12 flex items-center justify-center border-teal-100 cursor-pointer"
       >
-        <span class="text-sm font-medium text-teal-900 tracking-[-0.5px]">JS</span>
+        <span class="text-sm font-medium text-teal-900 tracking-[-0.5px]">{{ name }}</span>
       </div>
     </BaseDropdown.Trigger>
 
     <BaseDropdown.Content class="w-32">
-      <BaseDropdown.Item
-        class="flex items-center justify-between"
-        @select="handleSignout"
-      >
+      <BaseDropdown.Item class="flex items-center justify-between" @select="handleSignout">
         Sair
         <ExitIcon class="w-4 h-4" />
       </BaseDropdown.Item>
@@ -21,13 +18,25 @@
 </template>
 
 <script lang="ts" setup>
-import { useUserStore } from '@/app/store/useUserProvider'
+import { useUserStore } from '@/app/store/useUserStore'
 import BaseDropdown from './Dropdown/BaseDropdown'
 import ExitIcon from './icons/ExitIcon.vue'
+import { computed } from 'vue'
 
 const userStore = useUserStore()
 
 const handleSignout = () => {
   userStore.signout()
 }
+
+const name = computed(() => {
+  if (!userStore.user) return ''
+
+  const [firstName, secondName] = userStore.user!.name.split(' ')
+  const value = secondName
+    ? firstName.charAt(0).concat(secondName.charAt(0))
+    : firstName.slice(0, 2)
+
+  return value.toUpperCase()
+})
 </script>

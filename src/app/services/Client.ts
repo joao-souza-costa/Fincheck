@@ -1,6 +1,6 @@
 import axios from "axios";
 import { accessTokenKey } from "../config/constants/localStorageKeys";
-import { useUserStore } from "../store/useUserProvider";
+import { useUserStore } from "../store/useUserStore";
 import { toast } from "../utils/toast";
 const { VITE_API_URL } = import.meta.env
 

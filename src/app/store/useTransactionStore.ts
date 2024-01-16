@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query"
 import { defineStore, storeToRefs } from "pinia"
 import transactionService, { type GetAllTransactionFilters } from "../services/TransactionService"
 import { computed, ref, watch } from "vue"
-import { useUserStore } from "./useUserProvider"
+import { useUserStore } from "./useUserStore"
 
 interface AccountsDictionary {
   [key: string]: number

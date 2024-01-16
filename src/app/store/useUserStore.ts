@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { useRouter } from "vue-router"
-import { ref, type InjectionKey } from "vue"
+import { ref, type InjectionKey, readonly } from "vue"
 import { accessTokenKey } from "../config/constants/localStorageKeys"
 import { DASHBOARD, LOGIN } from "@/app/config/constants/route"
 import { useQuery } from "@tanstack/vue-query"
@@ -15,7 +15,7 @@ export const useUserStore = defineStore('user', () => {
   const router = useRouter()
   const accessToken = ref<boolean>(Boolean(localStorage.getItem(accessTokenKey)))
 
-  const { isFetching, isSuccess, remove } = useQuery({
+  const { data: user, isFetching, isSuccess, remove } = useQuery({
     queryKey: ['users', 'me'],
     queryFn: async () => userService.me(),
     enabled: accessToken,
@@ -36,6 +36,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   return {
+    user: readonly(user),
     accessToken,
     isFetching,
     isSuccess,

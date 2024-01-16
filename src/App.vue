@@ -2,7 +2,7 @@
 import { RouterView } from 'vue-router'
 import LaunchView from './view/pages/LauchView.vue'
 
-import { useUserStore } from './app/store/useUserProvider'
+import { useUserStore } from './app/store/useUserStore'
 const userStore = useUserStore()
 </script>
 

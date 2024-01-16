@@ -1,7 +1,7 @@
 import * as Yup from 'yup'
 import { useMutation } from '@tanstack/vue-query'
 import AuthService, { type signUpParams } from '@/app/services/AuthService'
-import { useUserStore } from '@/app/store/useUserProvider'
+import { useUserStore } from '@/app/store/useUserStore'
 import { useRouter } from 'vue-router'
 import { DASHBOARD } from '@/app/config/constants/route'
 import { toast } from '@/app/utils/toast'
