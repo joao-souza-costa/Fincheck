@@ -1,9 +1,9 @@
 import { HOME, LOGIN, REGISTER, DASHBOARD } from '../app/config/constants/route'
 
-import AuthLayout from '@/view/layouts/AuthLayout.vue'
-import LoginView from '@/view/pages/auth/Login/LoginView.vue'
-import RegisterView from '@/view/pages/auth/Register/RegisterView.vue'
-import DashboardView from '@/view/pages/Dashboard/DashboardView.vue'
+import AuthLayout from '../view/layouts/AuthLayout.vue'
+import LoginView from '../view/pages/auth/Login/LoginView.vue'
+import RegisterView from '../view/pages/auth/Register/RegisterView.vue'
+import DashboardView from '../view/pages/DashBoard/DashboardView.vue'
 
 export default [
   {
