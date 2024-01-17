@@ -52,7 +52,7 @@ import type { Transaction } from '@/app/services/TransactionService'
 
 type tProps = {
   openModal: boolean
-  initialValues?: Transaction
+  initialValues?: Partial<Transaction>
   type: 'INCOME' | 'EXPENSE'
   modalLabel: string
   balanceLabel: string
@@ -61,16 +61,15 @@ type tProps = {
   paymentLabel: string
 }
 
-
 type tEmit = {
   (e: 'close'): void
   (e: 'submit', v: GenericObject): void
 }
 
-const props = withDefaults(defineProps<tProps>(),{
-  initialValues:{
+const props = withDefaults(defineProps<tProps>(), {
+  initialValues: () => ({
     date: new Date()
-  }
+  })
 })
 defineEmits<tEmit>()
 

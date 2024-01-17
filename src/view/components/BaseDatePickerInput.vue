@@ -11,13 +11,13 @@
           <label class="absolute left-[13px] top-1 pointer-events-none text-xs text-gray-700">
             Data
           </label>
-          <span>{{ formatDate(value) }}</span>
+          <span>{{ formatDate(value as Date) }}</span>
         </button>
       </BasePopover.Trigger>
 
       <BasePopover.Content class="w-80 text-red-400">
         <VueDatePicker
-          v-model="value"
+          :model-value="value as Date"
           inline
           auto-apply
           :hide-navigation="['time', 'year', 'month']"
@@ -43,7 +43,7 @@ import VueDatePicker from '@vuepic/vue-datepicker'
 import BasePopover from '@/view/components/Popover/BasePopover'
 import { formatDate } from '@/app/utils/formatDate'
 import CrossCircle from '@/assets/CrossCircle.vue'
-import { ref, toRef } from 'vue'
+import { ref, toRef, watch } from 'vue'
 import { useField } from 'vee-validate'
 
 type iProps = {
@@ -54,13 +54,14 @@ const props = defineProps<iProps>()
 
 const isOpen = ref<boolean>(false)
 
-const toggleOpen = (): void => {
+const toggleOpen = (v: any): void => {
+  if (isOpen.value) setValue(v)
   isOpen.value = !isOpen.value
 }
 
 const name = toRef(props, 'name')
 
-const { errorMessage, value } = useField(name, undefined)
+const { errorMessage, value, setValue } = useField(name, undefined)
 </script>
 
 <style lang="less">
