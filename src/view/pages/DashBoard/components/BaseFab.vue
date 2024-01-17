@@ -36,7 +36,7 @@ import ExpenseCategory from '@/view/components/icons/categories/expense/ExpenseC
 import PlusIcon from '@/view/components/icons/PlusIcon.vue'
 import IncomeIcon from '@/view/components/icons/categories/income/IncomeIcon'
 import { computed, inject } from 'vue'
-import { MODALS_PROVIDER, type modalsProviderProps } from './providers/modalsProvider'
+import { MODALS_PROVIDER, type modalsProviderProps } from '../providers/modalsProvider'
 import { useAccountStore } from '@/app/store/useAccountStore'
 const { toggleAccountModal, toggleTransactionModal } = inject(
   MODALS_PROVIDER
