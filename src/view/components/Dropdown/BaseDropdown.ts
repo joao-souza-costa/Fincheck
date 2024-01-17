@@ -47,12 +47,13 @@ const BaseDropdownContent = defineComponent({
 })
 const BaseDropdownItem = defineComponent({
   emits: ['select', 'submit'],
+  props:['disabled'],
   components: {
     DropdownMenuItem
   },
   template: `
-  <DropdownMenuItem  @select="(v)=> $emit('select', v)" class="min-h-[40x] outline-none flex items-center py-2 px-4
-   text-gray-800 text-sm data-[highlighted]:bg-gray-50 rounded-2xl transition-colors cursor-pointer">
+  <DropdownMenuItem :disabled="disabled"  @select="(v)=> $emit('select', v)" class="min-h-[40x] outline-none flex items-center py-2 px-4
+   text-gray-800 text-sm data-[highlighted]:bg-gray-50 rounded-2xl transition-colors cursor-pointer disabled:opacity-75 disabled:text-opacity-20 disabled:cursor-not-allowed">
     <slot/>
   </DropdownMenuItem>`
 })

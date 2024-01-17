@@ -61,12 +61,17 @@ type tProps = {
   paymentLabel: string
 }
 
+
 type tEmit = {
   (e: 'close'): void
   (e: 'submit', v: GenericObject): void
 }
 
-const props = defineProps<tProps>()
+const props = withDefaults(defineProps<tProps>(),{
+  initialValues:{
+    date: new Date()
+  }
+})
 defineEmits<tEmit>()
 
 const { schema, accountsOptions, categoriesOptions } = useBaseTransactionModalController(props.type)

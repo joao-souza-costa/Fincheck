@@ -10,14 +10,14 @@
       </BaseDropdown.Trigger>
 
       <BaseDropdown.Content>
-        <BaseDropdown.Item class="gap-2" @click="toggleTransactionModal('EXPENSE')">
+        <BaseDropdown.Item class="gap-2" @click="hasAccounts && toggleTransactionModal('EXPENSE')">
           <ExpenseCategory />
-          Nova Despesa
+          <span :class="[!hasAccounts && 'opacity-50']">Nova Despesa</span>
         </BaseDropdown.Item>
 
-        <BaseDropdown.Item class="gap-2" @click="toggleTransactionModal('INCOME')">
+        <BaseDropdown.Item class="gap-2" @click="hasAccounts && toggleTransactionModal('INCOME')">
           <IncomeIcon />
-          Nova Receita
+          <span :class="[!hasAccounts && 'opacity-50']"> Nova Receita </span>
         </BaseDropdown.Item>
 
         <BaseDropdown.Item @click="toggleAccountModal('CREATE')" class="gap-2">
@@ -35,8 +35,16 @@ import BankAccountIcon from '@/view/components/icons/BankAccountIcon.vue'
 import ExpenseCategory from '@/view/components/icons/categories/expense/ExpenseCategory'
 import PlusIcon from '@/view/components/icons/PlusIcon.vue'
 import IncomeIcon from '@/view/components/icons/categories/income/IncomeIcon'
-import { inject } from 'vue'
+import { computed, inject } from 'vue'
 import { MODALS_PROVIDER, type modalsProviderProps } from '../../providers/modalsProvider'
+import { useAccountStore } from '@/app/store/useAccountStore'
+const { toggleAccountModal, toggleTransactionModal } = inject(
+  MODALS_PROVIDER
+) as modalsProviderProps
 
-const { toggleAccountModal, toggleTransactionModal } = inject(MODALS_PROVIDER) as modalsProviderProps
+const accountsStore = useAccountStore()
+
+const hasAccounts = computed(() => {
+  return accountsStore.data?.length
+})
 </script>
