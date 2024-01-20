@@ -21,10 +21,17 @@
             id="transactionName"
             :placeholder="transactionNameLabel"
           />
+
           <base-input-select
             name="categoryId"
             :options="categoriesOptions"
-            :placeholder="typeLabel"
+            :placeholder="categoryLabel"
+          />
+
+          <base-input-select
+            name="paymentType"
+            :options="paymentTypeOptions"
+            :placeholder="paymentTypeLabel"
           />
 
           <base-input-select
@@ -57,7 +64,8 @@ type tProps = {
   modalLabel: string
   balanceLabel: string
   transactionNameLabel: string
-  typeLabel: string
+  categoryLabel: string
+  paymentTypeLabel: string
   paymentLabel: string
 }
 
@@ -73,5 +81,6 @@ const props = withDefaults(defineProps<tProps>(), {
 })
 defineEmits<tEmit>()
 
-const { schema, accountsOptions, categoriesOptions } = useBaseTransactionModalController(props.type)
+const { schema, accountsOptions, categoriesOptions, paymentTypeOptions } =
+  useBaseTransactionModalController(props.type)
 </script>

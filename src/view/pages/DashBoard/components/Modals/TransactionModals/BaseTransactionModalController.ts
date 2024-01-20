@@ -2,9 +2,10 @@
 import * as Yup from 'yup'
 import { useAccountStore } from "@/app/store/useAccountStore"
 import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useQuery } from '@tanstack/vue-query'
 import categoriesService from '@/app/services/CategoriesService'
+import { PaymentTypes } from '@/app/config/constants/paymentTypes'
 
 export function useBaseTransactionModalController(type: string) {
 
@@ -28,12 +29,37 @@ export function useBaseTransactionModalController(type: string) {
       .map((acc) => ({ value: acc.id, label: acc.name }))
   })
 
+  const paymentTypeOptions = ref([
+    {
+      value: PaymentTypes.CASH,
+      label: 'Dinheiro'
+    },
+    {
+      value: PaymentTypes.CREDIT,
+      label: 'Cartão de crédito'
+    },
+    {
+      value: PaymentTypes.BILLET,
+      label: 'Boleto'
+    },
+    {
+      value: PaymentTypes.DEBIT,
+      label: 'Cartão de débito'
+    },
+    {
+      value: PaymentTypes.PIX,
+      label: 'PIX'
+    },
+  ])
+
+
   const schema = Yup.object().shape({
     value: Yup.string().required('Saldo  é obrigatório'),
     name: Yup.string().required('Nome da transação é obrigatório'),
-    categoryId: Yup.mixed().required('Tipo é obrigatório'),
-    bankAccountId: Yup.string().required('Método de pagamento é obrigatória'),
-    date: Yup.date().required('Data é obrigatório')
+    categoryId: Yup.mixed().required('Categoria é obrigatória'),
+    bankAccountId: Yup.string().required('Destino do pagamento é obrigatória'),
+    date: Yup.date().required('Data é obrigatório'),
+    paymentType: Yup.string().required('Método de pagamento é obrigatório')
   })
 
   return {
@@ -41,6 +67,7 @@ export function useBaseTransactionModalController(type: string) {
     accountsOptions,
     accountLoading,
     categoriesOptions,
+    paymentTypeOptions,
     categoriesLoading
   }
 }

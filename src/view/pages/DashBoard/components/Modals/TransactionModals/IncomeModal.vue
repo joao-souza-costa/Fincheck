@@ -6,8 +6,9 @@
     :modal-label="income ? 'Editar Receita' : 'Nova Receita'"
     balance-label="Valor da Receita"
     transaction-name-label="Noma da Receita"
-    type-label="Categoria"
+    category-label="Categoria"
     payment-label="Receber Com"
+    payment-type-label="Método de pagamento"
     @submit="handleSubmit"
     @close="$emit('close')"
   >
