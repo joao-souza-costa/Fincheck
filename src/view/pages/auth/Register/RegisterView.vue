@@ -14,14 +14,14 @@
     :validation-schema="schema"
     class="mt-[60px] flex flex-col items-center gap-4"
   >
-    <base-input type="text" id="name" name="name" placeholder="Name" />
+    <base-input type="text" id="name" name="name" placeholder="Nome" />
     <base-input type="text" id="email" name="email" placeholder="Email" />
-    <base-input type="password" id="password" name="password" placeholder="Password" />
+    <base-input type="password" id="password" name="password" placeholder="Senha" />
     <base-input
       type="password"
       id="password"
       name="confirmPassword"
-      placeholder="Confirm password"
+      placeholder="Confirmar senha"
     />
     <base-button :is-loading="isLoading" type="submit" class="w-full"> Criar conta </base-button>
   </Form>
