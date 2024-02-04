@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query"
 import { defineStore, storeToRefs } from "pinia"
-import transactionService, { type GetAllTransactionFilters } from "../services/TransactionService"
+import transactionService, { enumTransactionPeriodFilter, type GetAllTransactionFilters } from "../services/TransactionService"
 import { computed, ref, watch } from "vue"
 import { useUserStore } from "./useUserStore"
 
@@ -13,8 +13,8 @@ export const useTransactionsStore = defineStore('transactions', () => {
   const { accessToken } = storeToRefs(useUserStore())
 
   const filters = ref<GetAllTransactionFilters>({
-    month: new Date().getMonth(),
-    year: new Date().getFullYear(),
+    date: new Date(Date.now()).toISOString(),
+    period: enumTransactionPeriodFilter.monthly,
     bankAccountId: undefined
   })
 

@@ -14,19 +14,7 @@
             <filter-icon />
           </button>
         </div>
-        <div class="mt-6 relative">
-          <swiper
-            :initial-slide="filters.month"
-            :slides-per-view="3"
-            centered-slides
-            @slide-change="handleSwiperChange"
-          >
-            <slider-navigation />
-            <SwiperSlide v-for="(month, index) in MONTHS" :key="index" v-slot="{ isActive }">
-              <slider-options :month="month" :is-active="isActive" :index="index" />
-            </SwiperSlide>
-          </swiper>
-        </div>
+        <TransactionDatesSlider :filter="filters.period" :initial-value="filters.date" @change-value="handleSwiperChange"/>
       </header>
       <div
         v-if="transactionsLoading"
@@ -39,7 +27,7 @@
         <template v-if="!transactions?.length">
           <div class="flex flex-col items-center justify-center h-full">
             <img :src="emptyState" alt="empty state" />
-            <p class="text-gray-700">Não encontramos nenhuma transação</p>
+            <p class="text-gray-700 text-center">Não encontramos nenhuma transação</p>
           </div>
         </template>
         <template v-if="transactions?.length">
@@ -70,7 +58,6 @@
         </template>
       </div>
     </template>
-
     <filters-modal
       :open="isOpenFiltersModal"
       @close="toggleFiltersModal"
@@ -82,15 +69,12 @@
 </template>
 
 <script lang="ts" setup>
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import { MONTHS } from '@/app/config/constants/Date'
 import { useTransactionsController } from './transactionsConstroller'
 import BaseSpinner from '@/view/components/BaseSpinner.vue'
 import FilterIcon from '@/view/components/icons/FilterIcon.vue'
-import SliderOptions from './Transactions/SliderOptions.vue'
-import SliderNavigation from './Transactions/SliderNavigation.vue'
+import { TransactionDatesSlider } from './Transactions/TransactionDatesSlider'
 import CategoryIcon from '@/view/components/icons/categories/CategoryIcon.vue'
-import baseBalance from './BaseBalance.vue'
+import BaseBalance from '@/view/components/BaseBalance.vue'
 import emptyState from '@/assets/empty-state.svg'
 import TransactionsDropdown from './Transactions/TransactionsDropdown.vue'
 import FiltersModal from './Transactions/FiltersModal.vue'
@@ -99,7 +83,6 @@ import { MODALS_PROVIDER, type modalsProviderProps } from '../providers/modalsPr
 import { inject } from 'vue'
 
 const { toggleTransactionModal } = inject(MODALS_PROVIDER) as modalsProviderProps
-
 const {
   filters,
   transactionsLoading,
@@ -112,3 +95,9 @@ const {
   handleSelectTypeTransaction
 } = useTransactionsController()
 </script>
+
+<style>
+#transaction-view .swiper-slide-active button {
+  background-color: white;
+}
+</style>

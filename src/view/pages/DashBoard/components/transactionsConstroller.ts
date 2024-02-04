@@ -1,3 +1,4 @@
+import type { enumTransactionPeriodFilter } from "@/app/services/TransactionService"
 import { useTransactionsStore } from "@/app/store/useTransactionStore"
 import { storeToRefs } from "pinia"
 import { ref } from "vue"
@@ -16,16 +17,17 @@ export function useTransactionsController() {
     store.handleChangeFilters("type")(value)
   }
 
-  const handleSwiperChange = (swiperInstance: any) => {
-    store.handleChangeFilters("month")(swiperInstance.realIndex)
+  const handleSwiperChange = (value: string) => {
+    console.log(value)
+    //store.handleChangeFilters("date")(value)
   }
 
-  const handleApplyFilters = ({ bankAccountId, year }: {
+  const handleApplyFilters = ({ bankAccountId, period }: {
     bankAccountId: string | undefined
-    year: number
+    period: enumTransactionPeriodFilter
   }) => {
     store.handleChangeFilters("bankAccountId")(bankAccountId)
-    store.handleChangeFilters("year")(year)
+    store.handleChangeFilters("period")(period)
     toggleFiltersModal()
   }
 

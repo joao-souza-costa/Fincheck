@@ -1,7 +1,7 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useAccountStore } from '@/app/store/useAccountStore'
 import { storeToRefs } from 'pinia'
-
+import { enumTransactionPeriodFilter } from '@/app/services/TransactionService'
 
 export function useFiltersModalController() {
   const store = useAccountStore()
@@ -14,17 +14,21 @@ export function useFiltersModalController() {
     prevId === id ? (selectedAccountId.value = undefined) : (selectedAccountId.value = id)
   }
 
-  const selectedYear = ref<number>(new Date().getFullYear())
+  const selectedPeriod = ref<enumTransactionPeriodFilter>(enumTransactionPeriodFilter.monthly)
 
-  const handleSelectedYear = (step: number): void => {
-    selectedYear.value += step
+  const selectedPeriodIndex = computed<number>(() => {
+    return Object.values(enumTransactionPeriodFilter).indexOf(selectedPeriod.value)
+  })
+  const handleSelectedPeriod = (swiper: any): void => {
+    selectedPeriod.value = Object.values(enumTransactionPeriodFilter)[swiper.realIndex]
   }
 
   return {
     accounts,
     selectedAccountId,
-    selectedYear,
+    selectedPeriod,
+    selectedPeriodIndex,
     handleSelectedId,
-    handleSelectedYear,
+    handleSelectedPeriod,
   }
 }

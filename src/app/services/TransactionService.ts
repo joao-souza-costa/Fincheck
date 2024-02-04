@@ -1,5 +1,11 @@
 import { httpClient } from "./Client";
 
+export enum enumTransactionPeriodFilter {
+  monthly = 'monthly',
+  biweekly = 'biweekly',
+  weekly = 'weekly',
+}
+
 export type Transaction = {
   id: string;
   date: string | Date;
@@ -32,8 +38,8 @@ export interface CreateTransactionParams {
 }
 
 export type GetAllTransactionFilters = {
-  month: number;
-  year: number;
+  date: string,
+  period: enumTransactionPeriodFilter,
   bankAccountId?: string;
   type?: Transaction['type']
 }

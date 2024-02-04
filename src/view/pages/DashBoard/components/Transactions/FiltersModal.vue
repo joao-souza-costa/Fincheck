@@ -1,37 +1,49 @@
 <template>
   <div>
     <base-modal title="Filtros" :open="open" @update:open="$emit('close')">
-      <div>
+      <div class="mt-5">
         <span class="text-lg tracking-[-1px] font-bold text-gray-800"> Contas </span>
       </div>
-      <div class="space-y-2 mt-2">
-        <button
-          class="p-2 rounded-2xl w-full text-left text-gray-800 hover:bg-gray-50"
-          :class="{ '!bg-gray-200': selectedAccountId === account.id }"
-          v-for="account in accounts"
-          :key="account.id"
-          @click="handleSelectedId(account.id)"
+      <div class="h-44">
+        <base-scroll-bar>
+          <button
+            class="p-2 rounded-2xl w-full text-left text-gray-800 hover:bg-gray-50"
+            :class="{ '!bg-gray-200': selectedAccountId === account.id }"
+            v-for="account in accounts"
+            :key="account.id"
+            @click="handleSelectedId(account.id)"
+          >
+            {{ account.name }}
+          </button>
+        </base-scroll-bar>
+      </div>
+
+      <div class="mt-3">
+        <span class="text-lg tracking-[-1px] font-bold text-gray-800"> Período </span>
+      </div>
+
+      <div class="mt-3 w-60 flex items-center justify-between">
+        <Swiper
+          :initial-slide="selectedPeriodIndex"
+          :slides-per-view="1"
+          centered-slides
+          @init="handlePeriodSwiper"
+          @slide-change="handleSelectedPeriod"
         >
-          {{ account.name }}
-        </button>
-      </div>
-
-      <div class="mt-10">
-        <span class="text-lg tracking-[-1px] font-bold text-gray-800"> Ano </span>
-      </div>
-
-      <div class="mt-2 w-52 flex items-center justify-between">
-        <button class="w-12 h-12 flex items-center justify-center" @click="handleSelectedYear(-1)">
-          <chevron-left-icon class="w-6 h-6" />
-        </button>
-
-        <div class="flex-1 text-center">
-          <span class="text-sm font-medium tracking-[-0.5px]"> {{ selectedYear }} </span>
-        </div>
-
-        <button class="w-12 h-12 flex items-center justify-center" @click="handleSelectedYear(1)">
-          <chevron-right-icon class="w-6 h-6" />
-        </button>
+          <slider-navigation
+            class="bg-white from-white"
+            @slide-next="periodSwiper.slideNext()"
+            @slide-prev="periodSwiper.slidePrev()"
+          />
+          <SwiperSlide
+            v-for="(period, index) in enumTransactionPeriodFilter"
+            :key="index"
+            tag="p"
+            class="text-center"
+          >
+            {{ period }}
+          </SwiperSlide>
+        </Swiper>
       </div>
 
       <base-button class="w-full mt-10" @click="handleApplyFilters"> Aplicar filtros</base-button>
@@ -40,15 +52,18 @@
 </template>
 
 <script setup lang="ts">
+import BaseScrollBar from '@/view/components/BaseScrollBar.vue'
 import BaseButton from '@/view/components/BaseButton.vue'
 import BaseModal from '@/view/components/BaseModal.vue'
-import ChevronLeftIcon from '@/view/components/icons/ChevronLeftIcon.vue'
-import ChevronRightIcon from '@/view/components/icons/ChevronRightIcon.vue'
 import { useFiltersModalController } from './Contollers/FiltersModalController'
+import { SwiperSlide, Swiper } from 'swiper/vue'
+import { enumTransactionPeriodFilter } from '@/app/services/TransactionService'
+import SliderNavigation from './SliderNavigation.vue'
+import { ref } from 'vue'
 
 type tFilters = {
   bankAccountId: string | undefined
-  year: number
+  period: enumTransactionPeriodFilter
 }
 
 type iProps = {
@@ -62,10 +77,22 @@ type iEmits = {
 defineProps<iProps>()
 const emit = defineEmits<iEmits>()
 
-const { accounts, selectedAccountId, selectedYear, handleSelectedId, handleSelectedYear } =
-  useFiltersModalController()
+const {
+  accounts,
+  selectedAccountId,
+  selectedPeriod,
+  selectedPeriodIndex,
+  handleSelectedId,
+  handleSelectedPeriod
+} = useFiltersModalController()
+
+const periodSwiper = ref()
+
+const handlePeriodSwiper = (swiper: any) => {
+  periodSwiper.value = swiper
+}
 
 const handleApplyFilters = () => {
-  emit('applyFilters', { bankAccountId: selectedAccountId.value, year: selectedYear.value })
+  emit('applyFilters', { bankAccountId: selectedAccountId.value, period: selectedPeriod.value })
 }
 </script>

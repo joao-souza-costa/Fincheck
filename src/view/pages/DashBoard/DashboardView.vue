@@ -5,11 +5,11 @@
       <user-menu />
     </header>
     <main class="flex-1 flex flex-col md:flex-row gap-4 max-h-[95%]">
-      <div class="w-full md:w-1/2">
+      <div class="w-full md:max-w-[49.5%]">
         <accounts-view />
       </div>
-      <div class="w-full md:w-1/2">
-        <transactions-view />
+      <div class="w-full md:max-w-[49.5%]">
+        <transactions-view id="transaction-view" />
       </div>
     </main>
 
