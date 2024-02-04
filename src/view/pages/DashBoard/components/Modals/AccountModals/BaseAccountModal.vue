@@ -24,7 +24,7 @@ import { Form, type GenericObject } from 'vee-validate'
 import BaseModal from '@/view/components/BaseModal.vue'
 import BaseInput from '@/view/components/BaseInput.vue'
 import BaseInputSelect from '@/view/components/BaseInputSelect.vue'
-import ColorsDropdown from '../../ColorsDropdown.vue'
+import ColorsDropdown from '@/view/components/ColorsDropdown.vue' 
 import { useAccountModalController } from './BaseAccountModelController'
 import type { bankAccountsResponse } from '@/app/services/BankAccountsService'
 

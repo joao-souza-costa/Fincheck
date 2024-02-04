@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { formatCurrency } from '@/app/utils/formatCurrency'
 import { inject } from 'vue'
-import { type balanceProviderProps } from '../providers/balanceProvider'
+import { type balanceProviderProps } from '../pages/DashBoard/providers/balanceProvider'; 
 
 type iProps = {
   balance: number

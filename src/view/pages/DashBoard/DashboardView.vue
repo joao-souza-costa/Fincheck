@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full w-full p-4 md:p-8 md:pt-6 flex flex-col gap-4">
+  <div class="h-full w-full p-4 md:p-8 md:pt-6 flex flex-col gap-y-4">
     <header class="h-10 flex flex-row items-center justify-between">
       <fincheck-logo class="h-6 text-teal-900" />
       <user-menu />
@@ -25,7 +25,7 @@ import FincheckLogo from '@/view/components/FincheckLogo.vue'
 import UserMenu from '@/view/components/UserMenu.vue'
 import AccountsView from './components/AccountsView.vue'
 import TransactionsView from './components/TransactionsView.vue'
-import BaseFab from './components/BaseFab.vue'
+import BaseFab from '@/view/components/BaseFab.vue'
 import AccountModals from './components/Modals/AccountModals.vue'
 import { useBalanceProvider } from './providers/balanceProvider'
 import { useModalsProvider } from './providers/modalsProvider'
