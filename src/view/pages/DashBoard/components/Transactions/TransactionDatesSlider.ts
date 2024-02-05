@@ -6,13 +6,12 @@ import Swiper from "swiper";
 import { Manipulation } from "swiper/modules";
 import type { ManipulationMethods } from "swiper/types";
 
-
-import { addMonths, endOfWeek, format, startOfWeek, subMonths, startOfMonth, addWeeks, subWeeks } from "date-fns";
-import { ptBR } from "date-fns/locale";
+import dateFilters from "@/app/utils/dateFilters";
 
 import { MEDIUM_SCREEN } from "@/app/config/constants/breakpoints";
-import { enumTransactionPeriodFilter } from "@/app/services/TransactionService";
+
 import debounce from '@/app/utils/debounce'
+import { PERIODS } from "@/app/config/constants/dates";
 type iSwiperProperties = Swiper & ManipulationMethods
 
 interface iSliderOptions {
@@ -27,72 +26,12 @@ const createSliderOption = ({ label, value }: iSliderOptions) => renderToString(
   innerHTML: label,
 })))
 
-const handleWeek = (today: Date | number, lastDayOfWeek: Date) => {
-  let dateFormat = 'dd/MM'
-  const currentYear = new Date(Date.now()).getFullYear()
-  const firstDayOfWeek = startOfWeek(new Date(today))
-
-  if (currentYear !== firstDayOfWeek.getFullYear() || currentYear !== lastDayOfWeek.getFullYear())
-    dateFormat = 'dd/MM/yy'
-
-  return {
-    value: firstDayOfWeek.toISOString(),
-    label: format(firstDayOfWeek, dateFormat).concat(' à ').concat(format(lastDayOfWeek, dateFormat))
-  }
-}
-
-const filters = {
-  weekly: (today: Date, type?: 'NEXT' | 'PREV', number: number = 2) => {
-    let currentDate = today
-
-    if (type === 'NEXT')
-      currentDate = addWeeks(today, number)
-
-    if (type === 'PREV')
-      currentDate = subWeeks(today, number)
-
-    return handleWeek(currentDate, endOfWeek(new Date(currentDate)))
-  },
-  biweekly: (today: Date, type?: 'NEXT' | 'PREV', number: number = 2) => {
-
-    const biweeklyNumber = 2 * number
-
-    let currentDate = today
-
-
-    if (type === 'NEXT')
-      currentDate = addWeeks(today, biweeklyNumber)
-
-    if (type === 'PREV')
-      currentDate = subWeeks(today, biweeklyNumber)
-
-    return handleWeek(currentDate, addWeeks(endOfWeek(new Date(currentDate)), 1))
-  },
-  monthly: (today: Date | number, type?: 'NEXT' | 'PREV', number: number = 2) => {
-    let currentDate = today
-
-    if (type === 'NEXT')
-      currentDate = addMonths(today, number)
-
-    if (type === 'PREV')
-      currentDate = subMonths(today, number)
-
-    const dateFormat = 'MMM/yy'
-    const firstDayOfMonth = startOfMonth(new Date(currentDate))
-
-    return {
-      value: firstDayOfMonth.toISOString(),
-      label: format(firstDayOfMonth, dateFormat, { locale: ptBR })
-    }
-  }
-}
-
 export const TransactionDatesSlider = defineComponent({
   name: 'TransactionDatesSlider',
   props: {
     filter: {
-      type: String as PropType<enumTransactionPeriodFilter>,
-      default: enumTransactionPeriodFilter.monthly
+      type: String as PropType<PERIODS>,
+      default: PERIODS.monthly
     },
     value: {
       type: String,
@@ -104,6 +43,7 @@ export const TransactionDatesSlider = defineComponent({
     SliderNavigation
   },
   setup(props, ctx) {
+    const filters = dateFilters
     const swiper_test = ref()
     const current = ref(props.value)
     const swiper = computed<iSwiperProperties>(() => swiper_test.value.swiper)
@@ -185,7 +125,7 @@ export const TransactionDatesSlider = defineComponent({
         }
       },
       initialSlide: 1,
-      slidesPerView: 1.1, //it bugs the date inital if put 1
+      slidesPerView: 1.1, //it bugs the date initial if put 1
       centeredSlides: true,
       slideToClickedSlide: true,
       loop: true,

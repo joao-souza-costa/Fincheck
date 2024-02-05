@@ -28,21 +28,16 @@
           :slides-per-view="1"
           :loop="true"
           centered-slides
-          @init="handlePeriodSwiper"
+          @init="handlePERIODSwiper"
           @slide-change="handleSelectedPeriod"
         >
           <slider-navigation
             class="bg-white from-white"
-            @slide-next="periodSwiper.slideNext()"
-            @slide-prev="periodSwiper.slidePrev()"
+            @slide-next="PERIODSwiper.slideNext()"
+            @slide-prev="PERIODSwiper.slidePrev()"
           />
-          <SwiperSlide
-            v-for="(period, index) in enumTransactionPeriodFilter"
-            :key="index"
-            tag="p"
-            class="text-center"
-          >
-            {{ period }}
+          <SwiperSlide v-for="(period, index) in PERIODS" :key="index" tag="p" class="text-center">
+            {{ PERIODS_LABEL[period] }}
           </SwiperSlide>
         </Swiper>
       </div>
@@ -56,15 +51,14 @@
 import BaseScrollBar from '@/view/components/BaseScrollBar.vue'
 import BaseButton from '@/view/components/BaseButton.vue'
 import BaseModal from '@/view/components/BaseModal.vue'
-import { useFiltersModalController } from './Contollers/FiltersModalController'
+import { useFiltersModalController } from './FiltersModalController'
 import { SwiperSlide, Swiper } from 'swiper/vue'
-import { enumTransactionPeriodFilter } from '@/app/services/TransactionService'
-import SliderNavigation from './SliderNavigation.vue'
-import { ref } from 'vue'
+import SliderNavigation from '../Transactions/SliderNavigation.vue'
+import { PERIODS, PERIODS_LABEL } from '@/app/config/constants/dates'
 
 type tFilters = {
   bankAccountId: string | undefined
-  period: enumTransactionPeriodFilter
+  period: PERIODS
 }
 
 type iProps = {
@@ -83,15 +77,11 @@ const {
   selectedAccountId,
   selectedPeriod,
   selectedPeriodIndex,
+  PERIODSwiper,
   handleSelectedId,
-  handleSelectedPeriod
+  handleSelectedPeriod,
+  handlePERIODSwiper
 } = useFiltersModalController()
-
-const periodSwiper = ref()
-
-const handlePeriodSwiper = (swiper: any) => {
-  periodSwiper.value = swiper
-}
 
 const handleApplyFilters = () => {
   emit('applyFilters', { bankAccountId: selectedAccountId.value, period: selectedPeriod.value })

@@ -1,8 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query"
 import { defineStore, storeToRefs } from "pinia"
-import transactionService, { enumTransactionPeriodFilter, type GetAllTransactionFilters } from "../services/TransactionService"
+import transactionService, { type GetAllTransactionFilters } from "../services/TransactionService"
 import { computed, ref, watch } from "vue"
 import { useUserStore } from "./useUserStore"
+import { PERIODS } from "../config/constants/dates"
 
 interface AccountsDictionary {
   [key: string]: number
@@ -14,7 +15,7 @@ export const useTransactionsStore = defineStore('transactions', () => {
 
   const filters = ref<GetAllTransactionFilters>({
     date: new Date(Date.now()).toISOString(),
-    period: enumTransactionPeriodFilter.weekly,
+    period: PERIODS.weekly,
     bankAccountId: undefined
   })
 
