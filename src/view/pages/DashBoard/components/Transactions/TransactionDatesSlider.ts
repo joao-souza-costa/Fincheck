@@ -12,7 +12,7 @@ import { ptBR } from "date-fns/locale";
 
 import { MEDIUM_SCREEN } from "@/app/config/constants/breakpoints";
 import { enumTransactionPeriodFilter } from "@/app/services/TransactionService";
-
+import debounce from '@/app/utils/debounce'
 type iSwiperProperties = Swiper & ManipulationMethods
 
 interface iSliderOptions {
@@ -93,6 +93,10 @@ export const TransactionDatesSlider = defineComponent({
     filter: {
       type: String as PropType<enumTransactionPeriodFilter>,
       default: enumTransactionPeriodFilter.monthly
+    },
+    value: {
+      type: String,
+      default: new Date(Date.now()).toISOString()
     }
   },
   emits: ['changeValue'],
@@ -101,8 +105,7 @@ export const TransactionDatesSlider = defineComponent({
   },
   setup(props, ctx) {
     const swiper_test = ref()
-    const current = ref('')
-    const canStartNow = ref<boolean>(false)
+    const current = ref(props.value)
     const swiper = computed<iSwiperProperties>(() => swiper_test.value.swiper)
 
     const prependSlider = async (params: iSliderOptions) => {
@@ -129,19 +132,19 @@ export const TransactionDatesSlider = defineComponent({
       const item = swiper.value.wrapperEl.children.item(swiper.value.activeIndex)
       if (item) {
         current.value = item.getAttribute('data-value') as string
-        ctx.emit('changeValue', current.value)
       }
     }
 
     const initValues = async (date: Date) => {
-      await prependSlider(filters[props.filter](date, 'PREV', 1))
-      await prependSlider(filters[props.filter](date, 'PREV',))
-      await appendSlide(filters[props.filter](date))
-      await appendSlide(filters[props.filter](date, 'NEXT', 1))
-      canStartNow.value = true
+      Promise.all([await prependSlider(filters[props.filter](date, 'PREV', 1)),
+      await prependSlider(filters[props.filter](date, 'PREV',)),
+      await appendSlide(filters[props.filter](date)),
+      await appendSlide(filters[props.filter](date, 'NEXT', 1)),])
     }
-    const getMonth = filters.monthly
 
+    const emitCurrentValue = debounce(() => {
+      ctx.emit('changeValue', current.value)
+    })
 
     watch(current, async (value: Date | string) => {
       const isSecondLast = swiper.value.realIndex === (swiper.value.wrapperEl.children.length - 2)
@@ -151,6 +154,8 @@ export const TransactionDatesSlider = defineComponent({
       if (isSecondLast) await appendSlide(filters[props.filter](currentAsDate, 'NEXT'))
 
       if (isSecondItemInArray) await prependSlider(filters[props.filter](currentAsDate, 'PREV'))
+
+      emitCurrentValue()
     })
 
     watch(() => props.filter, async () => {
@@ -165,9 +170,7 @@ export const TransactionDatesSlider = defineComponent({
       prependSlider,
       appendSlide,
       initValues,
-      getMonth,
       handleSelectedValue,
-      canStartNow,
       current,
       swiper_test
     }
@@ -182,22 +185,17 @@ export const TransactionDatesSlider = defineComponent({
         }
       },
       initialSlide: 1,
-      slidesPerView: 1,
+      slidesPerView: 1.1, //it bugs the date inital if put 1
       centeredSlides: true,
       slideToClickedSlide: true,
       loop: true,
       on: {
         slideChangeTransitionEnd: this.handleSelectedValue,
-        beforeInit: () => {
-          const today = new Date(Date.now())
-          this.initValues(today)
-          this.handleSelectedValue()
+        beforeInit: async () => {
+          await this.initValues(new Date(this.current))
         }
       }
     })
-
-
-
   },
   template: /*html*/ `<div class="mt-6 relative overflow-hidden">
     <div ref="swiper_test" class="swipe h-12">

@@ -6,7 +6,6 @@ import { ref } from "vue"
 export function useTransactionsController() {
 
   const isOpenFiltersModal = ref(false)
-
   const store = useTransactionsStore()
   const { data, queryLoading, queryInitialLoading, filters } = storeToRefs(store)
 
@@ -18,8 +17,7 @@ export function useTransactionsController() {
   }
 
   const handleSwiperChange = (value: string) => {
-    console.log(value)
-    //store.handleChangeFilters("date")(value)
+    store.handleChangeFilters("date")(value)
   }
 
   const handleApplyFilters = ({ bankAccountId, period }: {
@@ -40,6 +38,6 @@ export function useTransactionsController() {
     toggleFiltersModal,
     handleSelectTypeTransaction,
     handleSwiperChange,
-    handleApplyFilters
+    handleApplyFilters,
   }
 }

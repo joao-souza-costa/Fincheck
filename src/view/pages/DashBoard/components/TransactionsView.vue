@@ -14,7 +14,11 @@
             <filter-icon />
           </button>
         </div>
-        <TransactionDatesSlider :filter="filters.period" :initial-value="filters.date" @change-value="handleSwiperChange"/>
+        <TransactionDatesSlider
+          :filter="filters.period"
+          :value="filters.date"
+          @change-value="handleSwiperChange"
+        />
       </header>
       <div
         v-if="transactionsLoading"

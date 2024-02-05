@@ -26,6 +26,7 @@
         <Swiper
           :initial-slide="selectedPeriodIndex"
           :slides-per-view="1"
+          :loop="true"
           centered-slides
           @init="handlePeriodSwiper"
           @slide-change="handleSelectedPeriod"

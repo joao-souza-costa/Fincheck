@@ -14,7 +14,7 @@ export const useTransactionsStore = defineStore('transactions', () => {
 
   const filters = ref<GetAllTransactionFilters>({
     date: new Date(Date.now()).toISOString(),
-    period: enumTransactionPeriodFilter.monthly,
+    period: enumTransactionPeriodFilter.weekly,
     bankAccountId: undefined
   })
 
