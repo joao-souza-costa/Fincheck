@@ -6,12 +6,15 @@ import { computed, ref } from 'vue'
 import { useQuery } from '@tanstack/vue-query'
 import categoriesService from '@/app/services/CategoriesService'
 import { PaymentTypes } from '@/app/config/constants/paymentTypes'
+import { useUserStore } from '@/app/store/useUserStore'
 
 export function useBaseTransactionModalController(type: string) {
+  const { accessToken } = storeToRefs(useUserStore())
 
   const { data: categories, isLoading: categoriesLoading } = useQuery({
     queryKey: ['categories'],
-    queryFn: categoriesService.getAll
+    queryFn: categoriesService.getAll,
+    enabled: accessToken
   })
 
   const { data: accounts, queryLoading: accountLoading } = storeToRefs(useAccountStore())
