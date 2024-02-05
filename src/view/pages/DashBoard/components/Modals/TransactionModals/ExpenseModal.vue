@@ -5,10 +5,10 @@
     type="EXPENSE"
     :modal-label="expense ? 'Editar Despesa' : 'Nova Despesa'"
     balance-label="Valor da Despesa"
-    transaction-name-label="Noma da despesa"
+    transaction-name-label="Nome da despesa"
     category-label="Categoria"
     payment-type-label="Método de pagamento"
-    payment-label="Pagar Com"
+    payment-label="Conta"
     @submit="handleSubmit"
     @close="$emit('close')"
   >
