@@ -57,7 +57,8 @@ export function useBaseTransactionModalController(type: string) {
 
 
   const schema = Yup.object().shape({
-    value: Yup.string().required('Saldo  é obrigatório'),
+    value: Yup.string().required('Saldo  é obrigatório')
+      .test('value', 'Saldo precisa ser maior que zero', val => Number(val) > 0),
     name: Yup.string().required('Nome da transação é obrigatório'),
     categoryId: Yup.mixed().required('Categoria é obrigatória'),
     bankAccountId: Yup.string().required('Destino do pagamento é obrigatória'),

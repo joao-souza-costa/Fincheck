@@ -9,12 +9,9 @@
         :validation-schema="schema"
         :initialValues="initialValues"
       >
-        <span class="text-gray-600 tracking-[-0.5px] text-xs">{{ balanceLabel }}</span>
-        <div class="flex items-center gap-2">
-          <span class="text-gray-600 tracking-[-0.5px] text-lg">R$</span>
-          <base-currency-input name="value" />
-        </div>
-        <div class="mt-10 flex flex-col gap-4">
+        <base-currency-input name="value" :placeholder="balanceLabel" />
+
+        <div class="mt-4 flex flex-col gap-4">
           <base-input
             name="name"
             type="text"

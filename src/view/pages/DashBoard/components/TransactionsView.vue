@@ -83,14 +83,14 @@
 
 <script lang="ts" setup>
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { MONTHS } from '@/app/config/constants/Date'
+import { MONTHS } from '@/app/config/constants/dates'
 import { useTransactionsController } from './transactionsConstroller'
 import BaseSpinner from '@/view/components/BaseSpinner.vue'
 import FilterIcon from '@/view/components/icons/FilterIcon.vue'
 import SliderOptions from './Transactions/SliderOptions.vue'
 import SliderNavigation from './Transactions/SliderNavigation.vue'
 import CategoryIcon from '@/view/components/icons/categories/CategoryIcon.vue'
-import baseBalance from './BaseBalance.vue'
+import BaseBalance from '@/view/components/BaseBalance.vue'
 import emptyState from '@/assets/empty-state.svg'
 import TransactionsDropdown from './Transactions/TransactionsDropdown.vue'
 import FiltersModal from './Transactions/FiltersModal.vue'
