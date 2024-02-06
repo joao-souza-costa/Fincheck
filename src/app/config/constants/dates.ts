@@ -14,12 +14,14 @@ export const MONTHS = [
   'Dez',
 ]
 export enum PERIODS {
-  weekly = 'weekly',
-  biweekly = 'biweekly',
-  monthly = 'monthly',
+  diary = 'DIARY',
+  weekly = 'WEEKLY',
+  biweekly = 'BIWEEKLY',
+  monthly = 'MONTHLY',
 }
 
 export const PERIODS_LABEL = {
+  [PERIODS.diary]: 'Diário',
   [PERIODS.weekly]: 'Semanal',
   [PERIODS.biweekly]: 'Quinzenal',
   [PERIODS.monthly]: 'Mensal',

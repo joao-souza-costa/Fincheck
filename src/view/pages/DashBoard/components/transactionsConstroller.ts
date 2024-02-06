@@ -1,13 +1,15 @@
 import type { PERIODS } from "@/app/config/constants/dates"
 import { useTransactionsStore } from "@/app/store/useTransactionStore"
 import { storeToRefs } from "pinia"
-import { ref } from "vue"
+import { computed, ref, watch } from "vue"
 
 export function useTransactionsController() {
 
   const isOpenFiltersModal = ref(false)
+  const slideLoading = ref(false)
+
   const store = useTransactionsStore()
-  const { data, queryLoading, queryInitialLoading, filters } = storeToRefs(store)
+  const { data, queryLoading, queryInitialLoading, filters, groupedTransactionByAccount } = storeToRefs(store)
 
   const toggleFiltersModal = (): boolean => {
     return isOpenFiltersModal.value = !isOpenFiltersModal.value
@@ -29,11 +31,20 @@ export function useTransactionsController() {
     toggleFiltersModal()
   }
 
+  const transactionsLoading = computed(() => {
+    return queryLoading.value || slideLoading.value
+  })
+
+  watch(queryLoading, () => {
+    slideLoading.value = false
+  })
+
   return {
     filters,
     transactions: data,
-    transactionsLoading: queryLoading,
+    transactionsLoading,
     initialLoading: queryInitialLoading,
+    slideLoading,
     isOpenFiltersModal,
     toggleFiltersModal,
     handleSelectTypeTransaction,

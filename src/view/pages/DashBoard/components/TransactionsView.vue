@@ -17,6 +17,7 @@
         <TransactionDatesSlider
           :filter="filters.period"
           :value="filters.date"
+          @slide-start="() => (slideLoading = true)"
           @change-value="handleSwiperChange"
         />
       </header>
@@ -93,6 +94,7 @@ const {
   transactions,
   initialLoading,
   isOpenFiltersModal,
+  slideLoading,
   toggleFiltersModal,
   handleSwiperChange,
   handleApplyFilters,

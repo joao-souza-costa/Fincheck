@@ -1,4 +1,4 @@
-import { addMonths, addWeeks, endOfWeek, format, startOfMonth, startOfWeek, subMonths, subWeeks } from "date-fns"
+import { addDays, addMonths, addWeeks, endOfWeek, format, isToday, startOfDay, startOfMonth, startOfWeek, subDays, subMonths, subWeeks } from "date-fns"
 import { ptBR } from "date-fns/locale"
 
 const handleWeek = (today: Date | number, lastDayOfWeek: Date) => {
@@ -16,7 +16,24 @@ const handleWeek = (today: Date | number, lastDayOfWeek: Date) => {
 }
 
 export default {
-  weekly: (today: Date, type?: 'NEXT' | 'PREV', number: number = 2) => {
+  DIARY: (today: Date, type?: 'NEXT' | 'PREV', number: number = 2) => {
+    let currentDate: Date = today
+
+    if (type === 'NEXT')
+      currentDate = addDays(today, number)
+
+    if (type === 'PREV')
+      currentDate = subDays(today, number)
+
+    const dateFormat = 'dd/MM'
+    const startDay = startOfDay(new Date(currentDate))
+
+    return {
+      value: startDay.toISOString(),
+      label: isToday(currentDate) ? 'Hoje' : format(startDay, dateFormat, { locale: ptBR })
+    }
+  },
+  WEEKLY: (today: Date, type?: 'NEXT' | 'PREV', number: number = 2) => {
     let currentDate = today
 
     if (type === 'NEXT')
@@ -27,7 +44,7 @@ export default {
 
     return handleWeek(currentDate, endOfWeek(new Date(currentDate)))
   },
-  biweekly: (today: Date, type?: 'NEXT' | 'PREV', number: number = 2) => {
+  BIWEEKLY: (today: Date, type?: 'NEXT' | 'PREV', number: number = 2) => {
 
     const biweeklyNumber = 2 * number
 
@@ -42,7 +59,7 @@ export default {
 
     return handleWeek(currentDate, addWeeks(endOfWeek(new Date(currentDate)), 1))
   },
-  monthly: (today: Date | number, type?: 'NEXT' | 'PREV', number: number = 2) => {
+  MONTHLY: (today: Date | number, type?: 'NEXT' | 'PREV', number: number = 2) => {
     let currentDate = today
 
     if (type === 'NEXT')

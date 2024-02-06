@@ -38,7 +38,7 @@ export const TransactionDatesSlider = defineComponent({
       default: new Date(Date.now()).toISOString()
     }
   },
-  emits: ['changeValue'],
+  emits: ['change-value', 'slide-start'],
   components: {
     SliderNavigation
   },
@@ -83,8 +83,8 @@ export const TransactionDatesSlider = defineComponent({
     }
 
     const emitCurrentValue = debounce(() => {
-      ctx.emit('changeValue', current.value)
-    })
+      ctx.emit('change-value', current.value)
+    }, 700)
 
     watch(current, async (value: Date | string) => {
       const isSecondLast = swiper.value.realIndex === (swiper.value.wrapperEl.children.length - 2)
@@ -125,11 +125,12 @@ export const TransactionDatesSlider = defineComponent({
         }
       },
       initialSlide: 1,
-      slidesPerView: 1.1, //it bugs the date initial if put 1
+      slidesPerView: 1.1, //it bugs the date inital if put 1
       centeredSlides: true,
       slideToClickedSlide: true,
       loop: true,
       on: {
+        slideChangeTransitionStart: () => this.$emit('slide-start'),
         slideChangeTransitionEnd: this.handleSelectedValue,
         beforeInit: async () => {
           await this.initValues(new Date(this.current))
