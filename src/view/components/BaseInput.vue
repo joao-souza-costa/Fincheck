@@ -27,7 +27,6 @@
 </template>
 
 <script setup lang="ts">
-import cn from '@/app/utils/cn'
 import { useField } from 'vee-validate'
 import CrossCircle from '@/assets/CrossCircle.vue'
 import { toRef } from 'vue'
