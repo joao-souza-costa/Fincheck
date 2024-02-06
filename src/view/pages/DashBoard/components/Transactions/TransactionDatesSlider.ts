@@ -61,10 +61,12 @@ export const TransactionDatesSlider = defineComponent({
     }
 
     const handlePrev = async () => {
+      ctx.emit('slide-start')
       swiper.value.slidePrev(200)
     }
 
     const handleNext = async () => {
+      ctx.emit('slide-start')
       swiper.value.slideNext(200)
     }
 
@@ -130,7 +132,7 @@ export const TransactionDatesSlider = defineComponent({
       slideToClickedSlide: true,
       loop: true,
       on: {
-        slideChangeTransitionStart: () => this.$emit('slide-start'),
+        click: () => this.$emit('slide-start'),
         slideChangeTransitionEnd: this.handleSelectedValue,
         beforeInit: async () => {
           await this.initValues(new Date(this.current))

@@ -4,6 +4,7 @@ import transactionService, { type GetAllTransactionFilters } from "../services/T
 import { computed, ref, watch } from "vue"
 import { useUserStore } from "./useUserStore"
 import { PERIODS } from "../config/constants/dates"
+import { startOfDay } from "date-fns"
 
 interface AccountsDictionary {
   [key: string]: number
@@ -14,7 +15,7 @@ export const useTransactionsStore = defineStore('transactions', () => {
   const { accessToken } = storeToRefs(useUserStore())
 
   const filters = ref<GetAllTransactionFilters>({
-    date: new Date(Date.now()).toISOString(),
+    date: startOfDay(Date.now()).toISOString(),
     period: PERIODS.diary,
     bankAccountId: undefined
   })
