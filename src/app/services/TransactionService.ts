@@ -1,3 +1,4 @@
+import { PERIODS } from "../config/constants/dates";
 import { httpClient } from "./Client";
 
 export type Transaction = {
@@ -32,8 +33,8 @@ export interface CreateTransactionParams {
 }
 
 export type GetAllTransactionFilters = {
-  month: number;
-  year: number;
+  date: string,
+  period: PERIODS,
   bankAccountId?: string;
   type?: Transaction['type']
 }

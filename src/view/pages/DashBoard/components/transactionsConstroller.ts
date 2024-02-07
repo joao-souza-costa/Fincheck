@@ -1,10 +1,12 @@
+import type { PERIODS } from "@/app/config/constants/dates"
 import { useTransactionsStore } from "@/app/store/useTransactionStore"
 import { storeToRefs } from "pinia"
-import { ref } from "vue"
+import { ref, watch } from "vue"
 
 export function useTransactionsController() {
 
   const isOpenFiltersModal = ref(false)
+  const slideLoading = ref(true)
 
   const store = useTransactionsStore()
   const { data, queryLoading, queryInitialLoading, filters } = storeToRefs(store)
@@ -16,28 +18,31 @@ export function useTransactionsController() {
     store.handleChangeFilters("type")(value)
   }
 
-  const handleSwiperChange = (swiperInstance: any) => {
-    store.handleChangeFilters("month")(swiperInstance.realIndex)
+  const handleSwiperChange = (value: string) => {
+    store.handleChangeFilters("date")(value)
   }
 
-  const handleApplyFilters = ({ bankAccountId, year }: {
+  const handleApplyFilters = ({ bankAccountId, period }: {
     bankAccountId: string | undefined
-    year: number
+    period: PERIODS
   }) => {
     store.handleChangeFilters("bankAccountId")(bankAccountId)
-    store.handleChangeFilters("year")(year)
+    store.handleChangeFilters("period")(period)
     toggleFiltersModal()
   }
+
+  watch(queryLoading, (value) => slideLoading.value = value)
 
   return {
     filters,
     transactions: data,
-    transactionsLoading: queryLoading,
+    transactionsLoading: slideLoading,
     initialLoading: queryInitialLoading,
+    slideLoading,
     isOpenFiltersModal,
     toggleFiltersModal,
     handleSelectTypeTransaction,
     handleSwiperChange,
-    handleApplyFilters
+    handleApplyFilters,
   }
 }

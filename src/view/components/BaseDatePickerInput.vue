@@ -17,6 +17,7 @@
 
       <BasePopover.Content class="w-80 text-red-400">
         <VueDatePicker
+          week-start="0"
           :model-value="internalValue"
           inline
           auto-apply
