@@ -21,7 +21,7 @@ httpClient.interceptors.response.use(response => response, error => {
 
   if (response.status === 401) {
     userStore.signout()
-    toast.error(response.data.message)
+    toast.error('Não foi possível validar sua ação, tente novamente')
   }
 
   throw (error)
