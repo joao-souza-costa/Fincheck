@@ -54,15 +54,15 @@
         </SelectContent>
       </SelectPortal>
     </SelectRoot>
-    <div v-if="errorMessage" class="flex gap-1 items-center mt-2 text-red-900">
-      <CrossCircle />
-      <span class="text-xs"> {{ errorMessage }} </span>
-    </div>
+
+    <base-input-error :error-message="errorMessage" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, toRef } from 'vue'
+import { toRef } from 'vue'
+import BaseInputError from './BaseInputError.vue'
+
 import {
   SelectContent,
   SelectItem,
@@ -77,7 +77,6 @@ import {
   SelectViewport
 } from 'radix-vue'
 import ChevronDownIcon from './icons/ChevronDownIcon.vue'
-import CrossCircle from '@/assets/CrossCircle.vue'
 import { useField } from 'vee-validate'
 
 type tProps = {

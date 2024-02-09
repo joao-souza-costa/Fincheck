@@ -1,47 +1,49 @@
 <template>
-  <base-transaction-modal
-    :open-modal="isOpen"
-    :initial-values="expense"
-    type="EXPENSE"
-    :modal-label="expense ? 'Editar Despesa' : 'Nova Despesa'"
-    balance-label="Valor da Despesa"
-    transaction-name-label="Nome da despesa"
-    category-label="Categoria"
-    payment-type-label="Método de pagamento"
-    payment-label="Conta"
-    @submit="handleSubmit"
-    @close="$emit('close')"
-  >
-    <template #right-action>
-      <trash-icon
-        v-if="expense"
-        role="button"
-        class="w-6 h-6 text-red-800"
-        @click="handleDeleteModal(expense.id)"
-      />
-    </template>
+  <base-modal :open="isOpen" @update:open="$emit('close')">
+    <base-transaction-modal
+      :open-modal="isOpen"
+      :initial-values="expense"
+      type="EXPENSE"
+      :modal-label="expense ? 'Editar Despesa' : 'Nova Despesa'"
+      balance-label="Valor da Despesa"
+      transaction-name-label="Nome da despesa"
+      category-label="Categoria"
+      payment-type-label="Método de pagamento"
+      payment-label="Conta"
+      @submit="handleSubmit"
+      @close="$emit('close')"
+    >
+      <template #right-action>
+        <trash-icon
+          v-if="expense"
+          role="button"
+          class="w-6 h-6 text-red-800"
+          @click="handleDeleteModal(expense.id)"
+        />
+      </template>
 
-    <base-button type="submit" :is-loading="updateLoading || queryLoading"> Salvar </base-button>
-  </base-transaction-modal>
+      <base-button type="submit" :is-loading="updateLoading || queryLoading"> Salvar </base-button>
+    </base-transaction-modal>
 
-  <confirm-delete-modal
-    v-if="isOpenDeleteModal"
-    title="Tem certeza que deseja excluir esta despesa"
-    :is-loading="deleteLoading || queryLoading"
-    @confirm="onDelete"
-    @cancel="isOpenDeleteModal = false"
-    @close="isOpenDeleteModal = false"
-  />
+    <confirm-delete-modal
+      v-if="isOpenDeleteModal"
+      title="Tem certeza que deseja excluir esta despesa"
+      :is-loading="deleteLoading || queryLoading"
+      @confirm="onDelete"
+      @cancel="isOpenDeleteModal = false"
+      @close="isOpenDeleteModal = false"
+    />
+  </base-modal>
 </template>
 
 <script lang="ts" setup>
 import TrashIcon from '@/view/components/icons/TrashIcon.vue'
-import BaseTransactionModal from './BaseTransactionModal.vue'
+import BaseTransactionModal from './BaseTransactionForm.vue'
 import type { Transaction } from '@/app/services/TransactionService'
 import { useTransactionModalsController } from './TransactionModalsController'
 import ConfirmDeleteModal from '@/view/components/ConfirmDeleteModal.vue'
 import BaseButton from '@/view/components/BaseButton.vue'
-
+import BaseModal from '@/view/components/BaseModal.vue'
 const props = defineProps<{ isOpen: boolean; expense?: Transaction }>()
 const emit = defineEmits<{ close: [] }>()
 

@@ -7,6 +7,7 @@
       <DialogContent
         aria-describedby="undefined"
         class="data-[state=open]:animate-content-show fixed top-1/2 -translate-x-1/2 left-1/2 -translate-y-1/2 p-6 space-y-10 bg-white rounded-2xl z-[51] shadow-[0px_11px_20px_0px_rgba(0,0,0,0.10)] w-full max-w-[400px] outline-none"
+        :class="$attrs.class"
       >
         <div aria-describedby="undefined">
           <header class="h-12 flex items-center justify-between text-gray-800">
@@ -34,6 +35,10 @@
 import { computed } from 'vue'
 import CrossIcon from './icons/CrossIcon.vue'
 import { DialogContent, DialogOverlay, DialogPortal, DialogRoot, DialogTitle } from 'radix-vue'
+
+defineOptions({
+  inheritAttrs: false
+})
 
 type iProps = {
   title: String

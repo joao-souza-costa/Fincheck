@@ -1,28 +1,22 @@
 <template>
-  <base-transaction-modal
-    :open-modal="isOpen"
-    :initial-values="income"
-    type="INCOME"
-    :modal-label="income ? 'Editar Receita' : 'Nova Receita'"
-    balance-label="Valor da Receita"
-    transaction-name-label="Nome da Receita"
-    category-label="Categoria"
-    payment-label="Conta"
-    payment-type-label="Método de pagamento"
-    @submit="handleSubmit"
-    @close="$emit('close')"
+  <base-modal
+    class="min-h-[600px]"
+    :title="income ? 'Editar Receita' : 'Nova Receita'"
+    :open="isOpen"
+    @update:open="$emit('close')"
   >
-    <template #right-action>
-      <trash-icon
-        v-if="income"
-        role="button"
-        class="w-6 h-6 text-red-800"
-        @click="handleDeleteModal(income.id)"
+    <Transition :name="transition" mode="out-in">
+      <component
+        :is="tabs[currentTab]"
+        :initial-values="income"
+        :is-loading="updateLoading || queryLoading"
+        v-bind="baseTransactionFormProps"
+        @submit="handleSubmit"
+        @open-categories="setCategories"
+        @close-categories="setForm"
       />
-    </template>
-
-    <base-button type="submit" :is-loading="updateLoading || queryLoading"> Salvar </base-button>
-  </base-transaction-modal>
+    </Transition>
+  </base-modal>
 
   <confirm-delete-modal
     v-if="isOpenDeleteModal"
@@ -36,12 +30,13 @@
 
 <script lang="ts" setup>
 import TrashIcon from '@/view/components/icons/TrashIcon.vue'
-import BaseTransactionModal from './BaseTransactionModal.vue'
+import BaseTransactionForm from './BaseTransactionForm.vue'
 import type { Transaction } from '@/app/services/TransactionService'
 import ConfirmDeleteModal from '@/view/components/ConfirmDeleteModal.vue'
-import BaseButton from '@/view/components/BaseButton.vue'
-
+import CategoriesList from '../CategoryModals/CategoriesList.vue'
+import BaseModal from '@/view/components/BaseModal.vue'
 import { useTransactionModalsController } from './TransactionModalsController'
+import { ref } from 'vue'
 
 const props = defineProps<{ isOpen: boolean; income?: Transaction }>()
 const emit = defineEmits<{ close: [] }>()
@@ -60,6 +55,62 @@ const {
 const handleSubmit = (values: any) => {
   return props.income ? onUpdate(props.income.id, values) : onCreate(values)
 }
+
+const currentTab = ref('BaseTransactionForm')
+const transition = ref('go')
+const tabs: { [key: string]: any } = {
+  BaseTransactionForm,
+  CategoriesList
+}
+
+const baseTransactionFormProps = ref({
+  type: 'INCOME',
+  balanceLabel: 'Valor da Receita',
+  transactionNameLabel: 'Nome da Receita',
+  categoryLabel: 'Categoria',
+  paymentLabel: 'Conta',
+  paymentTypeLabel: 'Método de pagamento'
+})
+
+const setCategories = () => {
+  transition.value = 'go'
+  currentTab.value = 'CategoriesList'
+}
+
+const setForm = () => {
+  transition.value = 'back'
+  currentTab.value = 'BaseTransactionForm'
+}
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.go-enter-active,
+.go-leave-active {
+  transition: all 0.25s ease-out;
+}
+
+.go-enter-from {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.go-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.back-enter-active,
+.back-leave-active {
+  transition: all 0.25s ease-out;
+}
+
+.back-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.back-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+</style>
