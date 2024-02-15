@@ -4,6 +4,7 @@ import TransactionForm from '../../Forms/TransactionForm/TransactionForm.vue'
 import CategoriesList from '../CategoryModals/CategoriesList.vue'
 import { ref } from 'vue'
 import type { Transaction } from '@/app/services/TransactionService'
+import type { TRANSACTION_TYPE } from '@/app/config/constants/transaction'
 
 interface iTabs {
   component: any
@@ -15,7 +16,7 @@ export type tProps = {
   isOpen: boolean
   transaction?: Transaction
   loading: boolean
-  type: 'INCOME' | 'EXPENSE'
+  type: TRANSACTION_TYPE
   labels: {
     title: string
     balanceLabel: string

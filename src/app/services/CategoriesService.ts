@@ -1,10 +1,11 @@
+import type { TRANSACTION_TYPE } from "../config/constants/transaction";
 import { httpClient } from "./Client";
 
 export interface categoriesResponse {
   id: string
   name: string,
   icon: string
-  type: 'INCOME' | 'EXPENSE'
+  type: TRANSACTION_TYPE
 }
 
 export default {

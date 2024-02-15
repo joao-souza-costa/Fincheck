@@ -51,12 +51,13 @@ import BaseDatePickerInput from '@/view/components/BaseDatePickerInput.vue'
 import { useBaseTransactionFormController } from './TransactionFormController'
 import BaseButton from '@/view/components/BaseButton.vue'
 import CategoryInput from './CategoryInput.vue'
+import type { TRANSACTION_TYPE } from '@/app/config/constants/transaction'
 
 type tProps = {
   isLoading: boolean
   initialValues?: Omit<Partial<Transaction>, 'categoryId'>
   category?: Transaction['category']
-  type: 'INCOME' | 'EXPENSE'
+  type: TRANSACTION_TYPE
   balanceLabel: string
   transactionNameLabel: string
   categoryLabel: string

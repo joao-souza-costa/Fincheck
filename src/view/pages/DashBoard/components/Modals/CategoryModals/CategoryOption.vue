@@ -4,7 +4,7 @@
     :class="$attrs.class"
   >
     <CategoryIcon
-      :type="type === 'EXPENSE' ? 'expense' : 'income'"
+      :type="type === TRANSACTION_TYPE.EXPENSE ? 'expense' : 'income'"
       :category="icon"
       class="h-10 w-10"
     />
@@ -15,12 +15,13 @@
 </template>
 
 <script setup lang="ts">
+import { TRANSACTION_TYPE } from '@/app/config/constants/transaction'
 import CategoryIcon from '@/view/components/icons/categories/CategoryIcon.vue'
 
 type tProp = {
   name: string
   icon: string
-  type: 'INCOME' | 'EXPENSE'
+  type: TRANSACTION_TYPE
 }
 
 defineProps<tProp>()

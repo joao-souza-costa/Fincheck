@@ -44,7 +44,7 @@
           >
             <div class="flex-1 flex items-center gap-3">
               <CategoryIcon
-                :type="transaction.type === 'EXPENSE' ? 'expense' : 'income'"
+                :type="transaction.type === TRANSACTION_TYPE.EXPENSE ? 'expense' : 'income'"
                 :category="transaction?.category?.icon"
               />
               <div>
@@ -56,7 +56,9 @@
             </div>
             <base-balance
               class="tracking-[-0.5px] font-medium"
-              :class="[transaction.type === 'EXPENSE' ? 'text-red-800' : 'text-green-800']"
+              :class="[
+                transaction.type === TRANSACTION_TYPE.EXPENSE ? 'text-red-800' : 'text-green-800'
+              ]"
               :balance="transaction.value"
             />
           </div>
@@ -86,6 +88,7 @@ import FiltersModal from './Modals/FiltersModal.vue'
 import { formatDate } from '@/app/utils/formatDate'
 import { MODALS_PROVIDER, type modalsProviderProps } from '../providers/modalsProvider'
 import { inject } from 'vue'
+import { TRANSACTION_TYPE } from '@/app/config/constants/transaction'
 
 const { toggleTransactionModal } = inject(MODALS_PROVIDER) as modalsProviderProps
 const {

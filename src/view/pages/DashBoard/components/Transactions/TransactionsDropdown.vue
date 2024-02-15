@@ -2,16 +2,16 @@
   <BaseDropdown.Root>
     <BaseDropdown.Trigger>
       <button class="flex items-center gap-2">
-        <template v-if="selected === 'EXPENSE'"> <ExpensesIcon /> </template>
+        <template v-if="selected === TRANSACTION_TYPE.EXPENSE"> <ExpensesIcon /> </template>
 
-        <template v-else-if="selected === 'INCOME'"> <IncomeIcon /> </template>
+        <template v-else-if="selected === TRANSACTION_TYPE.INCOME"> <IncomeIcon /> </template>
 
         <template v-else> <TransactionsIcon /> </template>
 
         <span class="text-sm text-gray-800 tracking-[-0.5px] font-medium">
-          <template v-if="selected === 'EXPENSE'"> Despesas </template>
+          <template v-if="selected === TRANSACTION_TYPE.EXPENSE"> Despesas </template>
 
-          <template v-else-if="selected === 'INCOME'"> Receitas </template>
+          <template v-else-if="selected === TRANSACTION_TYPE.INCOME"> Receitas </template>
 
           <template v-else> Transações </template>
         </span>
@@ -20,12 +20,12 @@
     </BaseDropdown.Trigger>
 
     <BaseDropdown.Content class="w-[279px]">
-      <BaseDropdown.Item class="gap-2" @select="$emit('select', 'INCOME')">
+      <BaseDropdown.Item class="gap-2" @select="$emit('select', TRANSACTION_TYPE.INCOME)">
         <IncomeIcon />
         Receita
       </BaseDropdown.Item>
 
-      <BaseDropdown.Item class="gap-2" @select="$emit('select', 'EXPENSE')">
+      <BaseDropdown.Item class="gap-2" @select="$emit('select', TRANSACTION_TYPE.EXPENSE)">
         <ExpensesIcon />
         Despesas
       </BaseDropdown.Item>
@@ -44,29 +44,15 @@ import ChevronDownIcon from '@/view/components/icons/ChevronDownIcon.vue'
 import IncomeIcon from '@/view/components/icons/IncomeOutlineIcon.vue'
 import ExpensesIcon from '@/view/components/icons/ExpensesIcon.vue'
 import TransactionsIcon from '@/view/components/icons/TransactionsIcon.vue'
-
-const options = {
-  INCOME: {
-    label: 'Receita',
-    icon: IncomeIcon
-  },
-  EXPENSE: {
-    label: 'Despesas',
-    icon: ExpensesIcon
-  },
-  undefined: {
-    label: 'Transações',
-    icon: TransactionsIcon
-  }
-}
+import { TRANSACTION_TYPE } from '@/app/config/constants/transaction'
 
 type tEmits = {
-  select: [v: 'INCOME' | 'EXPENSE' | undefined]
+  select: [v: TRANSACTION_TYPE | undefined]
 }
 
 defineEmits<tEmits>()
 defineProps<{
-  selected?: 'INCOME' | 'EXPENSE' | undefined
+  selected?: TRANSACTION_TYPE | undefined
 }>()
 </script>
 

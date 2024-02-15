@@ -20,13 +20,14 @@ import CategoryOption from './CategoryOption.vue'
 
 import { useCategoriesListController } from './CategoriesListController'
 import type { categoriesResponse } from '@/app/services/CategoriesService'
+import type { TRANSACTION_TYPE } from '@/app/config/constants/transaction';
 
 type tEmit = {
   (e: 'submit', category: categoriesResponse): void
 }
 
 const props = defineProps<{
-  type: 'INCOME' | 'EXPENSE'
+  type: TRANSACTION_TYPE
 }>()
 
 const { categoriesFiltered } = useCategoriesListController(props.type)

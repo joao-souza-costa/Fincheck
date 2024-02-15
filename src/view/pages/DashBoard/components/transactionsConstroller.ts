@@ -1,4 +1,5 @@
 import type { PERIODS } from "@/app/config/constants/dates"
+import type { TRANSACTION_TYPE } from "@/app/config/constants/transaction"
 import { useTransactionsStore } from "@/app/store/useTransactionStore"
 import { storeToRefs } from "pinia"
 import { ref, watch } from "vue"
@@ -14,7 +15,7 @@ export function useTransactionsController() {
   const toggleFiltersModal = (): boolean => {
     return isOpenFiltersModal.value = !isOpenFiltersModal.value
   }
-  const handleSelectTypeTransaction = (value: 'INCOME' | 'EXPENSE' | undefined) => {
+  const handleSelectTypeTransaction = (value: TRANSACTION_TYPE | undefined) => {
     store.handleChangeFilters("type")(value)
   }
 

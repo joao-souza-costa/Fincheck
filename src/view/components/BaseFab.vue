@@ -10,12 +10,18 @@
       </BaseDropdown.Trigger>
 
       <BaseDropdown.Content>
-        <BaseDropdown.Item class="gap-2" @click="hasAccounts && toggleTransactionModal('EXPENSE')">
+        <BaseDropdown.Item
+          class="gap-2"
+          @click="hasAccounts && toggleTransactionModal(TRANSACTION_TYPE.EXPENSE)"
+        >
           <ExpenseCategory />
           <span :class="[!hasAccounts && 'opacity-50']">Nova Despesa</span>
         </BaseDropdown.Item>
 
-        <BaseDropdown.Item class="gap-2" @click="hasAccounts && toggleTransactionModal('INCOME')">
+        <BaseDropdown.Item
+          class="gap-2"
+          @click="hasAccounts && toggleTransactionModal(TRANSACTION_TYPE.INCOME)"
+        >
           <IncomeIcon />
           <span :class="[!hasAccounts && 'opacity-50']"> Nova Receita </span>
         </BaseDropdown.Item>
@@ -36,8 +42,13 @@ import ExpenseCategory from '@/view/components/icons/categories/expense/ExpenseC
 import PlusIcon from '@/view/components/icons/PlusIcon.vue'
 import IncomeIcon from '@/view/components/icons/categories/income/IncomeIcon'
 import { computed, inject } from 'vue'
-import { MODALS_PROVIDER, type modalsProviderProps } from '@/view/pages/DashBoard/providers/modalsProvider'
+import {
+  MODALS_PROVIDER,
+  type modalsProviderProps
+} from '@/view/pages/DashBoard/providers/modalsProvider'
 import { useAccountStore } from '@/app/store/useAccountStore'
+import { TRANSACTION_TYPE } from '@/app/config/constants/transaction'
+
 const { toggleAccountModal, toggleTransactionModal } = inject(
   MODALS_PROVIDER
 ) as modalsProviderProps

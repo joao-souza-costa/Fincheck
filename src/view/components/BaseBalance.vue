@@ -7,16 +7,13 @@
 <script setup lang="ts">
 import { formatCurrency } from '@/app/utils/formatCurrency'
 import { inject } from 'vue'
-import { type balanceProviderProps } from '../pages/DashBoard/providers/balanceProvider'; 
+import { type balanceProviderProps } from '../pages/DashBoard/providers/balanceProvider'
 
 type iProps = {
   balance: number
-  type?: string
 }
 
 const { areVisible } = inject('balanceProvider') as balanceProviderProps
 
-withDefaults(defineProps<iProps>(), {
-  type: 'income'
-})
+defineProps<iProps>()
 </script>

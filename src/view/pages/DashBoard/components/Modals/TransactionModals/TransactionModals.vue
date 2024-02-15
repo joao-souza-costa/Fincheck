@@ -5,11 +5,11 @@
     :labels="expenseLabels"
     :transaction="isOpenTransactionModal?.EDIT_TRANSACTION"
     :loading="updateLoading || queryLoading"
-    type="EXPENSE"
-    @create="(values) => onCreate({ values, type: 'EXPENSE' })"
-    @update="(id, values) => onUpdate({ id, values, type: 'EXPENSE' })"
-    @delete="(id) => openDelete(id, 'EXPENSE')"
-    @close="toggleTransactionModal('EXPENSE')"
+    :type="TRANSACTION_TYPE.EXPENSE"
+    @create="(values) => onCreate({ values, type: TRANSACTION_TYPE.EXPENSE })"
+    @update="(id, values) => onUpdate({ id, values, type: TRANSACTION_TYPE.EXPENSE })"
+    @delete="(id) => openDelete(id, TRANSACTION_TYPE.EXPENSE)"
+    @close="toggleTransactionModal(TRANSACTION_TYPE.EXPENSE)"
   />
 
   <base-transaction-modal
@@ -18,11 +18,11 @@
     :labels="incomeLabels"
     :transaction="isOpenTransactionModal?.EDIT_TRANSACTION"
     :loading="updateLoading || queryLoading"
-    type="INCOME"
-    @create="(values) => onCreate({ values, type: 'INCOME' })"
-    @update="(id, values) => onUpdate({ id, values, type: 'INCOME' })"
-    @delete="(id) => openDelete(id, 'INCOME')"
-    @close="toggleTransactionModal('INCOME')"
+    :type="TRANSACTION_TYPE.INCOME"
+    @create="(values) => onCreate({ values, type: TRANSACTION_TYPE.INCOME })"
+    @update="(id, values) => onUpdate({ id, values, type: TRANSACTION_TYPE.INCOME })"
+    @delete="(id) => openDelete(id, TRANSACTION_TYPE.INCOME)"
+    @close="toggleTransactionModal(TRANSACTION_TYPE.INCOME)"
   />
 
   <confirm-delete-modal
@@ -40,6 +40,7 @@ import ConfirmDeleteModal from '@/view/components/ConfirmDeleteModal.vue'
 import BaseTransactionModal from './BaseTransactionModal.vue'
 import { useTransactionModalsController } from './TransactionModalsController'
 import { ref } from 'vue'
+import { TRANSACTION_TYPE } from '@/app/config/constants/transaction'
 
 const {
   deleteLoading,
