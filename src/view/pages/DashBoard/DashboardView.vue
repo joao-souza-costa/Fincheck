@@ -29,7 +29,7 @@ import BaseFab from '@/view/components/BaseFab.vue'
 import AccountModals from './components/Modals/AccountModals.vue'
 import { useBalanceProvider } from './providers/balanceProvider'
 import { useModalsProvider } from './providers/modalsProvider'
-import TransactionModals from './components/Modals/TransactionModals.vue'
+import TransactionModals from './components/Modals/TransactionModals/TransactionModals.vue'
 
 useBalanceProvider()
 useModalsProvider()

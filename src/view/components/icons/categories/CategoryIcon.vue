@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { markRaw } from 'vue'
+import { computed, markRaw } from 'vue'
 import { iconsMap } from './iconsMap'
 
 type CategoryIconProps = {
@@ -12,10 +12,12 @@ type CategoryIconProps = {
 }
 const props = defineProps<CategoryIconProps>()
 
-const current = markRaw(
-  iconsMap[props.type][
-    (props.category as keyof (typeof iconsMap.expense | typeof iconsMap.income)) ?? 'default'
-  ] || iconsMap[props.type].default
+const current = computed(() =>
+  markRaw(
+    iconsMap[props.type][
+      (props.category as keyof (typeof iconsMap.expense | typeof iconsMap.income)) ?? 'default'
+    ] || iconsMap[props.type].default
+  )
 )
 </script>
 

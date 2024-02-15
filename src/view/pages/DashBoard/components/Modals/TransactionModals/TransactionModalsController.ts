@@ -1,9 +1,13 @@
 import { useTransactionsStore } from '@/app/store/useTransactionStore'
 import { toast } from '@/app/utils/toast'
 import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
+import { MODALS_PROVIDER, type modalsProviderProps } from '../../../providers/modalsProvider'
 
-export function useTransactionModalsController(emit: Function, type: 'EXPENSE' | 'INCOME' = 'INCOME') {
+export function useTransactionModalsController() {
+
+  const { isOpenTransactionModal, toggleTransactionModal, isOpenDeleteModal, toggleDeleteModal } =
+    inject(MODALS_PROVIDER) as modalsProviderProps
 
   const label = {
     EXPENSE: 'Despesa',
@@ -13,21 +17,21 @@ export function useTransactionModalsController(emit: Function, type: 'EXPENSE' |
   const transactionsStore = useTransactionsStore()
   const { deleteLoading, refetchingLoading, updateLoading } = storeToRefs(transactionsStore)
 
-  async function onCreate(values: any) {
+  async function onCreate({ values, type }: { values: any, type: 'EXPENSE' | 'INCOME' }) {
     return transactionsStore
       .createTransaction({ ...values, type })
       .then(() => toast.success(`${label[type]} criada com sucesso`))
-      .then(() => emit('close'))
+      .then(() => toggleTransactionModal(type))
       .catch((e) => {
         toast.error(`Erro durante a criação da ${label[type]}`)
       })
   }
 
-  async function onUpdate(id: string, values: any) {
+  async function onUpdate({ id, values, type }: { id: string, values: any, type: 'EXPENSE' | 'INCOME' }) {
     return transactionsStore
       .updateTransaction(id, { ...values, type })
       .then(() => toast.success(`${label[type]} atualizada com sucesso`))
-      .then(() => emit('close'))
+      .then(() => toggleTransactionModal(type))
       .catch((e) => {
         toast.error(`Erro durante a atualização da ${label[type]}`)
       })
@@ -36,19 +40,41 @@ export function useTransactionModalsController(emit: Function, type: 'EXPENSE' |
     if (!id) return
     return transactionsStore
       .deleteTransaction(id)
-      .then(() => toast.success(`${label[type]} excluida com sucesso`))
+      .then(() => toast.success(`Exclusão concluida com sucesso`))
       .catch((e) => {
-        toast.error(`Erro durante a exclusão da ${label[type]}`)
+        toast.error(`Erro durante a exclusão`)
       })
+  }
+
+  const transactionId = ref<string>('')
+  const title = ref<string>('')
+
+  const openDelete = async (id: string, type: 'INCOME' | 'EXPENSE') => {
+    title.value = `Tem certeza que deseja excluir esta ${type === 'INCOME' ? 'receita' : 'despesa'}`
+    transactionId.value = id
+    toggleDeleteModal()
+    toggleTransactionModal(type)
+  }
+
+  const handleDelete = () => {
+    onDelete(transactionId.value).then(() => toggleDeleteModal())
   }
 
 
   return {
-    onCreate,
-    onUpdate,
-    onDelete,
     deleteLoading,
     queryLoading: refetchingLoading,
     updateLoading,
+    isOpenTransactionModal,
+    isOpenDeleteModal,
+    transactionId,
+    title,
+    onCreate,
+    onUpdate,
+    onDelete,
+    openDelete,
+    toggleTransactionModal,
+    toggleDeleteModal,
+    handleDelete
   }
 }

@@ -17,11 +17,11 @@
 <script setup lang="ts">
 import CategoryIcon from '@/view/components/icons/categories/CategoryIcon.vue'
 
-type tCategory = {
+type tProp = {
   name: string
   icon: string
   type: 'INCOME' | 'EXPENSE'
 }
 
-defineProps<tCategory>()
+defineProps<tProp>()
 </script>

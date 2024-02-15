@@ -1,59 +1,70 @@
 
-import * as Yup from 'yup'
-import { useAccountStore } from "@/app/store/useAccountStore"
-import { storeToRefs } from 'pinia'
-import { computed, ref } from 'vue'
-import { PaymentTypes } from '@/app/config/constants/paymentTypes'
+import type { categoriesResponse } from '@/app/services/CategoriesService'
+import TransactionForm from '../../Forms/TransactionForm/TransactionForm.vue'
+import CategoriesList from '../CategoryModals/CategoriesList.vue'
+import { ref } from 'vue'
+import type { Transaction } from '@/app/services/TransactionService'
 
-export function useBaseTransactionModalController() {
+interface iTabs {
+  component: any
+  closeFn: Function
+  submitFn: Function
+}
 
-  const { data: accounts, queryLoading: accountLoading } = storeToRefs(useAccountStore())
+export type tProps = {
+  isOpen: boolean
+  transaction?: Transaction
+  loading: boolean
+  type: 'INCOME' | 'EXPENSE'
+  labels: {
+    title: string
+    balanceLabel: string
+    transactionNameLabel: string
+    categoryLabel: string
+    paymentLabel: string
+    paymentTypeLabel: string
+  }
+}
 
-  const accountsOptions = computed(() => {
-    if (!accounts.value) return []
+export function useBaseTransactionModalController(props: tProps, emit: Function) {
+  const category = ref<categoriesResponse | undefined>(props.transaction?.category)
 
-    return accounts.value?.map((acc) => ({ value: acc.id, label: acc.name }))
-  })
+  const currentTab = ref('TransactionForm')
+  const transition = ref('go')
 
+  const setCategories = () => {
+    transition.value = 'go'
+    currentTab.value = 'CategoriesList'
+  }
 
-  const paymentTypeOptions = ref([
-    {
-      value: PaymentTypes.CASH,
-      label: 'Dinheiro'
+  const setForm = () => {
+    transition.value = 'back'
+    currentTab.value = 'TransactionForm'
+  }
+
+  const tabs: {
+    [key: string]: iTabs
+  } = {
+    TransactionForm: {
+      component: TransactionForm,
+      closeFn: () => emit('close'),
+      submitFn: (values: any) =>
+        props.transaction ? emit('update', props.transaction.id, values) : emit('create', values)
     },
-    {
-      value: PaymentTypes.CREDIT,
-      label: 'Cartão de crédito'
-    },
-    {
-      value: PaymentTypes.BILLET,
-      label: 'Boleto'
-    },
-    {
-      value: PaymentTypes.DEBIT,
-      label: 'Cartão de débito'
-    },
-    {
-      value: PaymentTypes.PIX,
-      label: 'PIX'
-    },
-  ])
-
-
-  const schema = Yup.object().shape({
-    value: Yup.string().required('Saldo  é obrigatório')
-      .test('value', 'Saldo precisa ser maior que zero', val => Number(val) > 0),
-    name: Yup.string().required('Nome da transação é obrigatório'),
-    categoryId: Yup.mixed().required('Categoria é obrigatória'),
-    bankAccountId: Yup.string().required('Destino do pagamento é obrigatória'),
-    date: Yup.date().required('Data é obrigatório'),
-    paymentType: Yup.string().required('Método de pagamento é obrigatório')
-  })
-
+    CategoriesList: {
+      component: CategoriesList,
+      closeFn: setForm,
+      submitFn: (chosenCategory: categoriesResponse) => {
+        setForm()
+        category.value = chosenCategory
+      }
+    }
+  }
   return {
-    schema,
-    accountsOptions,
-    accountLoading,
-    paymentTypeOptions,
+    category,
+    currentTab,
+    tabs,
+    transition,
+    setCategories
   }
 }
