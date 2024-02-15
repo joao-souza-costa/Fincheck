@@ -1,4 +1,5 @@
 import { PERIODS } from "../config/constants/dates";
+import type { categoriesResponse } from "./CategoriesService";
 import { httpClient } from "./Client";
 
 export type Transaction = {
@@ -8,11 +9,7 @@ export type Transaction = {
   value: number;
   type: 'INCOME' | 'EXPENSE';
   bankAccountId: string,
-  category?: {
-    id: string
-    name: string
-    icon: string
-  }
+  category?: categoriesResponse
 }
 
 export interface CreateTransactionParams {

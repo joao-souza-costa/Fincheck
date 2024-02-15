@@ -1,6 +1,6 @@
 <template>
   <base-modal :open="isOpen" @update:open="$emit('close')">
-    <base-transaction-modal
+    <transaction-modal
       :open-modal="isOpen"
       :initial-values="expense"
       type="EXPENSE"
@@ -23,7 +23,7 @@
       </template>
 
       <base-button type="submit" :is-loading="updateLoading || queryLoading"> Salvar </base-button>
-    </base-transaction-modal>
+    </transaction-modal>
 
     <confirm-delete-modal
       v-if="isOpenDeleteModal"
@@ -38,7 +38,7 @@
 
 <script lang="ts" setup>
 import TrashIcon from '@/view/components/icons/TrashIcon.vue'
-import BaseTransactionModal from './BaseTransactionForm.vue'
+import TransactionForm from '../../Forms/TransactionForm.vue'
 import type { Transaction } from '@/app/services/TransactionService'
 import { useTransactionModalsController } from './TransactionModalsController'
 import ConfirmDeleteModal from '@/view/components/ConfirmDeleteModal.vue'

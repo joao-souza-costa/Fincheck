@@ -5,8 +5,7 @@ import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
 import { PaymentTypes } from '@/app/config/constants/paymentTypes'
 
-export function useBaseTransactionModalController() {
-
+export function useBaseTransactionFormController(type: string) {
   const { data: accounts, queryLoading: accountLoading } = storeToRefs(useAccountStore())
 
   const accountsOptions = computed(() => {
@@ -15,23 +14,23 @@ export function useBaseTransactionModalController() {
     return accounts.value?.map((acc) => ({ value: acc.id, label: acc.name }))
   })
 
-
   const paymentTypeOptions = ref([
     {
-      value: PaymentTypes.CASH,
-      label: 'Dinheiro'
+      value: PaymentTypes.BILLET,
+      label: 'Boleto'
     },
     {
       value: PaymentTypes.CREDIT,
       label: 'Cartão de crédito'
     },
     {
-      value: PaymentTypes.BILLET,
-      label: 'Boleto'
-    },
-    {
       value: PaymentTypes.DEBIT,
       label: 'Cartão de débito'
+    },
+
+    {
+      value: PaymentTypes.CASH,
+      label: 'Dinheiro'
     },
     {
       value: PaymentTypes.PIX,

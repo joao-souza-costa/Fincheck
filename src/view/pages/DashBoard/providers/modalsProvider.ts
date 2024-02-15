@@ -1,6 +1,6 @@
 import type { bankAccountsResponse } from "@/app/services/BankAccountsService"
 import type { Transaction } from "@/app/services/TransactionService"
-import { provide, reactive } from "vue"
+import { provide, reactive, ref } from "vue"
 
 type tTransactionType = 'INCOME' | 'EXPENSE'
 type tAccountType = 'CREATE' | 'EDIT'
@@ -21,6 +21,8 @@ export type modalsProviderProps = {
     EDIT_TRANSACTION: Transaction | undefined
   }
   toggleTransactionModal: (type: tTransactionType, transaction?: Transaction) => void
+  isOpenDeleteModal: boolean,
+  toggleDeleteModal: (value?: boolean) => void
 }
 
 export function useModalsProvider() {
@@ -51,10 +53,18 @@ export function useModalsProvider() {
     isOpenTransactionModal[type] = !isOpenTransactionModal[type]
   }
 
+  const isOpenDeleteModal = ref<boolean>(false)
+
+  const toggleDeleteModal = (value: boolean = !isOpenDeleteModal.value) => {
+    isOpenDeleteModal.value = value
+  }
+
   provide(MODALS_PROVIDER, {
     isOpenAccountModal,
     toggleAccountModal,
     isOpenTransactionModal,
-    toggleTransactionModal
+    toggleTransactionModal,
+    isOpenDeleteModal,
+    toggleDeleteModal
   })
 }

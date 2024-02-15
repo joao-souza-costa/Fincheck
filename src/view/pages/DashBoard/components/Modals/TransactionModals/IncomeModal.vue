@@ -1,67 +1,59 @@
 <template>
   <base-modal
-    class="min-h-[600px]"
+    class="min-h-[600px] transition-all duration-700"
     :title="income ? 'Editar Receita' : 'Nova Receita'"
     :open="isOpen"
-    @update:open="$emit('close')"
+    @update:open="tabs[currentTab].closeFn"
   >
+    <template #right-action>
+      <trash-icon
+        v-if="income"
+        role="button"
+        class="w-6 h-6 text-red-800"
+        @click="$emit('delete', income.id)"
+      />
+    </template>
+
     <Transition :name="transition" mode="out-in">
       <component
-        :is="tabs[currentTab]"
+        :is="tabs[currentTab].component"
         :initial-values="income"
+        :category="category"
         :is-loading="updateLoading || queryLoading"
         v-bind="baseTransactionFormProps"
-        @submit="handleSubmit"
+        @submit="tabs[currentTab].submitFn"
         @open-categories="setCategories"
-        @close-categories="setForm"
       />
     </Transition>
   </base-modal>
-
-  <confirm-delete-modal
-    v-if="isOpenDeleteModal"
-    title="Tem certeza que deseja excluir esta receita"
-    :is-loading="deleteLoading || queryLoading"
-    @confirm="onDelete"
-    @cancel="isOpenDeleteModal = false"
-    @close="isOpenDeleteModal = false"
-  />
 </template>
 
 <script lang="ts" setup>
 import TrashIcon from '@/view/components/icons/TrashIcon.vue'
-import BaseTransactionForm from './BaseTransactionForm.vue'
+import TransactionForm from '../../Forms/TransactionForm.vue'
 import type { Transaction } from '@/app/services/TransactionService'
-import ConfirmDeleteModal from '@/view/components/ConfirmDeleteModal.vue'
 import CategoriesList from '../CategoryModals/CategoriesList.vue'
 import BaseModal from '@/view/components/BaseModal.vue'
 import { useTransactionModalsController } from './TransactionModalsController'
 import { ref } from 'vue'
+import type { categoriesResponse } from '@/app/services/CategoriesService'
 
+interface iTabs {
+  component: any
+  closeFn: Function
+  submitFn: Function
+}
 const props = defineProps<{ isOpen: boolean; income?: Transaction }>()
-const emit = defineEmits<{ close: [] }>()
+const emit = defineEmits<{ close: []; delete: [id: string] }>()
+const category = ref<categoriesResponse | undefined>(props.income?.category)
 
-const {
-  handleDeleteModal,
-  onUpdate,
-  onCreate,
-  onDelete,
-  isOpenDeleteModal,
-  deleteLoading,
-  queryLoading,
-  updateLoading
-} = useTransactionModalsController(emit, 'INCOME')
+const { onUpdate, onCreate, queryLoading, updateLoading } = useTransactionModalsController(
+  emit,
+  'INCOME'
+)
 
-const handleSubmit = (values: any) => {
-  return props.income ? onUpdate(props.income.id, values) : onCreate(values)
-}
-
-const currentTab = ref('BaseTransactionForm')
+const currentTab = ref('TransactionForm')
 const transition = ref('go')
-const tabs: { [key: string]: any } = {
-  BaseTransactionForm,
-  CategoriesList
-}
 
 const baseTransactionFormProps = ref({
   type: 'INCOME',
@@ -79,7 +71,25 @@ const setCategories = () => {
 
 const setForm = () => {
   transition.value = 'back'
-  currentTab.value = 'BaseTransactionForm'
+  currentTab.value = 'TransactionForm'
+}
+
+const tabs: {
+  [key: string]: iTabs
+} = {
+  TransactionForm: {
+    component: TransactionForm,
+    closeFn: () => emit('close'),
+    submitFn: (values: any) => (props.income ? onUpdate(props.income.id, values) : onCreate(values))
+  },
+  CategoriesList: {
+    component: CategoriesList,
+    closeFn: setForm,
+    submitFn: (chosenCategory: categoriesResponse) => {
+      setForm()
+      category.value = chosenCategory
+    }
+  }
 }
 </script>
 

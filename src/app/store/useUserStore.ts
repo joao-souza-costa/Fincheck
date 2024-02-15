@@ -1,15 +1,10 @@
 import { defineStore } from "pinia"
 import { useRouter } from "vue-router"
-import { ref, type InjectionKey, readonly } from "vue"
+import { ref, readonly } from "vue"
 import { accessTokenKey } from "../config/constants/localStorageKeys"
 import { DASHBOARD, LOGIN } from "@/app/config/constants/route"
 import { useQuery } from "@tanstack/vue-query"
 import userService from "../services/UserService"
-
-export const userProviderKey = Symbol() as InjectionKey<{
-  getSignedIn: Function
-  signin: Function
-}>
 
 export const useUserStore = defineStore('user', () => {
   const router = useRouter()

@@ -14,14 +14,24 @@
         :placeholder="transactionNameLabel"
       />
 
-      <Field name="categoryId" v-slot="{ errorMessage }" as="div">
+      <Field name="categoryId" :model-value="category?.id" v-slot="{ errorMessage }" as="div">
+        <category-option
+          v-if="category"
+          class="!border-gray-500 flex-row-reverse justify-between"
+          :icon="category.icon"
+          :name="category.name"
+          :type="category.type"
+          @click="$emit('open-categories')"
+        />
+
         <base-button
+          v-else
           class="w-full !justify-between !px-3 rounded-lg !border h-[55px]"
           :class="[
             errorMessage ? '!border-red-900 text-red-900' : '!border-gray-500 !text-gray-700'
           ]"
           :variant="'GHOST'"
-          @click="() => $emit('open-categories')"
+          @click="$emit('open-categories')"
         >
           <span> Categoria </span>
           <span>
@@ -53,6 +63,7 @@
     </div>
   </Form>
 </template>
+
 <script setup lang="ts">
 import type { Transaction } from '@/app/services/TransactionService'
 import { Field, Form, type GenericObject } from 'vee-validate'
@@ -60,14 +71,16 @@ import BaseCurrencyInput from '@/view/components/BaseCurrencyInput.vue'
 import BaseInput from '@/view/components/BaseInput.vue'
 import BaseInputSelect from '@/view/components/BaseInputSelect.vue'
 import BaseDatePickerInput from '@/view/components/BaseDatePickerInput.vue'
-import { useBaseTransactionModalController } from './BaseTransactionModalController'
+import { useBaseTransactionFormController } from './TransactionFormController'
 import BaseButton from '@/view/components/BaseButton.vue'
 import ChevronRightIcon from '@/view/components/icons/ChevronRightIcon.vue'
 import BaseInputError from '@/view/components/BaseInputError.vue'
+import CategoryOption from '../Modals/CategoryModals/CategoryOption.vue'
 
 type tProps = {
   isLoading: boolean
-  initialValues?: Partial<Transaction>
+  initialValues?: Omit<Partial<Transaction>, 'categoryId'>
+  category?: Transaction['category']
   type: 'INCOME' | 'EXPENSE'
   balanceLabel: string
   transactionNameLabel: string
@@ -86,8 +99,8 @@ const props = withDefaults(defineProps<tProps>(), {
     date: new Date()
   })
 })
+
 defineEmits<tEmit>()
 
-const { schema, accountsOptions, categoriesOptions, paymentTypeOptions } =
-  useBaseTransactionModalController(props.type)
+const { schema, accountsOptions, paymentTypeOptions } = useBaseTransactionFormController(props.type)
 </script>

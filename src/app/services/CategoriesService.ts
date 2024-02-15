@@ -1,6 +1,6 @@
 import { httpClient } from "./Client";
 
-export type categoriesResponse = {
+export interface categoriesResponse {
   id: string
   name: string,
   icon: string
