@@ -3,9 +3,9 @@ interface iRoute {
   name: string
 }
 
-export const HOME: iRoute = {
+export const DASH: iRoute = {
   path: '/',
-  name: 'HOME'
+  name: 'DASH'
 }
 
 export const LOGIN: iRoute = {
@@ -28,8 +28,19 @@ export const FORGOT_CHANGE_PASSWORD: iRoute = {
   name: 'FORGOT_CHANGE_PASSWORD'
 }
 
-export const DASHBOARD: iRoute = {
+
+export const HOME_PAGE: iRoute = {
   path: '/dash-board',
+  name: 'PAGE'
+}
+
+export const DASHBOARD: iRoute = {
+  path: '',
   name: 'DASHBOARD'
+}
+
+export const SETTINGS: iRoute = {
+  path: 'settings',
+  name: 'SETTINGS'
 }
 

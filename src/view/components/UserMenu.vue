@@ -9,6 +9,12 @@
     </BaseDropdown.Trigger>
 
     <BaseDropdown.Content class="w-32">
+      <BaseDropdown.Item class="flex items-center justify-between" @select="router.push(SETTINGS)">
+        Configurações
+      </BaseDropdown.Item>
+      <BaseDropdown.Item class="flex items-center justify-between" @select="router.push(DASHBOARD)">
+        Dashboard
+      </BaseDropdown.Item>
       <BaseDropdown.Item class="flex items-center justify-between" @select="handleSignout">
         Sair
         <ExitIcon class="w-4 h-4" />
@@ -22,8 +28,11 @@ import { useUserStore } from '@/app/store/useUserStore'
 import BaseDropdown from './Dropdown/BaseDropdown'
 import ExitIcon from './icons/ExitIcon.vue'
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { DASHBOARD, SETTINGS } from '@/app/config/constants/route'
 
 const userStore = useUserStore()
+const router = useRouter()
 
 const handleSignout = () => {
   userStore.signout()
