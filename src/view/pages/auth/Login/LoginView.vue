@@ -1,7 +1,7 @@
 <template>
   <header class="flex flex-col items-center gap-4">
     <h1 class="text-2xl text-bold text-gray-900 tracking-[-1px]">Entre em sua conta</h1>
-    <p class="space-x-2" v-if="true">
+    <p class="space-x-2" v-if="activeUserRegister">
       <span class="tracking-[-0.5px] text-gray-700"> Novo por aqui ? </span>
       <router-link :to="{ name: REGISTER.name }" class="tracking-[-1px] font-medium text-teal-900">
         Crie sua conta
