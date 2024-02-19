@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed right-4 bottom-4">
+  <div class="fixed right-4 bottom-4 z-10">
     <BaseDropdown.Root>
       <BaseDropdown.Trigger>
         <button

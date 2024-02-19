@@ -44,7 +44,7 @@
           >
             <div class="flex-1 flex items-center gap-3">
               <CategoryIcon
-                :type="transaction.type === TRANSACTION_TYPE.EXPENSE ? 'expense' : 'income'"
+                :type="transaction.type"
                 :category="transaction?.category?.icon"
               />
               <div>

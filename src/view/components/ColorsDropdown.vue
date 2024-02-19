@@ -46,8 +46,8 @@ const props = withDefaults(defineProps<iProps>(), {
   initialValue: ''
 })
 
-interface AccountsDictionary {
-  [key: string]: Color
+interface ColorsDictionary {
+  [key: Color['color']]: Color
 }
 
 type Color = {
@@ -55,7 +55,7 @@ type Color = {
   bg: string
 }
 
-const colors: AccountsDictionary = {
+const colors: ColorsDictionary = {
   '#868E96': { color: '#868E96', bg: '#F8F9FA' },
   '#FA5252': { color: '#FA5252', bg: '#FFF5F5' },
   '#E64980': { color: '#E64980', bg: '#FFF0F6' },

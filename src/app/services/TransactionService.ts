@@ -49,10 +49,10 @@ export default {
     return data;
   },
   update: async ({ id, ...params }: Omit<CreateTransactionParams, 'type'>) => {
-    const { data } = await httpClient.put<Transaction[]>(`/transactions/${id}`, params);
+    const { data } = await httpClient.put<Transaction>(`/transactions/${id}`, params);
     return data;
   },
   delete: async (id: string) => {
-    return httpClient.delete<Transaction[]>(`/transactions/${id}`);
+    return httpClient.delete(`/transactions/${id}`);
   },
 }

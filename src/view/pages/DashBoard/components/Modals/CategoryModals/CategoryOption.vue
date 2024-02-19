@@ -4,7 +4,7 @@
     :class="$attrs.class"
   >
     <CategoryIcon
-      :type="type === TRANSACTION_TYPE.EXPENSE ? 'expense' : 'income'"
+      :type="type"
       :category="icon"
       class="h-10 w-10"
     />

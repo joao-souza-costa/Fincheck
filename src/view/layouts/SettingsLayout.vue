@@ -1,15 +1,14 @@
 <template>
-  <div>
-    <div>Settings Page</div>
-    <button @click="router.push(DASHBOARD)">go to Dashboard</button>
-  </div>
+  <section class="h-[95%] w-full flex md:flex-row flex-col">
+    <div class="md:w-1/4 w-full">
+      <settings-menu />
+    </div>
+    <div class="md:w-3/4 w-full">
+      <RouterView />
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import { DASHBOARD } from '@/app/config/constants/route'
-
-const router = useRouter()
+import SettingsMenu from '@/view/pages/Settings/components/SettingsMenu.vue'
 </script>
-
-<style scoped></style>

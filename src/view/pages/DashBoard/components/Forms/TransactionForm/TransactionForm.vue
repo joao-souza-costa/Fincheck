@@ -21,7 +21,6 @@
           @open-categories="$emit('open-categories')"
         />
       </Field>
-
       <base-input-select
         name="paymentType"
         :options="paymentTypeOptions"

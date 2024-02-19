@@ -39,8 +39,13 @@ export const DASHBOARD: iRoute = {
   name: 'DASHBOARD'
 }
 
-export const SETTINGS: iRoute = {
+export const DASHBOARD_SETTINGS: iRoute = {
   path: 'settings',
   name: 'SETTINGS'
+}
+
+export const CATEGORY_SETTINGS: iRoute = {
+  path: 'categories',
+  name: 'CATEGORIES'
 }
 

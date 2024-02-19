@@ -1,12 +1,13 @@
-import { HOME_PAGE, LOGIN, REGISTER, DASHBOARD, FORGOT_PASSWORD, FORGOT_CHANGE_PASSWORD, SETTINGS, DASH } from '../app/config/constants/route'
-import AuthLayout from '../view/layouts/AuthLayout.vue'
-import LoginView from '../view/pages/Auth/Login/LoginView.vue'
-import ForgotPasswordView from '../view/pages/Auth/ForgotPassword/ForgotPasswordView.vue'
-import ForgotConfirmPasswordView from '../view/pages/Auth/ForgotPassword/ForgotConfirmPasswordView.vue'
-import RegisterView from '../view/pages/Auth/Register/RegisterView.vue'
-import DashboardView from '../view/pages/DashBoard/DashboardView.vue'
+import { HOME_PAGE, LOGIN, REGISTER, DASHBOARD, FORGOT_PASSWORD, FORGOT_CHANGE_PASSWORD, DASHBOARD_SETTINGS, DASH, CATEGORY_SETTINGS } from '../app/config/constants/route'
+import AuthLayout from '@/view/layouts/AuthLayout.vue'
+import LoginView from '@/view/pages/Auth/Login/LoginView.vue'
+import ForgotPasswordView from '@/view/pages/Auth/ForgotPassword/ForgotPasswordView.vue'
+import ForgotConfirmPasswordView from '@/view/pages/Auth/ForgotPassword/ForgotConfirmPasswordView.vue'
+import RegisterView from '@/view/pages/Auth/Register/RegisterView.vue'
+import DashboardView from '@/view/pages/DashBoard/DashboardView.vue'
 import SettingsLayout from '@/view/layouts/SettingsLayout.vue'
 import HomePageLayout from '@/view/layouts/HomePageLayout.vue'
+import CategoriesSettingsView from '@/view/pages/Settings/Categories/CategoriesSettingsView.vue'
 
 
 const defineSlide = (to: any, from: any) => {
@@ -24,10 +25,17 @@ const HOME_PAGE_CHILDREN = [
     beforeEnter: [defineSlide]
   },
   {
-    path: SETTINGS.path,
-    name: SETTINGS.name,
+    path: DASHBOARD_SETTINGS.path,
+    name: DASHBOARD_SETTINGS.name,
     component: SettingsLayout,
-    beforeEnter: [defineSlide]
+    beforeEnter: [defineSlide],
+    children: [
+      {
+        path: CATEGORY_SETTINGS.path,
+        name: CATEGORY_SETTINGS.name,
+        component: CategoriesSettingsView,
+      }
+    ]
   },
 ]
 

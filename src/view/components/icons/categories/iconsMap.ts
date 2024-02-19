@@ -1,3 +1,4 @@
+import type { TRANSACTION_TYPE } from '@/app/config/constants/transaction'
 import Clothes from "./expense/Clothes.vue";
 import Education from "./expense/Education.vue";
 import Food from "./expense/Food.vue";
@@ -9,13 +10,12 @@ import Travel from "./expense/Travel.vue";
 import Income from "./income/IncomeIcon"
 import Expenses from "./expense/ExpenseCategory"
 
-export const iconsMap = {
-  income: {
+export const iconsMap: { [key in TRANSACTION_TYPE]: Record<string, any> } = {
+  INCOME: {
     default: Income,
     travel: Travel,
-
   },
-  expense: {
+  EXPENSE: {
     default: Expenses,
     food: Food,
     fun: Fun,
@@ -25,6 +25,6 @@ export const iconsMap = {
     clothes: Clothes,
     transport: Transport,
     travel: Travel,
-    salon:Grocery,
+    salon: Grocery,
   },
 };
