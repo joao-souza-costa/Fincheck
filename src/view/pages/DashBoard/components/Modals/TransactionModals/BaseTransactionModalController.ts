@@ -2,9 +2,11 @@
 import type { categoriesResponse } from '@/app/services/CategoriesService'
 import TransactionForm from '../../Forms/TransactionForm/TransactionForm.vue'
 import CategoriesList from '../CategoryModals/CategoriesList.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import type { Transaction } from '@/app/services/TransactionService'
 import type { TRANSACTION_TYPE } from '@/app/config/constants/transaction'
+import { useRouter } from 'vue-router'
+import { CATEGORY_SETTINGS } from '@/app/config/constants/route'
 
 interface iTabs {
   component: any
@@ -28,6 +30,8 @@ export type tProps = {
 }
 
 export function useBaseTransactionModalController(props: tProps, emit: Function) {
+  const router = useRouter()
+
   const category = ref<categoriesResponse | undefined>(props.transaction?.category)
 
   const currentTab = ref('TransactionForm')
@@ -61,11 +65,23 @@ export function useBaseTransactionModalController(props: tProps, emit: Function)
       }
     }
   }
+
+  const handleAddCategories = () => {
+    router.push(CATEGORY_SETTINGS)
+    emit('close')
+  }
+
+  const isCategoriesListTab = computed(() => {
+    return currentTab.value === 'CategoriesList'
+  })
+
   return {
     category,
     currentTab,
     tabs,
     transition,
-    setCategories
+    isCategoriesListTab,
+    setCategories,
+    handleAddCategories
   }
 }

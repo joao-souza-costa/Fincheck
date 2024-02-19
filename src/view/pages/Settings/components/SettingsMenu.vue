@@ -11,11 +11,6 @@
 
 <script setup lang="ts">
 import { CATEGORY_SETTINGS } from '@/app/config/constants/route'
-import { useRoute } from 'vue-router'
-
-const route = useRoute()
-
-console.log(route.name)
 </script>
 
 <style scoped></style>

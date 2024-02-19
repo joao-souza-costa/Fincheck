@@ -7,10 +7,16 @@
   >
     <template #right-action>
       <trash-icon
-        v-if="transaction"
+        v-if="transaction && !isCategoriesListTab"
         role="button"
         class="w-6 h-6 text-red-800"
         @click="$emit('delete', transaction.id)"
+      />
+      <settings-icon
+        v-if="isCategoriesListTab"
+        role="button"
+        class="w-6 h-6 text-teal-800"
+        @click="handleAddCategories"
       />
     </template>
 
@@ -25,6 +31,7 @@
           v-bind="labels"
           @submit="tabs[currentTab].submitFn"
           @open-categories="setCategories"
+          @add-category="handleAddCategories"
         />
       </keep-alive>
     </Transition>
@@ -33,6 +40,7 @@
 
 <script lang="ts" setup>
 import TrashIcon from '@/view/components/icons/TrashIcon.vue'
+import SettingsIcon from '@/view/components/icons/SettingsIcon.vue'
 import type { Transaction } from '@/app/services/TransactionService'
 import BaseModal from '@/view/components/BaseModal.vue'
 
@@ -47,10 +55,15 @@ const emit = defineEmits<{
   update: [id: string, values: Transaction]
 }>()
 
-const { tabs, setCategories, currentTab, transition, category } = useBaseTransactionModalController(
-  props,
-  emit
-)
+const {
+  tabs,
+  isCategoriesListTab,
+  setCategories,
+  currentTab,
+  transition,
+  category,
+  handleAddCategories
+} = useBaseTransactionModalController(props, emit)
 </script>
 
 <style scoped>
