@@ -1,5 +1,5 @@
 <template>
-  <base-modal title="Excluir" open @update:open="$emit('close')">
+  <base-modal title="Excluir" open @update:open="!isLoading && $emit('close')">
     <div class="flex flex-col items-center text-center gap-6">
       <div class="w-[52px] h-[52px] rounded-full bg-red-0 flex items-center justify-center">
         <trash-icon class="w-6 h-6 text-red-900" />
@@ -22,7 +22,9 @@
         Sim, desejo excluir
       </base-button>
 
-      <base-button class="w-full" variant="GHOST" @click="$emit('cancel')"> Cancelar </base-button>
+      <base-button class="w-full" :disabled="isLoading" variant="GHOST" @click="$emit('cancel')">
+        Cancelar
+      </base-button>
     </div>
   </base-modal>
 </template>

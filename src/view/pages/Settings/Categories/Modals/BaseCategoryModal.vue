@@ -10,7 +10,7 @@
 
       <category-icon-dropdown :type="values.type" name="icon" />
 
-      <base-button class="w-full" type="submit" :is-loading="false"> Salvar </base-button>
+      <slot />
     </form>
   </base-modal>
 </template>

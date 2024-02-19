@@ -3,7 +3,14 @@
     <div class="mb-10">
       <div class="flex items-center justify-between">
         <p class="text-3xl font-bold">Categorias</p>
-        <base-button @click="handleModal" variant="PRIMARY">Adicionar</base-button>
+        <base-button
+          v-if="data"
+          :disabled="data.length > 19"
+          @click="handleModal"
+          variant="PRIMARY"
+        >
+          Adicionar
+        </base-button>
       </div>
       <p class="mt-5 text-1xl font-normal relative">
         Nesta página você vai poder gerenciar as suas categorias
@@ -93,7 +100,8 @@ import ConfirmDeleteModal from '@/view/components/ConfirmDeleteModal.vue'
 import { toast } from '@/app/utils/toast'
 
 const categoryStore = useCategoryStore()
-const { data, isRefetchingLoading, queryLoading, deleteLoading } = storeToRefs(categoryStore)
+const { data, isRefetchingLoading, queryLoading, deleteLoading, createLoading } =
+  storeToRefs(categoryStore)
 
 const isOpen = ref<boolean>(false)
 
