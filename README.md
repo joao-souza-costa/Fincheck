@@ -1,46 +1,37 @@
-# fincheck-vue-3
+## 💻 Project 
 
-This template should help get you started developing with Vue 3 in Vite.
+Fincheck is an application designed to assist micro-entrepreneurs in managing their finances.
 
-## Recommended IDE Setup
+## Stacks
+<img src="https://skillicons.dev/icons?i=html,css,javascript,typescript,docker,git,vue,vite,tailwindcss" width="415px" alt="Technologies" />
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Functionalities
 
-## Type Support for `.vue` Imports in TS
+- CRUD bank accounts: ✅
+- CRUD transactions: ✅
+- CRUD Categories:✅
+- FILTERS transactions:✅
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+## 📥 Installing the Project
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+#### Prerequisites
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+- To use this project you must have Docker installed on your computer.
+  - [Windows](https://docs.docker.com/windows/started)
+  - [MAC](https://docs.docker.com/mac/started/) or [Linux](https://docs.docker.com/linux/started/)
+  - [Postgres](https://www.docker.com/blog/how-to-use-the-postgres-docker-official-image/#Using-Docker-Compose)
 
-## Customize configuration
+#### Prerequisites Steps
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- After installing docker and postgres, follow the following instructions:
+  - Clone the project [Fincheck-BE](https://github.com/joao-souza-costa/Fincheck-BE) to your directory
+  - Inside the directory, create the `.env` file at the root of the project and add the necessary variables as shown in the example file: `.env.example`;
+  - Enter the command `docker-compose -up` in the terminal
+ 
+#### Setup Steps
 
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+ - Clone the project to your directory
+  - Inside the directory, create the `.env` file at the root of the project and add the necessary variables as shown in the example file: `.env.example`;
+  - Type the command `yarn` or `npm install` to install the dependencies
+  - Enter the build command `yarn dev` or `npm run dev` to run the project
+  - Copy and paste the URL provided into your preferred browser
