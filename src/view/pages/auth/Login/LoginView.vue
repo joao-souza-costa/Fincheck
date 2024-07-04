@@ -1,7 +1,7 @@
 <template>
   <header class="flex flex-col items-center gap-4">
     <h1 class="text-2xl text-bold text-gray-900 tracking-[-1px]">Entre em sua conta</h1>
-    <p class="space-x-2" v-if="true">
+    <p class="space-x-2" v-if="ACTIVE_USER_REGISTER">
       <span class="tracking-[-0.5px] text-gray-700"> Novo por aqui ? </span>
       <router-link :to="{ name: REGISTER.name }" class="tracking-[-1px] font-medium text-teal-900">
         Crie sua conta
@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { Form } from 'vee-validate'
 import { RouterLink } from 'vue-router'
-
+import { ACTIVE_USER_REGISTER } from '@/app/config/constants/envConstants'
 import { REGISTER, FORGOT_PASSWORD } from '@/app/config/constants/route'
 import BaseInput from '@/view/components/BaseInput.vue'
 import BaseButton from '@/view/components/BaseButton.vue'
