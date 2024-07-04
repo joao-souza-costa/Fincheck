@@ -4,7 +4,7 @@
       <div class="w-full md:max-w-[49.5%]">
         <accounts-view />
       </div>
-      <div class="w-full md:max-w-[49.5%] h-full">
+      <div class="w-full md:max-w-[49.5%] ">
         <transactions-view id="transaction-view" />
       </div>
     </main>

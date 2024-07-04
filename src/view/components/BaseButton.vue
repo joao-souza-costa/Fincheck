@@ -5,7 +5,7 @@
     :class="buttonVariant[variant]"
   >
     <base-spinner class="w-6 h-6" v-if="isLoading" />
-    <slot v-else />
+    <slot v-else> {{ label }} </slot>
   </button>
 </template>
 
@@ -22,6 +22,7 @@ type iProps = {
   isLoading?: boolean
   disabled?: boolean
   variant?: 'PRIMARY' | 'DANGER' | 'GHOST'
+  label?: string
 }
 
 withDefaults(defineProps<iProps>(), {

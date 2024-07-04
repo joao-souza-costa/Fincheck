@@ -36,7 +36,6 @@ import BaseInput from '@/view/components/BaseInput.vue'
 import BaseButton from '@/view/components/BaseButton.vue'
 
 import { useLoginController } from './useLoginController'
-import { activeUserRegister } from '@/app/config/constants/envConstants'
 
 const { schema, onSubmit, isLoading } = useLoginController()
 </script>

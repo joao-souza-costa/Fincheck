@@ -12,5 +12,3 @@
 <script setup lang="ts">
 import { CATEGORY_SETTINGS } from '@/app/config/constants/route'
 </script>
-
-<style scoped></style>

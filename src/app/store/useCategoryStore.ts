@@ -9,7 +9,7 @@ export const useCategoryStore = defineStore('categories', () => {
   const { accessToken } = storeToRefs(useUserStore())
   const queryClient = useQueryClient()
 
-  const { data, isLoading: queryLoading, isRefetching: isRefetchingLoading } = useQuery({
+  const { data = [], isLoading: queryLoading, isRefetching: isRefetchingLoading } = useQuery({
     queryKey: ['categories'],
     queryFn: categoriesService.getAll,
     enabled: accessToken

@@ -9,7 +9,7 @@
     <template #right-action>
       <trash-icon role="button" class="w-6 h-6 text-red-800" @click="$emit('open-delete')" />
     </template>
-    <base-button type="submit" :is-loading="queryLoading || updateLoading"> Editar </base-button>
+    <base-button type="submit" :is-loading="queryLoading || updateLoading" label="Editar" />
   </base-category-modal>
 </template>
 
