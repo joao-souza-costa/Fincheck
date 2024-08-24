@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import CreateCategoryModal from '../Modals/CreateCategoryModal.vue'
+import CreateCategoryModal from '../modals/CreateCategoryModal.vue'
 import BaseButton from '@/view/components/BaseButton.vue'
 
 defineProps<{ disabled: boolean }>()

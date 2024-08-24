@@ -25,7 +25,7 @@ import BaseModal from '@/view/components/BaseModal.vue'
 import BaseInput from '@/view/components/BaseInput.vue'
 import BaseInputSelect from '@/view/components/BaseInputSelect.vue'
 import ColorsDropdown from '@/view/components/ColorsDropdown.vue' 
-import { useAccountModalController } from './BaseAccountModelController'
+import { useAccountModalController } from './BaseAccountModalController'
 import type { bankAccountsResponse } from '@/app/services/BankAccountsService'
 
 type iProps = {

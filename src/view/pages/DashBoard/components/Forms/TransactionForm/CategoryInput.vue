@@ -28,7 +28,7 @@
 import type { categoriesResponse } from '@/app/services/CategoriesService'
 import ChevronRightIcon from '@/view/components/icons/ChevronRightIcon.vue'
 import BaseInputError from '@/view/components/BaseInputError.vue'
-import CategoryOption from '../../Modals/CategoryModals/CategoryOption.vue'
+import CategoryOption from '../../modals/CategoryModals/CategoryOption.vue'
 import BaseButton from '@/view/components/BaseButton.vue'
 
 defineProps<{

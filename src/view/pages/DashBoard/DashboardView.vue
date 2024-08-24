@@ -19,10 +19,10 @@
 import AccountsView from './components/AccountsView.vue'
 import TransactionsView from './components/TransactionsView.vue'
 import BaseFab from '@/view/components/BaseFab.vue'
-import AccountModals from './components/Modals/AccountModals.vue'
+import AccountModals from './components/modals/AccountModals.vue'
 import { useBalanceProvider } from './providers/balanceProvider'
 import { useModalsProvider } from './providers/modalsProvider'
-import TransactionModals from './components/Modals/TransactionModals/TransactionModals.vue'
+import TransactionModals from './components/modals/TransactionModals/TransactionModals.vue'
 
 useBalanceProvider()
 useModalsProvider()

@@ -1,6 +1,6 @@
 
 import type { categoriesResponse } from '@/app/services/CategoriesService'
-import TransactionForm from '../../Forms/TransactionForm/TransactionForm.vue'
+import TransactionForm from '../../forms/TransactionForm/TransactionForm.vue'
 import CategoriesList from '../CategoryModals/CategoriesList.vue'
 import { computed, ref } from 'vue'
 import type { Transaction } from '@/app/services/TransactionService'

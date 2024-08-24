@@ -35,7 +35,7 @@ import { toast } from '@/app/utils/toast'
 import { useCategoryStore } from '@/app/store/useCategoryStore'
 import ConfirmDeleteModal from '@/view/components/ConfirmDeleteModal.vue'
 import CategoriesHeader from './components/CategoriesHeader.vue'
-import EditCategoryModal from './Modals/EditCategoryModal.vue'
+import EditCategoryModal from './modals/EditCategoryModal.vue'
 import CategoriesTable from './components/CategoriesTable.vue'
 import type { categoriesResponse } from '@/app/services/CategoriesService'
 
