@@ -9,11 +9,11 @@ export interface iHeader {
 export default (headers: iHeader[], slots: { [key: string]: Function }) => {
   const th = h(
     'tr',
-    { class: 'w-full' },
+    { class: 'w-full flex flex-row items-center' },
     headers?.map((header, key) => {
       return h(
         'th',
-        { class: [`inline-block font-normal w-1/${headers.length}`, header.class], key },
+        { class: [`inline-block font-normal flex-1`, header.class], key },
         slots?.[`header.${header?.key}`]?.() || header?.title || header?.key
       )
     })

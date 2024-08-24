@@ -14,7 +14,7 @@ export default (item: iCell, slots: { [key: string]: Function }) => {
   for (const property in item) {
     const attributes = {
       key: item[property]?.key,
-      class: [item[property].class, `w-1/${Object.keys(item).length}`]
+      class: [item[property].class, `flex-1`]
     }
 
     tableData.push(
@@ -26,7 +26,7 @@ export default (item: iCell, slots: { [key: string]: Function }) => {
     'tr',
     {
       class:
-        'py-3 px-5 cursor-pointer hover:bg-gray-100 flex items-center justify-between border border-b-gray-300 transition-all'
+        'py-3 px-5 block w-full flex flex-row items-center cursor-pointer hover:bg-gray-100 border border-b-gray-300 transition-all'
     },
     tableData
   )
